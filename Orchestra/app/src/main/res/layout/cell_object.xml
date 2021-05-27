@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="98dp"
+    android:layout_height="98dp"
+    android:layout_marginBottom="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@color/btn_connexion">
+
+<ImageView
+    android:layout_width="24dp"
+    android:layout_height="24dp"
+    android:id="@+id/cell_object_icon_iv"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="5dp"
+    android:src="@drawable/ic_device"/>
+
+    <ImageView
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:id="@+id/cell_object_fav_iv"
+        app:layout_constraintTop_toTopOf="@id/cell_object_icon_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_heart"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cell_object_name_tv"
+        app:layout_constraintTop_toBottomOf="@id/cell_object_icon_iv"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="ObjectName"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cell_object_room_tv"
+        app:layout_constraintTop_toBottomOf="@id/cell_object_name_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="RoomName"
+        android:layout_marginStart="10dp"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cell_object_stat_tv"
+        app:layout_constraintTop_toBottomOf="@id/cell_object_room_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="ObjectStatus"
+        android:layout_marginStart="10dp"
+        android:textSize="12dp"
+        android:textColor="@color/white"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

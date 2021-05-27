@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context="view.ui.SignInActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/create_account_title_tv"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:text="@string/create_account_title"
+            android:textSize="36sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_gravity="center">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/create_account_mail_tv"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/login_email"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="24sp"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:id="@+id/login_id_et"
+            android:drawableStart="@drawable/ic_user"
+            android:background="@drawable/login_edit_background"
+            android:hint="@string/create_account_email_hint"
+            android:textColorHint="@color/light_gray"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:inputType="text"
+            android:maxLines="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/create_account_pwd_tv"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/create_account_pwd"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="24sp"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:id="@+id/create_account_pwd_et"
+            android:drawableStart="@drawable/ic_password"
+            android:background="@drawable/login_edit_background"
+            android:hint="@string/create_account_pwd_hint"
+            android:textColorHint="@color/light_gray"
+            android:layout_gravity="center"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:maxLines="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/create_account_confirm_pwd_tv"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/create_account_confirm_pwd"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="24sp"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:id="@+id/create_account_confirm_pwd_et"
+            android:drawableStart="@drawable/ic_password"
+            android:background="@drawable/login_edit_background"
+            android:hint="@string/create_account_pwd_hint"
+            android:textColorHint="@color/light_gray"
+            android:layout_gravity="center"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:maxLines="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/create_account_user_tv"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/create_account_user_name"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="24sp"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:id="@+id/create_account_user_et"
+            android:drawableStart="@drawable/ic_user"
+            android:background="@drawable/login_edit_background"
+            android:hint="@string/create_account_user_name_hint"
+            android:textColorHint="@color/light_gray"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:inputType="text"
+            android:maxLines="1" />
+
+
+    </LinearLayout>
+
+</ScrollView>
