@@ -39,7 +39,15 @@ class DetailSceneActivity : AppCompatActivity() {
         val sceneDetail = intent.getSerializableExtra("DetailScene") as? Scene
 
         detailSceneName.text = sceneDetail!!.title
-        detailSceneName.setTextColor(Color.parseColor(sceneDetail.backgroundColor))
+
+        sceneDetail.backgroundColor?.let {
+            val sceneBackgroundColor = if(it.first() == '#') {
+                Color.parseColor(it)
+            } else {
+                it.toInt()
+            }
+            detailSceneName.setTextColor(sceneBackgroundColor)
+        }
         detailSceneDescription.text = sceneDetail.sceneDescription
 
         detailSceneAdapter.detailSceneActions = sceneDetail.actions

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.Device
 import view.adapter.DetailDeviceSpecificationAdapter
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -48,7 +47,7 @@ class DetailDeviceActivity : AppCompatActivity() {
         val deviceDetail = intent.getSerializableExtra("DetailDevice") as? Device
 
         detailDeviceName.text = deviceDetail!!.name
-        detailDeviceName.setTextColor(Color.parseColor(deviceDetail!!.backgroundColor))
+        detailDeviceName.setTextColor(Color.parseColor(deviceDetail.backgroundColor))
         detailDeviceRoom.text = deviceDetail.roomName
 
         val manufacturerLabel = getString(R.string.specification_manufacturer)
@@ -57,7 +56,7 @@ class DetailDeviceActivity : AppCompatActivity() {
         val versionLabel = getString(R.string.specification_version)
         val reachabilityLabel = getString(R.string.specification_reachable)
 
-        val reachabilityStatus =  if (deviceDetail!!.isReachable == true) "Disponibile" else  "Non Disponible"
+        val reachabilityStatus =  if (deviceDetail.isReachable == true) "Disponibile" else  "Non Disponible"
 
         detailDeviceSpecificationInfoNames.add(manufacturerLabel)
         detailDeviceSpecificationInfoNames.add(serialNumberLabel)
@@ -65,10 +64,10 @@ class DetailDeviceActivity : AppCompatActivity() {
         detailDeviceSpecificationInfoNames.add(versionLabel)
         detailDeviceSpecificationInfoNames.add(reachabilityLabel)
 
-        detailDeviceKeyValue[manufacturerLabel] = deviceDetail!!.manufacturer!!
-        detailDeviceKeyValue[serialNumberLabel] = deviceDetail!!.serialNumber!!
-        detailDeviceKeyValue[modelLabel] = deviceDetail!!.model!!
-        detailDeviceKeyValue[versionLabel] = deviceDetail!!.version!!
+        detailDeviceKeyValue[manufacturerLabel] = deviceDetail.manufacturer!!
+        detailDeviceKeyValue[serialNumberLabel] = deviceDetail.serialNumber!!
+        detailDeviceKeyValue[modelLabel] = deviceDetail.model!!
+        detailDeviceKeyValue[versionLabel] = deviceDetail.version!!
         detailDeviceKeyValue[reachabilityLabel] = reachabilityStatus
 
         detailDeviceAdapter.deviceSpecificationInfoNames = detailDeviceSpecificationInfoNames

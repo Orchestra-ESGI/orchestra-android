@@ -7,11 +7,17 @@ import android.widget.ImageView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.orchestra.R
+import utils.OnItemClicked
 
 
-class ShuffleColorAdapter : RecyclerView.Adapter<ShuffleColorAdapter.ShuffleColorViewHolder>(){
+class ShuffleColorAdapter(clickListener: OnItemClicked): RecyclerView.Adapter<ShuffleColorAdapter.ShuffleColorViewHolder>(){
+
+    var colorListMap: MutableMap<Int, Boolean>? = null
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     var colorList: List<Int>? = null
         set(value) {
@@ -19,7 +25,7 @@ class ShuffleColorAdapter : RecyclerView.Adapter<ShuffleColorAdapter.ShuffleColo
             notifyDataSetChanged()
         }
 
-    var positionSelected = 0
+    private val itemListener: OnItemClicked = clickListener
 
     private lateinit var layoutInflater: LayoutInflater
 
@@ -29,17 +35,32 @@ class ShuffleColorAdapter : RecyclerView.Adapter<ShuffleColorAdapter.ShuffleColo
         return ShuffleColorViewHolder(objectView)
     }
 
+    override fun onBindViewHolder(holder: ShuffleColorViewHolder, position: Int) {
+        var color = colorList!![position]
+        holder.bind(color = color, selected = colorListMap!![color]!!, position = position, listener = itemListener)
+    }
+
+    override fun getItemCount(): Int {
+        if (colorList!!.isEmpty() && colorListMap!!.isEmpty()) {
+            return 0
+        }
+        return colorList!!.size
+    }
+
     class ShuffleColorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val colorIcon = itemView.findViewById<ImageView>(R.id.cell_color_iv)
 
-        fun bind(color: Int, position: Int) {
+        fun bind(color: Int, selected: Boolean, position: Int, listener: OnItemClicked) {
 
-            if (position != 0) {
+            if (!selected) {
                 colorIcon.setImageResource(0)
             }
 
-            val unwrappedDrawable = AppCompatResources.getDrawable(itemView.context, R.drawable.create_scene_shuffle_color_shape)
+            val unwrappedDrawable = AppCompatResources.getDrawable(
+                itemView.context,
+                R.drawable.create_scene_shuffle_color_shape
+            )
             val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
             DrawableCompat.setTint(wrappedDrawable, color)
 
@@ -47,25 +68,10 @@ class ShuffleColorAdapter : RecyclerView.Adapter<ShuffleColorAdapter.ShuffleColo
 
             itemView.setOnClickListener {
                 colorIcon.setImageResource(R.drawable.ic_circle_point)
+                listener.colorClicked(color, position)
             }
         }
     }
 
-    override fun onBindViewHolder(holder: ShuffleColorViewHolder, position: Int) {
-        holder.bind(color = colorList!![position], position = position)
-    }
 
-    override fun getItemCount(): Int {
-        if (colorList!!.isEmpty()) {
-            return 0
-        }
-        return colorList!!.size
-    }
-
-    fun getPosition(): Int {
-        return positionSelected
-    }
-    fun setPosition(position: Int) {
-        positionSelected = position
-    }
 }

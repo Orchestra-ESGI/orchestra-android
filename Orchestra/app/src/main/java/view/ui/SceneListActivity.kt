@@ -1,6 +1,5 @@
 package view.ui
 
-import android.R.attr
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log

@@ -2,13 +2,16 @@ package view.ui
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +22,7 @@ import core.rest.model.ActionScene
 import core.rest.model.Scene
 import utils.OnItemClicked
 import view.adapter.DetailSceneActionsAdapter
+import view.adapter.SceneAdapter
 import view.adapter.ShuffleColorAdapter
 import kotlin.random.Random
 
@@ -38,6 +42,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked {
     private lateinit var sceneColorsAdapter : ShuffleColorAdapter
     private lateinit var listActionAdapter : DetailSceneActionsAdapter
 
+    private lateinit var sceneColorsHashMap : MutableMap<Int, Boolean>
     private lateinit var sceneColors : ArrayList<Int>
     private var actionList : ArrayList<ActionScene> = ArrayList()
 
@@ -60,10 +65,10 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.create_scene_add_btn -> {
-            val intent = Intent();
+            val intent = Intent()
             intent.putExtra("CreatedScene", retrieveData())
-            setResult(RESULT_OK, intent);
-            finish();
+            setResult(RESULT_OK, intent)
+            finish()
             true
         }
 
@@ -73,10 +78,16 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked {
     }
 
     private fun generateBackGroundColor() {
+        this.sceneColorsHashMap = mutableMapOf()
         this.sceneColors = ArrayList()
         val size = 5
-        for (i in 0..size) {
-            this.sceneColors.add(Color.argb(255, Random.nextInt(256), Random.nextInt(256), Random.nextInt(256)))
+        var randomColor : Int = Color.argb(255, Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
+        this.sceneColorsHashMap[randomColor] = true
+        this.sceneColors.add(randomColor)
+        for (i in 1..size) {
+            randomColor = Color.argb(255, Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
+            this.sceneColorsHashMap[randomColor] = false
+            this.sceneColors.add(randomColor)
         }
     }
 
@@ -96,7 +107,8 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked {
     private fun setUpRv() {
 
         sceneColorsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        sceneColorsAdapter = ShuffleColorAdapter()
+        sceneColorsAdapter = ShuffleColorAdapter(this)
+        sceneColorsAdapter.colorListMap = sceneColorsHashMap
         sceneColorsAdapter.colorList = sceneColors
         sceneColorsRecyclerView.adapter = sceneColorsAdapter
 
@@ -108,9 +120,10 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked {
 
     private fun setUpShuffleColor() {
         shuffleColorButton.setOnClickListener {
+            this.sceneColorsHashMap.clear()
             this.sceneColors.toMutableList().clear()
             generateBackGroundColor()
-            sceneColorsAdapter.colorList = sceneColors
+            redrawShuffleColors()
         }
     }
 
@@ -141,13 +154,33 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked {
         val id = Random.nextInt()
         val name = nameEditText.text
         val description = descriptionEditText.text
-        val backgroundColor = R.color.design_default_color_primary_dark
+        val backgroundColor = sceneColorsHashMap.filterValues { it }.keys.first()
+        // TO CHANGE
         val idUser = Random.nextInt()
 
         return Scene(id.toString(), name.toString(), description.toString(), backgroundColor.toString(), idUser.toString(), actionList)
     }
 
-    override fun colorClicked(v: View, color: Int, position: Int) {
-        TODO("Not yet implemented")
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun colorClicked(color: Int, position: Int) {
+        Log.d("ClickedColor", "$color - $position")
+        var oldSelectedColor = sceneColorsHashMap.filterValues {
+            it
+        }
+        if (oldSelectedColor.size == 1) {
+            Log.d("ClickedColor", oldSelectedColor.keys.first().toString())
+            sceneColorsHashMap.replace(oldSelectedColor.keys.first(), false)
+            sceneColorsHashMap.replace(color, true)
+            redrawShuffleColors()
+        }
+    }
+
+    private fun redrawShuffleColors() {
+        sceneColorsRecyclerView.adapter = null;
+        sceneColorsRecyclerView.layoutManager = null;
+        sceneColorsAdapter.colorListMap = sceneColorsHashMap
+        sceneColorsAdapter.colorList = sceneColors
+        sceneColorsRecyclerView.adapter = sceneColorsAdapter
+        sceneColorsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     }
 }
