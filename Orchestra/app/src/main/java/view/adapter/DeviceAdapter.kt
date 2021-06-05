@@ -2,6 +2,7 @@ package view.adapter
 
 import android.content.Intent
 import android.graphics.Color
+import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,9 +39,9 @@ class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
             objectTitle.text = device.name
             objectRoom.text = device.roomName
             if (device.isReachable == true) {
-                objectStatus.text = "Disponible"
+                    objectStatus.text = itemView.context.getString(R.string.reachable_ok)
             } else {
-                objectStatus.text = "Indisponible"
+                objectStatus.text = itemView.context.getString(R.string.reachable_nok)
             }
 
             val unwrappedDrawable = AppCompatResources.getDrawable(itemView.context, R.drawable.scene_list_item_shape)

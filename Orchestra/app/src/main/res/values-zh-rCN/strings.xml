@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Orchestra</string>
+    <string name="login_welcome">欢迎回到Orchestra!</string>
+    <string name="login_email">电子邮件</string>
+    <string name="login_pwd">密码</string>
+    <string name="login_connect">连接</string>
+    <string name="login_create_account">创建一个账户</string>
+    <string name="login_forgot_pwd">忘记密码?</string>
+    <string name="login_no_account">没有账户?</string>
+
+    <string name="create_account_title">创建一个账户来同步您的所有信息</string>
+    <string name="create_account_email">电子邮件</string>
+    <string name="create_account_email_hint">ex: toto@gmail.com</string>
+    <string name="create_account_pwd">密码</string>
+    <string name="create_account_pwd_hint">*********</string>
+    <string name="create_account_confirm_pwd">确认密码</string>
+    <string name="create_account_user_name">名称</string>
+    <string name="create_account_user_name_hint">John Doe</string>
+
+    <string name="create_account_title_page">创建一个账户</string>
+    <string name="create_account_continue">继续</string>
+
+    <string name="scene_list_title">我的家</string>
+    <string name="scene_list_object_title">我的对象</string>
+    <string name="scene_list_scene_title">我的场景</string>
+
+    <string name="create_scene_new_scene">新场景</string>
+    <string name="create_scene_name">名称</string>
+    <string name="create_scene_name_hint">"日落时开灯"</string>
+    <string name="create_scene_choose_color">选择一种颜色</string>
+    <string name="create_scene_description">说明</string>
+    <string name="create_scene_description_hint">"天黑就开灯"</string>
+    <string name="create_scene_add_action">+ 增加行动</string>
+
+    <string name="create_scene_list_action">动作列表</string>
+    <string name="create_scene_list_action_description">选择一个动作</string>
+
+    <string name="detail_device_ok">OK</string>
+    <string name="detail_device_room_title">房间</string>
+    <string name="detail_device_specifications_title">特点</string>
+
+    <string name="specification_manufacturer">制造商</string>
+    <string name="specification_serial_number">序号</string>
+    <string name="specification_model">型号</string>
+    <string name="specification_version">版本</string>
+    <string name="specification_reachable">可用性</string>
+
+    <string name="reachable_ok">可用</string>
+    <string name="reachable_nok">不可用</string>
+
+    <string name="detail_scene_modify">编辑</string>
+    <string name="detail_scene_description_title">说明</string>
+    <string name="detail_scene_action_title">行动</string>
+</resources>

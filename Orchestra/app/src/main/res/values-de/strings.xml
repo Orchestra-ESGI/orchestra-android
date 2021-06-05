@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Orchestra</string>
+    <string name="login_welcome">Willkommen zurück bei Orchestra!</string>
+    <string name="login_email">E-Mail</string>
+    <string name="login_pwd">Passwort</string>
+    <string name="login_connect">Verbindung</string>
+    <string name="login_create_account">Ein Konto erstellen</string>
+    <string name="login_forgot_pwd">Haben Sie Ihr Passwort vergessen ?</string>
+    <string name="login_no_account">Sie haben noch kein Konto ?</string>
+
+    <string name="create_account_title">Erstellen Sie ein Konto, um alle Ihre Informationen zu synchronisieren</string>
+    <string name="create_account_email">E-Mail</string>
+    <string name="create_account_email_hint">ex: toto@gmail.com</string>
+    <string name="create_account_pwd">Passwort</string>
+    <string name="create_account_pwd_hint">*********</string>
+    <string name="create_account_confirm_pwd">Bestätigen Sie das Passwort</string>
+    <string name="create_account_user_name">Name</string>
+    <string name="create_account_user_name_hint">John Doe</string>
+
+    <string name="create_account_title_page">Ein Konto erstellen</string>
+    <string name="create_account_continue">Weiter</string>
+
+    <string name="scene_list_title">Mein Zuhause</string>
+    <string name="scene_list_object_title">Meine Objekte</string>
+    <string name="scene_list_scene_title">Meine Szenen</string>
+
+    <string name="create_scene_new_scene">Neue Szene</string>
+    <string name="create_scene_name">Name</string>
+    <string name="create_scene_name_hint">"Schalten Sie das Licht bei Sonnenuntergang ein"</string>
+    <string name="create_scene_choose_color">Wählen Sie eine Farbe</string>
+    <string name="create_scene_description">Beschreibung</string>
+    <string name="create_scene_description_hint">"Schalten Sie das Licht ein, wenn es dunkel ist"</string>
+    <string name="create_scene_add_action">+ Aktionen hinzufügen</string>
+
+    <string name="create_scene_list_action">Liste der Aktionen</string>
+    <string name="create_scene_list_action_description">Wähle eine Aktion</string>
+
+    <string name="detail_device_ok">OK</string>
+    <string name="detail_device_room_title">Zimmer</string>
+    <string name="detail_device_specifications_title">Eigenschaften</string>
+
+    <string name="specification_manufacturer">Hersteller</string>
+    <string name="specification_serial_number">Ordnungsnummer</string>
+    <string name="specification_model">Modell</string>
+    <string name="specification_version">Ausführung</string>
+    <string name="specification_reachable">Verfügbarkeit</string>
+
+    <string name="reachable_ok">Verfügbar</string>
+    <string name="reachable_nok">Nicht verfügbar</string>
+
+    <string name="detail_scene_modify">Bearbeiten</string>
+    <string name="detail_scene_description_title">Beschreibung</string>
+    <string name="detail_scene_action_title">Aktionen</string>
+</resources>

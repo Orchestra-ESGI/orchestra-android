@@ -1,51 +1,54 @@
 <resources>
     <string name="app_name">Orchestra</string>
-    <string name="login_welcome">Bienvenue sur Orchestra, vous êtes de retour !</string>
+    <string name="login_welcome">Welcome back to Orchestra!</string>
     <string name="login_email">Email</string>
-    <string name="login_pwd">Mot de passe</string>
-    <string name="login_connect">Connexion</string>
-    <string name="login_create_account">Créer un compte</string>
-    <string name="login_forgot_pwd">Mot de passe oublié ?</string>
-    <string name="login_no_account">Vous n\'avez pas de compte ?</string>
+    <string name="login_pwd">Password</string>
+    <string name="login_connect">Connect</string>
+    <string name="login_create_account">Create an account</string>
+    <string name="login_forgot_pwd">Forgot your password?</string>
+    <string name="login_no_account">Do not have an account?</string>
 
-    <string name="create_account_title">Créez un compte pour synchroniser toutes vos informations</string>
+    <string name="create_account_title">Create an account to synchronise all your information</string>
     <string name="create_account_email">Email</string>
     <string name="create_account_email_hint">ex: toto@gmail.com</string>
-    <string name="create_account_pwd">Mot de passe</string>
+    <string name="create_account_pwd">Password</string>
     <string name="create_account_pwd_hint">*********</string>
-    <string name="create_account_confirm_pwd">Confirmer le mot de passe</string>
-    <string name="create_account_user_name">Nom</string>
+    <string name="create_account_confirm_pwd">Confirm your password</string>
+    <string name="create_account_user_name">Name</string>
     <string name="create_account_user_name_hint">John Doe</string>
 
-    <string name="create_account_title_page">Création de compte</string>
-    <string name="create_account_continue">Continuer</string>
+    <string name="create_account_title_page">Account creation</string>
+    <string name="create_account_continue">Continue</string>
 
-    <string name="scene_list_title">Mon domicile</string>
-    <string name="scene_list_object_title">Mes objets</string>
-    <string name="scene_list_scene_title">Mes scènes</string>
+    <string name="scene_list_title">My Home</string>
+    <string name="scene_list_object_title">My Devices</string>
+    <string name="scene_list_scene_title">My Scenes</string>
 
-    <string name="create_scene_new_scene">Nouvelle scène</string>
-    <string name="create_scene_name">Nom</string>
-    <string name="create_scene_name_hint">"Allumer la lumière au coucher du soleil"</string>
-    <string name="create_scene_choose_color">Choisissez une couleur</string>
+    <string name="create_scene_new_scene">New Scene</string>
+    <string name="create_scene_name">Name</string>
+    <string name="create_scene_name_hint">"Turn on the light at sunset"</string>
+    <string name="create_scene_choose_color">Choose a colour</string>
     <string name="create_scene_description">Description</string>
-    <string name="create_scene_description_hint">"Allumer les lampes s'il fait nuit"</string>
-    <string name="create_scene_add_action">+ Ajouter une action</string>
+    <string name="create_scene_description_hint">"Turn on the lights if it is dark"</string>
+    <string name="create_scene_add_action">+ Add actions</string>
 
-    <string name="create_scene_list_action">Liste des actions</string>
-    <string name="create_scene_list_action_description">Choisir une action</string>
+    <string name="create_scene_list_action">Liste of actions</string>
+    <string name="create_scene_list_action_description">Choose an action</string>
 
     <string name="detail_device_ok">OK</string>
-    <string name="detail_device_room_title">Pièce</string>
-    <string name="detail_device_specifications_title">Caractéristiques</string>
+    <string name="detail_device_room_title">Room</string>
+    <string name="detail_device_specifications_title">Features</string>
 
-    <string name="specification_manufacturer">Fabricant</string>
-    <string name="specification_serial_number">Numéro de série</string>
-    <string name="specification_model">Modèle</string>
+    <string name="specification_manufacturer">Manufacturer</string>
+    <string name="specification_serial_number">Serial Number</string>
+    <string name="specification_model">Model</string>
     <string name="specification_version">Version</string>
-    <string name="specification_reachable">Disponibilité</string>
+    <string name="specification_reachable">Availability</string>
 
-    <string name="detail_scene_modify">Modifier</string>
+    <string name="reachable_ok">Available</string>
+    <string name="reachable_nok">Unavailable</string>
+
+    <string name="detail_scene_modify">Modify</string>
     <string name="detail_scene_description_title">Description</string>
     <string name="detail_scene_action_title">Actions</string>
 </resources>

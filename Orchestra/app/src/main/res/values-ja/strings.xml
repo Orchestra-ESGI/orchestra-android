@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Orchestra</string>
+    <string name="login_welcome">Orchestra へようこそ、戻ってきました!</string>
+    <string name="login_email">メールアドレス</string>
+    <string name="login_pwd">パスワード</string>
+    <string name="login_connect">ログイン</string>
+    <string name="login_create_account">アカウントを作成する</string>
+    <string name="login_forgot_pwd">パスワードをお忘れですか ?</string>
+    <string name="login_no_account">アカウントを持っていませんか ?</string>
+
+    <string name="create_account_title">アカウントを作成してすべての情報を同期</string>
+    <string name="create_account_email">メールアドレス</string>
+    <string name="create_account_email_hint">ex: toto@gmail.com</string>
+    <string name="create_account_pwd">パスワード</string>
+    <string name="create_account_pwd_hint">*********</string>
+    <string name="create_account_confirm_pwd">パスワードを認証する</string>
+    <string name="create_account_user_name">苗字</string>
+    <string name="create_account_user_name_hint">John Doe</string>
+
+    <string name="create_account_title_page">アカウント作成e</string>
+    <string name="create_account_continue">続ける</string>
+
+    <string name="scene_list_title">私の家</string>
+    <string name="scene_list_object_title">私のオブジェクト</string>
+    <string name="scene_list_scene_title">私のシーン</string>
+
+    <string name="create_scene_new_scene">新しいシーン</string>
+    <string name="create_scene_name">苗字</string>
+    <string name="create_scene_name_hint">"夕暮れ時に明かりを灯す"</string>
+    <string name="create_scene_choose_color">色を選択</string>
+    <string name="create_scene_description">説明</string>
+    <string name="create_scene_description_hint">"暗くなったらランプを点ける"</string>
+    <string name="create_scene_add_action">+ アクションを追加</string>
+
+    <string name="create_scene_list_action">アクション一覧</string>
+    <string name="create_scene_list_action_description">アクションを選択</string>
+
+    <string name="detail_device_ok">OK</string>
+    <string name="detail_device_room_title">ルーム</string>
+    <string name="detail_device_specifications_title">特徴</string>
+
+    <string name="specification_manufacturer">メーカー</string>
+    <string name="specification_serial_number">シリアルナンバー</string>
+    <string name="specification_model">モデル</string>
+    <string name="specification_version">バージョン</string>
+    <string name="specification_reachable">可用性</string>
+
+    <string name="reachable_ok">利用可能</string>
+    <string name="reachable_nok">利用不可</string>
+
+    <string name="detail_scene_modify">編集</string>
+    <string name="detail_scene_description_title">説明</string>
+    <string name="detail_scene_action_title">行動</string>
+</resources>

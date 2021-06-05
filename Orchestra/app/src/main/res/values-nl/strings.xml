@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Orchestra</string>
+    <string name="login_welcome">Welkom terug bij het Orchestra!</string>
+    <string name="login_email">E-mail</string>
+    <string name="login_pwd">Wachtwoord</string>
+    <string name="login_connect">Aansluiting</string>
+    <string name="login_create_account">Maak een account aan</string>
+    <string name="login_forgot_pwd">Wachtwoord vergeten ?</string>
+    <string name="login_no_account">Heb je geen account ?</string>
+
+    <string name="create_account_title">Maak een account aan om al uw informatie te synchroniseren</string>
+    <string name="create_account_email">E-mail</string>
+    <string name="create_account_email_hint">ex: toto@gmail.com</string>
+    <string name="create_account_pwd">Wachtwoord</string>
+    <string name="create_account_pwd_hint">*********</string>
+    <string name="create_account_confirm_pwd">Bevestig wachtwoord</string>
+    <string name="create_account_user_name">Naam</string>
+    <string name="create_account_user_name_hint">John Doe</string>
+
+    <string name="create_account_title_page">Maak een account aan</string>
+    <string name="create_account_continue">Ga door</string>
+
+    <string name="scene_list_title">Mijn huis</string>
+    <string name="scene_list_object_title">Mijn objecten</string>
+    <string name="scene_list_scene_title">Mijn scènes</string>
+
+    <string name="create_scene_new_scene">Nieuwe scène</string>
+    <string name="create_scene_name">Naam</string>
+    <string name="create_scene_name_hint">"Doe het licht aan bij zonsondergang"</string>
+    <string name="create_scene_choose_color">Kies een kleur</string>
+    <string name="create_scene_description">Beschrijving</string>
+    <string name="create_scene_description_hint">"Doe de lichten aan als het donker is"</string>
+    <string name="create_scene_add_action">+ Acties toevoegen</string>
+
+    <string name="create_scene_list_action">Lijst met acties</string>
+    <string name="create_scene_list_action_description">Kies een actie</string>
+
+    <string name="detail_device_ok">OK</string>
+    <string name="detail_device_room_title">Kamer</string>
+    <string name="detail_device_specifications_title">Kenmerken</string>
+
+    <string name="specification_manufacturer">Fabrikant</string>
+    <string name="specification_serial_number">Serienummer</string>
+    <string name="specification_model">Model</string>
+    <string name="specification_version">Versie</string>
+    <string name="specification_reachable">Beschikbaarheid</string>
+
+    <string name="reachable_ok">Beschikbaar</string>
+    <string name="reachable_nok">Niet beschikbaar</string>
+
+    <string name="detail_scene_modify">Bewerken</string>
+    <string name="detail_scene_description_title">Beschrijving</string>
+    <string name="detail_scene_action_title">Acties</string>
+</resources>
