@@ -7,6 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
@@ -15,6 +17,8 @@ import core.rest.model.Device
 import core.rest.model.Scene
 import view.adapter.DeviceAdapter
 import view.adapter.SceneAdapter
+import viewModel.DeviceViewModel
+import viewModel.SceneViewModel
 
 
 class SceneListActivity : AppCompatActivity() {
@@ -23,50 +27,49 @@ class SceneListActivity : AppCompatActivity() {
     private lateinit var devicesRecyclerView: RecyclerView
     private lateinit var sceneAdapter : SceneAdapter
     private lateinit var deviceAdapter : DeviceAdapter
-
-    var deviceList : ArrayList<Device> = ArrayList()
-    var sceneList : ArrayList<Scene> = ArrayList()
+    private lateinit var deviceViewModel : DeviceViewModel
+    private lateinit var sceneViewModel: SceneViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scene_list)
 
+        bind()
+        setUpDeviceRv()
+        setUpSceneRv()
+        setUpObserver()
+        setUpProfilBtn()
+    }
+
+    private fun bind() {
         devicesRecyclerView = findViewById(R.id.list_device_rv)
-        devicesRecyclerView.layoutManager = GridLayoutManager(this, 3)
-
         scenesRecyclerView = findViewById(R.id.list_scene_rv)
-        scenesRecyclerView.layoutManager = GridLayoutManager(this, 2)
+        deviceViewModel = ViewModelProviders.of(this).get(DeviceViewModel::class.java)
+        sceneViewModel = ViewModelProviders.of(this).get(SceneViewModel::class.java)
+    }
 
+    private fun setUpDeviceRv() {
+        devicesRecyclerView.layoutManager = GridLayoutManager(this, 3)
         deviceAdapter = DeviceAdapter()
-        sceneAdapter = SceneAdapter()
-
-        deviceList = FakeObjectDataService.getDevices()
-        sceneList = FakeObjectDataService.getScenes()
-
-        deviceAdapter.deviceList = deviceList
-        sceneAdapter.sceneList = sceneList
-
-        scenesRecyclerView.adapter = sceneAdapter
         devicesRecyclerView.adapter = deviceAdapter
+    }
 
-        /*
-        val sections: ArrayList<SectionedGridRecyclerViewAdapter.Section> = ArrayList()
+    private fun setUpSceneRv() {
+        scenesRecyclerView.layoutManager = GridLayoutManager(this, 2)
+        sceneAdapter = SceneAdapter()
+        scenesRecyclerView.adapter = sceneAdapter
+    }
 
-        sections.add(SectionedGridRecyclerViewAdapter.Section(0, "Mes objets"))
-        //sections.add(SectionedGridRecyclerViewAdapter.Section(4, "Mes scènes"))
-        val arrSection = arrayOfNulls<SectionedGridRecyclerViewAdapter.Section>(sections.size)
-        val mSectionedAdapter = SectionedGridRecyclerViewAdapter(
-            this,
-            R.layout.activity_scene_list,
-            R.id.scene_list_title_tv,
-            scenesRecyclerView,
-            sceneAdapter
-        )
-        mSectionedAdapter.setSections(sections.toArray(arrSection))
-        scenesRecyclerView.adapter = mSectionedAdapter
+    private fun setUpObserver() {
+        deviceViewModel.deviceList.observe(this, Observer {
+            deviceAdapter.deviceList = it
+        })
+        sceneViewModel.sceneList.observe(this, Observer {
+            sceneAdapter.sceneList = it
+        })
+    }
 
-         */
-
+    private fun setUpProfilBtn() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_user_params)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -101,12 +104,10 @@ class SceneListActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode === 1) {
             if (resultCode === RESULT_OK) {
-                val sceneDetail = data?.getSerializableExtra("CreatedScene") as? Scene
-                sceneDetail?.let {
-                    sceneList.add(it)
-                }
-                sceneAdapter.sceneList = sceneList
+                sceneViewModel.getScenes()
             }
         }
     }
+
+
 }

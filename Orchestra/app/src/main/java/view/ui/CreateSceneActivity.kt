@@ -7,13 +7,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
@@ -22,8 +23,8 @@ import core.rest.model.ActionScene
 import core.rest.model.Scene
 import utils.OnItemClicked
 import view.adapter.DetailSceneActionsAdapter
-import view.adapter.SceneAdapter
 import view.adapter.ShuffleColorAdapter
+import viewModel.SceneViewModel
 import kotlin.random.Random
 
 class CreateSceneActivity : AppCompatActivity(), OnItemClicked {
@@ -46,6 +47,8 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked {
     private lateinit var sceneColors : ArrayList<Int>
     private var actionList : ArrayList<ActionScene> = ArrayList()
 
+    private lateinit var sceneViewModel : SceneViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_scene)
@@ -55,26 +58,6 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked {
         setUpRv()
         setUpShuffleColor()
         setUpAddActions()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.create_scene_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.create_scene_add_btn -> {
-            val intent = Intent()
-            intent.putExtra("CreatedScene", retrieveData())
-            setResult(RESULT_OK, intent)
-            finish()
-            true
-        }
-
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
     }
 
     private fun generateBackGroundColor() {
@@ -102,6 +85,8 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked {
         descriptionEditText = findViewById(R.id.create_scene_description_et)
         addActionTextView = findViewById(R.id.create_scene_add_action_tv)
         listActionRecyclerView = findViewById(R.id.create_scene_list_action_rv)
+
+        sceneViewModel = ViewModelProviders.of(this).get(SceneViewModel::class.java)
     }
 
     private fun setUpRv() {
@@ -163,12 +148,10 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked {
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun colorClicked(color: Int, position: Int) {
-        Log.d("ClickedColor", "$color - $position")
-        var oldSelectedColor = sceneColorsHashMap.filterValues {
+        val oldSelectedColor = sceneColorsHashMap.filterValues {
             it
         }
         if (oldSelectedColor.size == 1) {
-            Log.d("ClickedColor", oldSelectedColor.keys.first().toString())
             sceneColorsHashMap.replace(oldSelectedColor.keys.first(), false)
             sceneColorsHashMap.replace(color, true)
             redrawShuffleColors()
@@ -176,11 +159,32 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked {
     }
 
     private fun redrawShuffleColors() {
-        sceneColorsRecyclerView.adapter = null;
-        sceneColorsRecyclerView.layoutManager = null;
+        sceneColorsRecyclerView.adapter = null
+        sceneColorsRecyclerView.layoutManager = null
         sceneColorsAdapter.colorListMap = sceneColorsHashMap
         sceneColorsAdapter.colorList = sceneColors
         sceneColorsRecyclerView.adapter = sceneColorsAdapter
-        sceneColorsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        sceneColorsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.create_scene_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.create_scene_add_btn -> {
+            val intent = Intent()
+            intent.putExtra("CreatedScene", retrieveData())
+            setResult(RESULT_OK, intent)
+            FakeObjectDataService.addScene(retrieveData())
+            finish()
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 }
