@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         connexionBtn?.setOnClickListener {
-            val sceneListIntent =  Intent(this, SceneListActivity::class.java)
+            val sceneListIntent =  Intent(this, HomeActivity::class.java)
             startActivity(sceneListIntent)
         }
     }

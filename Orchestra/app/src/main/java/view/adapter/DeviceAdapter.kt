@@ -1,8 +1,10 @@
 package view.adapter
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.provider.Settings.Global.getString
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +16,22 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.Device
+import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import view.ui.DetailDeviceActivity
+import view.ui.HomeActivity
+import viewModel.DeviceViewModel
+import viewModel.HomeViewModel
 
 
 class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
 
-    var deviceList: List<Device>? = null
+    var deviceList: List<HubAccessoryConfiguration>? = null
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    var homeVM: HomeViewModel? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -30,15 +42,14 @@ class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
     class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val objectIcon = itemView.findViewById<ImageView>(R.id.cell_object_icon_iv)
-        private val objectFav = itemView.findViewById<ImageView>(R.id.cell_object_fav_iv)
         private val objectTitle = itemView.findViewById<TextView>(R.id.cell_object_name_tv)
         private val objectRoom = itemView.findViewById<TextView>(R.id.cell_object_room_tv)
         private val objectStatus = itemView.findViewById<TextView>(R.id.cell_object_stat_tv)
 
-        fun bind(device: Device) {
+        fun bind(device: HubAccessoryConfiguration, homeVM : HomeViewModel?) {
             objectTitle.text = device.name
-            objectRoom.text = device.roomName
-            if (device.isReachable == true) {
+            objectRoom.text = device.room_name
+            if (device.is_reachable == true) {
                     objectStatus.text = itemView.context.getString(R.string.reachable_ok)
             } else {
                 objectStatus.text = itemView.context.getString(R.string.reachable_nok)
@@ -46,16 +57,28 @@ class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
 
             val unwrappedDrawable = AppCompatResources.getDrawable(itemView.context, R.drawable.scene_list_item_shape)
             val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
-            val deviceBackgroundColor = Color.parseColor(device.backgroundColor)
+            val deviceBackgroundColor = Color.parseColor(device.background_color)
             DrawableCompat.setTint(wrappedDrawable, deviceBackgroundColor)
 
             itemView.setBackgroundResource(R.drawable.scene_list_item_shape)
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, DetailDeviceActivity::class.java)
-                intent.putExtra("DetailDevice", device)
+                intent.putExtra("AccessoryDetail", device)
                 itemView.context.startActivity(intent)
             }
+
+            itemView.setOnLongClickListener {
+                val builder = AlertDialog.Builder(itemView.context)
+                builder.setTitle("Suppression de l'objet")
+                builder.setMessage("Êtes-vous sûr de vouloir supprimer l'objet ?")
+                builder.setPositiveButton("Supprimer") { dialog, which ->
+                    if(homeVM != null) homeVM!!.deleteDevice(device.friendly_name!!)
+                }
+                builder.show()
+                true
+            }
+
         }
     }
 
@@ -66,7 +89,7 @@ class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: DeviceViewHolder, position: Int) {
-        holder.bind(device = deviceList!![position])
+        holder.bind(device = deviceList!![position], homeVM = homeVM)
 
     }
 

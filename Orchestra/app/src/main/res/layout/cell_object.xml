@@ -17,15 +17,6 @@
     android:layout_marginTop="5dp"
     android:src="@drawable/ic_device"/>
 
-    <ImageView
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:id="@+id/cell_object_fav_iv"
-        app:layout_constraintTop_toTopOf="@id/cell_object_icon_iv"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/ic_heart"/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

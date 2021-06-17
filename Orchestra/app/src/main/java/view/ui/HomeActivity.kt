@@ -6,28 +6,27 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
-import core.rest.mock.FakeObjectDataService
-import core.rest.model.Device
-import core.rest.model.Scene
 import view.adapter.DeviceAdapter
 import view.adapter.SceneAdapter
 import viewModel.DeviceViewModel
+import viewModel.HomeViewModel
 import viewModel.SceneViewModel
 
 
-class SceneListActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
     private lateinit var scenesRecyclerView: RecyclerView
     private lateinit var devicesRecyclerView: RecyclerView
     private lateinit var sceneAdapter : SceneAdapter
     private lateinit var deviceAdapter : DeviceAdapter
-    private lateinit var deviceViewModel : DeviceViewModel
+    private lateinit var homeViewModel: HomeViewModel
     private lateinit var sceneViewModel: SceneViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,12 +38,14 @@ class SceneListActivity : AppCompatActivity() {
         setUpSceneRv()
         setUpObserver()
         setUpProfilBtn()
+        homeViewModel.getAllDevice()
     }
 
     private fun bind() {
         devicesRecyclerView = findViewById(R.id.list_device_rv)
         scenesRecyclerView = findViewById(R.id.list_scene_rv)
-        deviceViewModel = ViewModelProviders.of(this).get(DeviceViewModel::class.java)
+        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        homeViewModel.context = this
         sceneViewModel = ViewModelProviders.of(this).get(SceneViewModel::class.java)
     }
 
@@ -52,6 +53,7 @@ class SceneListActivity : AppCompatActivity() {
         devicesRecyclerView.layoutManager = GridLayoutManager(this, 3)
         deviceAdapter = DeviceAdapter()
         devicesRecyclerView.adapter = deviceAdapter
+        deviceAdapter.homeVM = homeViewModel
     }
 
     private fun setUpSceneRv() {
@@ -61,7 +63,7 @@ class SceneListActivity : AppCompatActivity() {
     }
 
     private fun setUpObserver() {
-        deviceViewModel.deviceList.observe(this, Observer {
+        homeViewModel.deviceList.observe(this, Observer {
             deviceAdapter.deviceList = it
         })
         sceneViewModel.sceneList.observe(this, Observer {
@@ -89,9 +91,32 @@ class SceneListActivity : AppCompatActivity() {
             true
         }
 
+        R.id.scene_list_refresh -> {
+            homeViewModel.getAllDevice()
+            true
+        }
+
         R.id.scene_list_add_btn -> {
-            val createSceneIntent = Intent(this, CreateSceneActivity::class.java)
-            startActivityForResult(createSceneIntent, 1)
+            val listOfAction: List<String> = listOf("Ajouter un objet", "Ajouter une scène")
+            val listOfActionToCharSequence = listOfAction.toTypedArray<CharSequence>()
+
+            val alertDialog: AlertDialog = this@HomeActivity.let {
+                val builder = AlertDialog.Builder(it)
+                builder.apply {
+                    this.setItems(listOfActionToCharSequence) { _, which ->
+                        val selected = listOfActionToCharSequence[which]
+                        if (selected == "Ajouter un objet") {
+                            val supportedDeviceIntent = Intent(context, SupportedAccessoriesListActivity::class.java)
+                            startActivity(supportedDeviceIntent)
+                        } else {
+                            val createSceneIntent = Intent(context, CreateSceneActivity::class.java)
+                            startActivityForResult(createSceneIntent, 1)
+                        }
+                    }
+                }
+                builder.create()
+            }
+            alertDialog.show()
             true
         }
 
@@ -107,6 +132,13 @@ class SceneListActivity : AppCompatActivity() {
                 sceneViewModel.getScenes()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent()
+        intent.action = Intent.ACTION_MAIN
+        intent.addCategory(Intent.CATEGORY_HOME)
+        startActivity(intent)
     }
 
 

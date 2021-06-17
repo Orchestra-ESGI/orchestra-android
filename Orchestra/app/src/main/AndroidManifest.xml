@@ -2,17 +2,33 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.orchestra">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:screenOrientation="sensorPortrait"
         android:theme="@style/Theme.Orchestra">
-        <activity android:name="view.ui.DetailSceneActivity"
-            android:theme="@style/DetailScenePage"/>
+        <activity android:name="view.ui.SearchDeviceActivity"
+            android:theme="@style/SearchDeviceActivityPage"></activity>
+        <activity android:name="view.ui.DevicePhysicalConfigurationActivity"
+            android:theme="@style/DevicePhysicalConfigurationActivityPage"/>
+        <activity android:name="view.ui.CreateDeviceActivity"
+            android:theme="@style/CreateDeviceActivityPage"/>
+        <activity android:name="view.ui.SupportedAccessoriesListActivity"
+            android:theme="@style/SupportedAccessoriesListActivityPage"/>
+        <activity android:name="view.ui.SupportedDeviceListActivity"
+            android:theme="@style/SupportedDeviceListActivityPage"/>
+        <activity
+            android:name="view.ui.DetailSceneActivity"
+            android:theme="@style/DetailScenePage" />
         <activity
             android:name="view.ui.DetailDeviceActivity"
             android:theme="@style/DetailDevicePage" />
@@ -20,7 +36,7 @@
             android:name="view.ui.CreateSceneActivity"
             android:theme="@style/CreateScenePage" />
         <activity
-            android:name="view.ui.SceneListActivity"
+            android:name="view.ui.HomeActivity"
             android:theme="@style/SceneListPage" />
         <activity
             android:name="view.ui.SignInActivity"

@@ -1,0 +1,37 @@
+package view.ui
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.orchestra.R
+import core.rest.model.SupportedDeviceInformations
+import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import view.adapter.SupportedDeviceAdapter
+import viewModel.DeviceViewModel
+
+class SupportedDeviceListActivity : AppCompatActivity() {
+
+    private lateinit var supportedDeviceListRecyclerView: RecyclerView
+    private lateinit var supportedDeviceAdapter : SupportedDeviceAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_supported_device_list)
+
+        val data : List<SupportedDeviceInformations>? = intent.getSerializableExtra("SupportedDevice") as? List<SupportedDeviceInformations>
+
+        var deviceVM = ViewModelProviders.of(this).get(DeviceViewModel::class.java)
+        deviceVM.context = this
+
+        supportedDeviceListRecyclerView = findViewById(R.id.supported_device_rv)
+        supportedDeviceListRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        supportedDeviceAdapter = SupportedDeviceAdapter()
+        supportedDeviceAdapter.device = intent.getSerializableExtra("device") as? HubAccessoryConfiguration
+        supportedDeviceAdapter.brand = intent.getStringExtra("brand")
+        supportedDeviceAdapter.supportedDeviceList = data!!
+        supportedDeviceAdapter.deviceVM = deviceVM
+        supportedDeviceListRecyclerView.adapter = supportedDeviceAdapter
+    }
+}

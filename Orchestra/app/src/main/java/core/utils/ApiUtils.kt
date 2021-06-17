@@ -3,7 +3,8 @@ package core.utils
 import com.example.orchestra.BuildConfig
 
 object ApiUtils {
-    var API_URL = "http://localhost:3000"
+    // var API_URL = "http://nassimpi.local:3000/"
+    var API_URL = "http://192.168.1.33:3000/"
     var API_SECRET = "TOKEN"
 
     fun getVersion() : String {

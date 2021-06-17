@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_gray"
+    android:orientation="vertical"
+    tools:context="view.ui.SearchDeviceActivity">
+
+    <ImageView
+        android:layout_width="196dp"
+        android:layout_height="196dp"
+        android:id="@+id/search_device_iv"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        tools:src="@drawable/ic_check"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_device_title_tv"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:textSize="72dp"
+        tools:text="@string/search_device_success_title"
+        android:textStyle="bold"
+        tools:textColor="@color/white"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_device_description_tv"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:textSize="24dp"
+        tools:text="@string/search_device_success_description"
+        android:textColor="@color/light_gray"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_device_btn"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center"
+        tools:text="@string/search_device_success_btn"/>
+
+
+</LinearLayout>

@@ -22,7 +22,7 @@ object SceneClient {
         }
         return sceneServices
     }
-
+/*
     fun getAllScenes(idHouse : String) {
         getApi()?.getAllScenes(idHouse)?.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())?.subscribe(
             { result -> Log.d("success", result.toString()) },
@@ -36,4 +36,5 @@ object SceneClient {
             { error -> Log.d("error", error.message!!) }
         )
     }
+ */
 }

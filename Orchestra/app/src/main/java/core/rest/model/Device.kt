@@ -15,3 +15,4 @@ class Device (
     val isReachable: Boolean?,
     val version: String?
         ) : Serializable
+

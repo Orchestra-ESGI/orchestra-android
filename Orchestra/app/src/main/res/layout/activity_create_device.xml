@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context="view.ui.CreateDeviceActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/create_device_new_device_tv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/create_device_new_device"
+        android:textColor="@color/white"
+        android:textSize="36dp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/create_device_name_tv"
+        app:layout_constraintTop_toBottomOf="@+id/create_device_new_device_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/create_device_name"
+        android:textColor="@color/white"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/create_device_name_et"
+        app:layout_constraintTop_toBottomOf="@+id/create_device_name_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/create_scene_edit_text_shape"
+        android:hint="@string/create_device_name_hint"
+        android:textColorHint="@color/light_gray"
+        android:textColor="@color/white"
+        android:inputType="text"
+        android:maxLines="1"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/create_device_which_room_tv"
+        app:layout_constraintTop_toBottomOf="@id/create_device_name_et"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/create_device_which_room"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/create_device_which_room_et"
+        app:layout_constraintTop_toBottomOf="@+id/create_device_which_room_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/create_scene_edit_text_shape"
+        android:hint="@string/create_device_which_room_hint"
+        android:textColorHint="@color/light_gray"
+        android:textColor="@color/white"
+        android:inputType="text"
+        android:maxLines="1"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/create_device_choose_color_tv"
+        app:layout_constraintTop_toBottomOf="@id/create_device_which_room_et"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/create_device_choose_color"
+        android:textColor="@color/white"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:id="@+id/create_device_shuffle_color_iv"
+        app:layout_constraintTop_toBottomOf="@id/create_device_which_room_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="26dp"
+        android:layout_marginRight="30dp"
+        android:src="@drawable/ic_shuffle"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/create_device_colors_rv"
+        app:layout_constraintTop_toBottomOf="@id/create_device_choose_color_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/create_device_is_favoris_tv"
+        app:layout_constraintTop_toBottomOf="@id/create_device_colors_rv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/create_device_is_favoris"
+        android:textColor="@color/white"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"/>
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:id="@+id/create_device_is_favoris_switch"
+        app:layout_constraintTop_toBottomOf="@id/create_device_colors_rv"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="30dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
