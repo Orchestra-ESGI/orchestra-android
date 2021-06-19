@@ -13,11 +13,14 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
+import com.kaopiz.kprogresshud.KProgressHUD
+import core.rest.model.ActionsToSet
+import core.rest.model.ActionsToSetIn
+import core.rest.model.ColorAction
 import view.adapter.DeviceAdapter
 import view.adapter.SceneAdapter
-import viewModel.DeviceViewModel
 import viewModel.HomeViewModel
-import viewModel.SceneViewModel
+import java.io.Serializable
 
 
 class HomeActivity : AppCompatActivity() {
@@ -27,18 +30,20 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var sceneAdapter : SceneAdapter
     private lateinit var deviceAdapter : DeviceAdapter
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var sceneViewModel: SceneViewModel
+    private lateinit var loader: KProgressHUD
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scene_list)
 
         bind()
+        init()
         setUpDeviceRv()
         setUpSceneRv()
         setUpObserver()
         setUpProfilBtn()
         homeViewModel.getAllDevice()
+        homeViewModel.getAllScene()
     }
 
     private fun bind() {
@@ -46,7 +51,15 @@ class HomeActivity : AppCompatActivity() {
         scenesRecyclerView = findViewById(R.id.list_scene_rv)
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         homeViewModel.context = this
-        sceneViewModel = ViewModelProviders.of(this).get(SceneViewModel::class.java)
+    }
+
+    private fun init() {
+       loader = KProgressHUD.create(this)
+       loader.setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+            .setCancellable(true)
+            .setAnimationSpeed(2)
+            .setDimAmount(0.5f)
+            .show();
     }
 
     private fun setUpDeviceRv() {
@@ -60,13 +73,15 @@ class HomeActivity : AppCompatActivity() {
         scenesRecyclerView.layoutManager = GridLayoutManager(this, 2)
         sceneAdapter = SceneAdapter()
         scenesRecyclerView.adapter = sceneAdapter
+        sceneAdapter.homeVM = homeViewModel
     }
 
     private fun setUpObserver() {
         homeViewModel.deviceList.observe(this, Observer {
             deviceAdapter.deviceList = it
+            loader.dismiss()
         })
-        sceneViewModel.sceneList.observe(this, Observer {
+        homeViewModel.sceneList.observe(this, Observer {
             sceneAdapter.sceneList = it
         })
     }
@@ -93,6 +108,14 @@ class HomeActivity : AppCompatActivity() {
 
         R.id.scene_list_refresh -> {
             homeViewModel.getAllDevice()
+            homeViewModel.getAllScene()
+            loader.setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setCancellable(true)
+                    .setAnimationSpeed(2)
+                    .setDimAmount(0.5f)
+                    .show();
+            deviceAdapter.notifyDataSetChanged()
+            sceneAdapter.notifyDataSetChanged()
             true
         }
 
@@ -110,6 +133,9 @@ class HomeActivity : AppCompatActivity() {
                             startActivity(supportedDeviceIntent)
                         } else {
                             val createSceneIntent = Intent(context, CreateSceneActivity::class.java)
+                            val args = Bundle()
+                            args.putSerializable("ARRAYLIST", deviceAdapter.deviceList as Serializable)
+                            createSceneIntent.putExtra("BUNDLE", args)
                             startActivityForResult(createSceneIntent, 1)
                         }
                     }
@@ -129,7 +155,7 @@ class HomeActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode === 1) {
             if (resultCode === RESULT_OK) {
-                sceneViewModel.getScenes()
+                homeViewModel.getAllScene()
             }
         }
     }
@@ -140,6 +166,4 @@ class HomeActivity : AppCompatActivity() {
         intent.addCategory(Intent.CATEGORY_HOME)
         startActivity(intent)
     }
-
-
 }

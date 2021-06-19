@@ -24,7 +24,8 @@ class DeviceViewModel : ViewModel() {
 
     init {
         // deviceList.value = FakeObjectDataService.getDevices()
-        // deviceList.value = listOf<HubAccessoryConfiguration>(HubAccessoryConfiguration("Lampe", "Cuisine", "#000000", "", "", true, true, HubAccessoryType.lightbulb, Actions(SliderAction(current_state = 100), ColorAction(current_state = "#FFFFFF"), SliderAction(current_state = 100, type = SliderType.ColorTempSlider), DeviceState.ON) ))
+        // val hub1 = HubAccessoryConfiguration("Lampe", "Cuisine", "#000000", "", "", true, true, HubAccessoryType.lightbulb, Actions(DeviceState.ON, SliderAction(0, 100, 0), ColorAction("#FF0000"), SliderAction(0, 100, 0)), friendly_name = "x3049defadea" )
+        // deviceList.value = listOf<HubAccessoryConfiguration>(hub1)
     }
 
     fun getDevices() {
@@ -52,7 +53,7 @@ class DeviceViewModel : ViewModel() {
 
     fun sendDeviceAction(actions : ActionsToSet) {
         Log.d("Test Gson", Gson().toJson(actions))
-        // deviceService.sendDeviceAction(actions)
+        deviceService.sendDeviceAction(actions)
     }
 
     fun deleteDevice(friendlyName : String) {

@@ -17,8 +17,8 @@ data class ColorAction (
         ) : Serializable
 
 data class ActionsToSet(
-        var friendly_name : String,
-        var actions : ActionsToSetIn
+        var friendly_name : String?,
+        var actions : ActionsToSetIn?
 ) : Serializable
 
 data class ActionsToSetIn(
@@ -29,14 +29,16 @@ data class ActionsToSetIn(
 ) : Serializable
 
 data class Actions (
-        var state: DeviceState?,
-        var brightness: SliderAction?,
-        var color: ColorAction?,
-        var color_temp: SliderAction?
+        var state: DeviceState? = null,
+        var brightness: SliderAction? = null,
+        var color: ColorAction? = null,
+        var color_temp: SliderAction? = null
         ) : Serializable
 
+
+
 enum class DeviceState {
-        Toggle,
-        ON,
-        OFF
+        toggle,
+        on,
+        off
 }

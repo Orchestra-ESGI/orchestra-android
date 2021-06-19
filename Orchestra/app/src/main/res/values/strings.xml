@@ -33,7 +33,7 @@
     <string name="create_scene_add_action">+ Add actions</string>
 
     <string name="create_scene_list_action">Liste of actions</string>
-    <string name="create_scene_list_action_description">Choose an action</string>
+    <string name="create_scene_list_action_description">Choose a device</string>
 
     <string name="detail_device_ok">OK</string>
     <string name="detail_device_room_title">Room</string>

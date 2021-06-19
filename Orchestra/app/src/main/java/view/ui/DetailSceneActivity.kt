@@ -26,7 +26,7 @@ class DetailSceneActivity : AppCompatActivity() {
         detailSceneDescription = findViewById(R.id.detail_scene_description_tv)
         deviceSceneRecyclerView = findViewById(R.id.detail_scene_actions_rv)
 
-        detailSceneAdapter = DetailSceneActionsAdapter()
+        // detailSceneAdapter = DetailSceneActionsAdapter()
 
         deviceSceneRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
@@ -38,9 +38,9 @@ class DetailSceneActivity : AppCompatActivity() {
 
         val sceneDetail = intent.getSerializableExtra("DetailScene") as? Scene
 
-        detailSceneName.text = sceneDetail!!.title
+        detailSceneName.text = sceneDetail!!.name
 
-        sceneDetail.backgroundColor?.let {
+        sceneDetail.color?.let {
             val sceneBackgroundColor = if(it.first() == '#') {
                 Color.parseColor(it)
             } else {
@@ -48,9 +48,9 @@ class DetailSceneActivity : AppCompatActivity() {
             }
             detailSceneName.setTextColor(sceneBackgroundColor)
         }
-        detailSceneDescription.text = sceneDetail.sceneDescription
+        detailSceneDescription.text = sceneDetail.description
 
-        detailSceneAdapter.detailSceneActions = sceneDetail.actions
+        // detailSceneAdapter.detailSceneActions = sceneDetail.actions
 
         deviceSceneRecyclerView.adapter = detailSceneAdapter
     }

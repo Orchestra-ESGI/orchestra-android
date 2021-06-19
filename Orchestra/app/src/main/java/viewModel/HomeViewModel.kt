@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import core.rest.client.DeviceClient
 import core.rest.mock.FakeObjectDataService
 import core.rest.model.Device
+import core.rest.model.ListSceneToDelete
 import core.rest.model.Scene
 import core.rest.model.SupportedAccessories
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
@@ -31,9 +32,22 @@ class HomeViewModel: ViewModel() {
         deviceViewModel!!.getDevices()
     }
 
+    fun getAllScene() {
+        sceneViewModel!!.context = context
+        sceneViewModel!!.sceneList.observe(context, Observer {
+            sceneList.value = it
+        })
+        sceneViewModel!!.getScenes()
+    }
+
     fun deleteDevice(friendlyName : String) {
         deviceViewModel!!.context = context
         deviceViewModel!!.deleteDevice(friendlyName)
+    }
+
+    fun deleteScenes(scenes : ListSceneToDelete) {
+        sceneViewModel!!.context = context
+        sceneViewModel!!.deleteScenes(scenes)
     }
 
     override fun onCleared() {

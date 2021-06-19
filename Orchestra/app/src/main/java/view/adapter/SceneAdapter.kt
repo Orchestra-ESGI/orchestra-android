@@ -1,5 +1,6 @@
 package view.adapter
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -10,12 +11,20 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
+import core.rest.model.ListSceneToDelete
 import core.rest.model.Scene
 import view.ui.DetailSceneActivity
+import viewModel.HomeViewModel
 
 class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
 
     var sceneList: List<Scene>? = null
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    var homeVM: HomeViewModel? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -31,13 +40,13 @@ class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
 
     class SceneViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val sceneTitle = itemView.findViewById<TextView>(R.id.cell_scene_title_tv)
-        fun bind(scene : Scene) {
-            sceneTitle.text = scene.title
+        fun bind(scene : Scene, homeVM : HomeViewModel?) {
+            sceneTitle.text = scene.name
 
             val unwrappedDrawable = AppCompatResources.getDrawable(itemView.context, R.drawable.scene_list_item_shape)
             val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
 
-            scene.backgroundColor?.let {
+            scene.color?.let {
                 val sceneBackgroundColor = if(it.first() == '#') {
                     Color.parseColor(it)
                 } else {
@@ -53,11 +62,24 @@ class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
                 intent.putExtra("DetailScene", scene)
                 itemView.context.startActivity(intent)
             }
+
+            itemView.setOnLongClickListener {
+                val builder = AlertDialog.Builder(itemView.context)
+                builder.setTitle("Suppression de la scène ")
+                builder.setMessage("Êtes-vous sûr de vouloir supprimer la scène ?")
+                builder.setPositiveButton("Supprimer") { dialog, which ->
+                    if(homeVM != null) {
+                        homeVM!!.deleteScenes(ListSceneToDelete(listOf(scene._id)))
+                    }
+                }
+                builder.show()
+                true
+            }
         }
     }
 
     override fun onBindViewHolder(holder: SceneViewHolder, position: Int) {
-        holder.bind(scene = sceneList!![position])
+        holder.bind(scene = sceneList!![position], homeVM = homeVM)
     }
 
     override fun getItemCount(): Int {

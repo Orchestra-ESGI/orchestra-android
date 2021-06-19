@@ -22,12 +22,14 @@ object FakeObjectDataService {
     var arrActionScene3: ArrayList<ActionScene> = arrayListOf(actionMock2, actionMock5)
     var arrActionScene4: ArrayList<ActionScene> = arrayListOf(actionMock3)
 
-
+/*
     private var sceneMock1 = Scene("1", "Lever", "Lever du jour", "#FFC0CB", "1", arrActionScene1)
     private var sceneMock2 = Scene("2", "Manger", "Manger du jour", "#B6DAEA", "1", arrActionScene2)
     private var sceneMock3 = Scene("3", "Regarder", "Regarder du jour", "#F1838D", "1", arrActionScene3)
     private var sceneMock4 = Scene("4", "Coucher", "Coucher du jour", "#CFDA9B", "1", arrActionScene4)
-    var arrSceneMock : ArrayList<Scene> = arrayListOf(sceneMock1, sceneMock2, sceneMock3, sceneMock4)
+
+ */
+    var arrSceneMock : ArrayList<Scene> = arrayListOf()
 
     fun getDevices() : ArrayList<Device> {
         return arrDeviceMock

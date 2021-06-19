@@ -3,6 +3,7 @@ package core.rest.model.hubConfiguration
 enum class HubAccessoryType {
     lightbulb,
     statelessProgrammableSwitch,
-    occupancySensor,
+    switch,
+    sensor,
     unknown
 }

@@ -138,8 +138,8 @@ class CreateDeviceActivity : AppCompatActivity(), OnItemClicked {
 
         when (supportedDevice!!.type) {
             "lightbulb" -> {type = HubAccessoryType.lightbulb}
-            "statelessProgrammableSwitch" -> type = HubAccessoryType.statelessProgrammableSwitch
-            "occupancySensor" -> type = HubAccessoryType.occupancySensor
+            "switch" -> type = HubAccessoryType.switch
+            "sensor" -> type = HubAccessoryType.sensor
             else -> { // Note the block
                 type = null
             }

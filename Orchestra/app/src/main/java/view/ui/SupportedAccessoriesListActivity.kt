@@ -39,8 +39,8 @@ class SupportedAccessoriesListActivity : AppCompatActivity() {
 
         deviceViewModel.getSupportedAccessories()
 
-        mapper = jacksonObjectMapper()
-        supportedAccessoriesTypeList = mapper.readValue(FakeObjectDataService.mockSupportedDevice)
+        // mapper = jacksonObjectMapper()
+        // supportedAccessoriesTypeList = mapper.readValue(FakeObjectDataService.mockSupportedDevice)
 
         supportedDeviceTypeListRecyclerView = findViewById(R.id.supported_device_type_rv)
         supportedDeviceTypeListRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

@@ -12,7 +12,7 @@ import java.util.*
 import kotlin.Comparator
 
 
-class SimpleSectionedRecyclerViewAdaper(context: Context, sectionResourceId: Int, textResourceId: Int, baseAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SimpleSectionedRecyclerViewAdaper(context: Context, sectionResourceId: Int, textResourceId: Int, baseAdapter: SimpleAdapter) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var mContext: Context? = null
     private val SECTION_TYPE = 0
 
@@ -20,7 +20,7 @@ class SimpleSectionedRecyclerViewAdaper(context: Context, sectionResourceId: Int
     private var mSectionResourceId = 0
     private var mTextResourceId = 0
     private var mLayoutInflater: LayoutInflater? = null
-    private var mBaseAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>?
+    private var mBaseAdapter: SimpleAdapter
     private val mSections = SparseArray<Section?>()
 /*
     fun SimpleSectionedRecyclerViewAdaper(
@@ -97,7 +97,7 @@ class SimpleSectionedRecyclerViewAdaper(context: Context, sectionResourceId: Int
             (sectionViewHolder as SectionViewHolder).title.text = mSections[position]!!.title
         } else {
             mBaseAdapter!!.onBindViewHolder(
-                sectionViewHolder,
+                    (sectionViewHolder as SimpleAdapter.SimpleViewHolder),
                 sectionedPositionToPosition(position)
             )
         }

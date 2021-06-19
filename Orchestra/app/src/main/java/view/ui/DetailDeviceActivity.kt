@@ -98,7 +98,7 @@ class DetailDeviceActivity : AppCompatActivity() {
         detailDeviceAdapter = DetailDeviceSpecificationAdapter()
         deviceVM = ViewModelProviders.of(this).get(DeviceViewModel::class.java)
         if(deviceDetail?.actions?.state != null) {
-            stateSwitch.isChecked = deviceDetail?.actions?.state!! == DeviceState.ON
+            stateSwitch.isChecked = deviceDetail?.actions?.state!! == DeviceState.on
         }
 
         okTextView.setOnClickListener {
@@ -114,11 +114,12 @@ class DetailDeviceActivity : AppCompatActivity() {
         if(deviceDetail?.actions?.brightness != null && deviceDetail?.actions?.color_temp != null) {
             brightnessSlider.min = deviceDetail?.actions?.brightness?.min_val!!
             brightnessSlider.max = deviceDetail?.actions?.brightness?.max_val!!
+            brightnessSlider.progress = deviceDetail?.actions?.brightness?.current_state!!
 
             colorTemperatureSlider.min = deviceDetail?.actions?.color_temp?.min_val!!
             colorTemperatureSlider.max = deviceDetail?.actions?.color_temp?.max_val!!
+            colorTemperatureSlider.progress = deviceDetail?.actions?.color_temp?.current_state!!
         }
-
     }
 
     private fun setupDeviceInfos() {
@@ -163,13 +164,13 @@ class DetailDeviceActivity : AppCompatActivity() {
             HubAccessoryType.lightbulb -> {
                 configLinearLayout.visibility = View.GONE
             }
-            HubAccessoryType.statelessProgrammableSwitch -> {
+            HubAccessoryType.switch -> {
                 configLinearLayout.visibility = View.GONE
                 brightnessLayout.visibility = View.GONE
                 colorLayout.visibility = View.GONE
                 colorTemperatureLayout.visibility = View.GONE
             }
-            HubAccessoryType.occupancySensor -> {
+            HubAccessoryType.sensor -> {
                 configLinearLayout.visibility = View.GONE
                 brightnessLayout.visibility = View.GONE
                 colorLayout.visibility = View.GONE
@@ -189,7 +190,7 @@ class DetailDeviceActivity : AppCompatActivity() {
 
     private fun setObserverOnState() {
         stateSwitch.setOnCheckedChangeListener { _, isChecked ->
-            val stateChanged =if(isChecked) DeviceState.ON.toString() else DeviceState.OFF.toString()
+            val stateChanged =if(isChecked) DeviceState.on.toString() else DeviceState.on.toString()
             updateDeviceActions(state = stateChanged)
         }
     }
