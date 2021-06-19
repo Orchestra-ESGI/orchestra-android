@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.Device
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.HubAccessoryType
 import core.rest.model.hubConfiguration.ListHubAccessoryConfigurationToDelete
 import view.ui.DetailDeviceActivity
 import view.ui.HomeActivity
@@ -48,6 +49,13 @@ class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
         private val objectStatus = itemView.findViewById<TextView>(R.id.cell_object_stat_tv)
 
         fun bind(device: HubAccessoryConfiguration, homeVM : HomeViewModel?) {
+            when(device.type) {
+                HubAccessoryType.lightbulb -> objectIcon.setImageResource(R.drawable.ic_lightbulb)
+                HubAccessoryType.switch -> objectIcon.setImageResource(R.drawable.ic_switch)
+                HubAccessoryType.sensor -> objectIcon.setImageResource(R.drawable.ic_sensor)
+                else -> objectIcon.setImageResource(R.drawable.ic_unknown)
+
+            }
             objectTitle.text = device.name
             objectRoom.text = device.room_name
             if (device.is_reachable == true) {
