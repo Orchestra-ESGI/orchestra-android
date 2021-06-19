@@ -4,6 +4,7 @@ import core.rest.model.ActionsToSet
 import core.rest.model.SupportedAccessories
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import core.rest.model.hubConfiguration.ListHubAccessoryConfiguration
+import core.rest.model.hubConfiguration.ListHubAccessoryConfigurationToDelete
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -23,6 +24,6 @@ interface DeviceService {
     @POST("device/add")
     fun saveDevice(@Body device: HubAccessoryConfiguration): Call<HubAccessoryConfiguration>
 
-    @DELETE("device/{id}")
-    fun deleteDevice(@Path("id") friendly_name: String): Call<HubAccessoryConfiguration>
+    @HTTP(method = "DELETE", path = "/device", hasBody = true)
+    fun deleteDevices(@Body friendly_name: ListHubAccessoryConfigurationToDelete): Call<ListHubAccessoryConfigurationToDelete>
 }

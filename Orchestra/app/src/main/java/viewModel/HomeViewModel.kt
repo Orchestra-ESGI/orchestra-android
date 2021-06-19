@@ -11,6 +11,7 @@ import core.rest.model.ListSceneToDelete
 import core.rest.model.Scene
 import core.rest.model.SupportedAccessories
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.ListHubAccessoryConfigurationToDelete
 
 class HomeViewModel: ViewModel() {
     lateinit var context : AppCompatActivity
@@ -40,9 +41,9 @@ class HomeViewModel: ViewModel() {
         sceneViewModel!!.getScenes()
     }
 
-    fun deleteDevice(friendlyName : String) {
+    fun deleteDevices(friendlyName : ListHubAccessoryConfigurationToDelete) {
         deviceViewModel!!.context = context
-        deviceViewModel!!.deleteDevice(friendlyName)
+        deviceViewModel!!.deleteDevices(friendlyName)
     }
 
     fun deleteScenes(scenes : ListSceneToDelete) {

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import core.rest.model.*
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import core.rest.model.hubConfiguration.ListHubAccessoryConfiguration
+import core.rest.model.hubConfiguration.ListHubAccessoryConfigurationToDelete
 import core.rest.services.DeviceService
 import core.rest.services.RootApiService
 import retrofit2.Call
@@ -116,16 +117,16 @@ object DeviceClient {
         })
     }
 
-    fun deleteDevice(device : String) {
-        getApi()?.deleteDevice(device)?.enqueue(object : Callback<HubAccessoryConfiguration> {
+    fun deleteDevices(device : ListHubAccessoryConfigurationToDelete) {
+        getApi()?.deleteDevices(device)?.enqueue(object : Callback<ListHubAccessoryConfigurationToDelete> {
             override fun onResponse(
-                    call: Call<HubAccessoryConfiguration>,
-                    response: Response<HubAccessoryConfiguration>
+                    call: Call<ListHubAccessoryConfigurationToDelete>,
+                    response: Response<ListHubAccessoryConfigurationToDelete>
             ) {
                 Log.d("Test Delete Device", "OK")
             }
 
-            override fun onFailure(call: Call<HubAccessoryConfiguration>, t: Throwable) {
+            override fun onFailure(call: Call<ListHubAccessoryConfigurationToDelete>, t: Throwable) {
                 Log.d("Test Send Device", "NOK")
             }
         })

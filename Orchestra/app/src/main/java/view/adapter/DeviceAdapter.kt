@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.Device
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.ListHubAccessoryConfigurationToDelete
 import view.ui.DetailDeviceActivity
 import view.ui.HomeActivity
 import viewModel.DeviceViewModel
@@ -73,7 +74,9 @@ class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
                 builder.setTitle("Suppression de l'objet")
                 builder.setMessage("Êtes-vous sûr de vouloir supprimer l'objet ?")
                 builder.setPositiveButton("Supprimer") { dialog, which ->
-                    if(homeVM != null) homeVM!!.deleteDevice(device.friendly_name!!)
+                    if(homeVM != null) {
+                        homeVM!!.deleteDevices(ListHubAccessoryConfigurationToDelete(listOf(device.friendly_name!!)))
+                    }
                 }
                 builder.show()
                 true

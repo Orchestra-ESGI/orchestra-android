@@ -15,3 +15,7 @@ data class HubAccessoryConfiguration(
         var actions: Actions? = null,
         var friendly_name: String? = null
 ) : Serializable
+
+data class ListHubAccessoryConfigurationToDelete(
+        var friendly_names: List<String>
+) : Serializable

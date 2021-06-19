@@ -1,20 +1,14 @@
 package viewModel
 
-import android.app.Notification
-import android.util.Log
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import com.google.gson.Gson
 import core.rest.client.DeviceClient
-import core.rest.mock.FakeObjectDataService
 import core.rest.model.*
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
-import core.rest.model.hubConfiguration.HubAccessoryType
-import core.rest.services.DeviceService
-import kotlin.math.acos
+import core.rest.model.hubConfiguration.ListHubAccessoryConfigurationToDelete
 
 class DeviceViewModel : ViewModel() {
     lateinit var context : AppCompatActivity
@@ -52,15 +46,10 @@ class DeviceViewModel : ViewModel() {
     }
 
     fun sendDeviceAction(actions : ActionsToSet) {
-        Log.d("Test Gson", Gson().toJson(actions))
         deviceService.sendDeviceAction(actions)
     }
 
-    fun deleteDevice(friendlyName : String) {
-        deviceService.deleteDevice(friendlyName)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
+    fun deleteDevices(friendlyName : ListHubAccessoryConfigurationToDelete) {
+        deviceService.deleteDevices(friendlyName)
     }
 }
