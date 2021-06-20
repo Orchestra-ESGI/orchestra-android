@@ -36,6 +36,7 @@ object SceneClient {
                         Interceptor { chain ->
                             val builder = chain.request().newBuilder()
                             builder.header("Authorization", "Bearer $token")
+                            builder.header("App-Key", "orchestra")
                             return@Interceptor chain.proceed(builder.build())
                         }
                 )

@@ -38,7 +38,6 @@ class LoginActivity : AppCompatActivity() {
 
 
         val sharedPref = getSharedPreferences("com.example.orchestra.API_TOKEN", Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = sharedPref.edit()
 
         createAccountTv.setOnClickListener {
             val createAccountIntent =  Intent(this, SignInActivity::class.java)
