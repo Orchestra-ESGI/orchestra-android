@@ -22,7 +22,7 @@ class SearchDeviceActivity : AppCompatActivity() {
     private lateinit var returnHomeButton : Button
 
     private var deviceData: HubAccessoryConfiguration? = null
-    private var deviceVM: DeviceViewModel? = null
+    private lateinit var deviceVM: DeviceViewModel
     private var isSuccessfulyAdded = false
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -36,6 +36,7 @@ class SearchDeviceActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search_device)
 
         deviceVM = ViewModelProviders.of(this).get(DeviceViewModel::class.java)
+        deviceVM.context = this
         deviceData = intent.getSerializableExtra("CreatedScene") as? HubAccessoryConfiguration
 
         bind()

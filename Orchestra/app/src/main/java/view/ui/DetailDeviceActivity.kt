@@ -97,6 +97,8 @@ class DetailDeviceActivity : AppCompatActivity() {
         detailDeviceKeyValue = HashMap()
         detailDeviceAdapter = DetailDeviceSpecificationAdapter()
         deviceVM = ViewModelProviders.of(this).get(DeviceViewModel::class.java)
+        deviceVM.context = this
+
         if(deviceDetail?.actions?.state != null) {
             stateSwitch.isChecked = deviceDetail?.actions?.state!! == DeviceState.on
         }

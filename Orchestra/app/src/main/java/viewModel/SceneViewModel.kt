@@ -26,22 +26,18 @@ class SceneViewModel : ViewModel() {
         sceneService.sceneList.observe(context, Observer {
             sceneList.value = it
         })
-        sceneService.getAllScene()
+        sceneService.getAllScene(context)
     }
 
     fun saveScene(scene : Scene) {
-        sceneService.addScene(scene)
+        sceneService.addScene(scene, context)
     }
 
     fun launchScene(sceneId : String) {
-        sceneService.launchScene(sceneId)
+        sceneService.launchScene(sceneId, context)
     }
 
     fun deleteScenes(scenes : ListSceneToDelete) {
-        sceneService.deleteScenes(scenes)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
+        sceneService.deleteScenes(scenes, context)
     }
 }

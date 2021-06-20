@@ -27,29 +27,29 @@ class DeviceViewModel : ViewModel() {
         deviceService.deviceList.observe(context, Observer {
             deviceList.value = it
         })
-        deviceService.getAllDevices()
+        deviceService.getAllDevices(context)
     }
 
     fun getSupportedAccessories() {
         deviceService.supportedDevices.observe(context, Observer {
             supportedAccessorieList.value = it
         })
-        deviceService.getSupportedAccessories()
+        deviceService.getSupportedAccessories(context)
     }
 
     fun saveDevice(device : HubAccessoryConfiguration) {
-        deviceService.saveDevice(device)
+        deviceService.saveDevice(device, context)
     }
 
     fun resetDevice() {
-        deviceService.resetDevice()
+        deviceService.resetDevice(context)
     }
 
     fun sendDeviceAction(actions : ActionsToSet) {
-        deviceService.sendDeviceAction(actions)
+        deviceService.sendDeviceAction(actions, context)
     }
 
     fun deleteDevices(friendlyName : ListHubAccessoryConfigurationToDelete) {
-        deviceService.deleteDevices(friendlyName)
+        deviceService.deleteDevices(friendlyName, context)
     }
 }

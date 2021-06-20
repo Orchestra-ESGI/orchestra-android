@@ -1,5 +1,6 @@
 package core.rest.client
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import core.rest.model.ListScene
@@ -12,6 +13,9 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import core.rest.model.Scene
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.services.DeviceService
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,20 +27,33 @@ object SceneClient {
     private var sceneServices: SceneServices? = getApi()
     var sceneList: MutableLiveData<List<Scene>> = MutableLiveData()
 
-    private fun getApi(): SceneServices? {
-        if (sceneServices == null) {
-            val retrofit = Retrofit.Builder()
-                .baseUrl(RootApiService.ROOT_PATH)
-                // .addConverterFactory(MoshiConverterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create())
-                .build()
-            sceneServices = retrofit.create(SceneServices::class.java)
+    private fun getApi(context: Context? = null): SceneServices? {
+        if(context != null) {
+            val sharedPref = context.getSharedPreferences("com.example.orchestra.API_TOKEN", Context.MODE_PRIVATE)
+            val token = sharedPref.getString("Token", "")
+            val okHttpClient = OkHttpClient.Builder().apply {
+                addInterceptor(
+                        Interceptor { chain ->
+                            val builder = chain.request().newBuilder()
+                            builder.header("Authorization", "Bearer $token")
+                            return@Interceptor chain.proceed(builder.build())
+                        }
+                )
+            }.build()
+            if (sceneServices == null) {
+                val retrofit = Retrofit.Builder()
+                        .baseUrl(RootApiService.ROOT_PATH)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(okHttpClient)
+                        .build()
+                sceneServices = retrofit.create(SceneServices::class.java)
+            }
         }
         return sceneServices
     }
 
-    fun getAllScene() {
-        getApi()?.getAllScenes()
+    fun getAllScene(context: Context?) {
+        getApi(context)?.getAllScenes()
             ?.enqueue(object : Callback<ListScene>{
                 override fun onResponse(
                     call: Call<ListScene>?,
@@ -53,8 +70,8 @@ object SceneClient {
             })
     }
 
-    fun addScene(scene : Scene) {
-        getApi()?.addScene(scene)
+    fun addScene(scene : Scene, context: Context?) {
+        getApi(context)?.addScene(scene)
                 ?.enqueue(object : Callback<Scene>{
                     override fun onResponse(
                             call: Call<Scene>?,
@@ -70,8 +87,8 @@ object SceneClient {
                 })
     }
 
-    fun deleteScenes(sceneIds : ListSceneToDelete) {
-        getApi()?.deleteScenes(sceneIds)
+    fun deleteScenes(sceneIds : ListSceneToDelete, context: Context?) {
+        getApi(context)?.deleteScenes(sceneIds)
                 ?.enqueue(object : Callback<ListSceneToDelete>{
                     override fun onResponse(
                             call: Call<ListSceneToDelete>?,
@@ -87,8 +104,8 @@ object SceneClient {
                 })
     }
 
-    fun launchScene(sceneId : String) {
-        getApi()?.launchScene(sceneId)
+    fun launchScene(sceneId : String, context: Context?) {
+        getApi(context)?.launchScene(sceneId)
                 ?.enqueue(object : Callback<Scene>{
                     override fun onResponse(
                             call: Call<Scene>?,
