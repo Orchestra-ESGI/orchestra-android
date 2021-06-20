@@ -192,7 +192,7 @@ class DetailDeviceActivity : AppCompatActivity() {
 
     private fun setObserverOnState() {
         stateSwitch.setOnCheckedChangeListener { _, isChecked ->
-            val stateChanged =if(isChecked) DeviceState.on.toString() else DeviceState.on.toString()
+            val stateChanged =if(isChecked) DeviceState.on.toString() else DeviceState.off.toString()
             updateDeviceActions(state = stateChanged)
         }
     }

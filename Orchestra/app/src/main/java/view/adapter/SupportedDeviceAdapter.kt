@@ -86,6 +86,8 @@ class SupportedDeviceAdapter : RecyclerView.Adapter<SupportedDeviceAdapter.Suppo
                             itemView.context.startActivity(Intent(itemView.context, HomeActivity::class.java))
                         }
                         builder.show()
+                    } else {
+                        itemView.context.startActivity(intent)
                     }
                 } else {
                     itemView.context.startActivity(intent)

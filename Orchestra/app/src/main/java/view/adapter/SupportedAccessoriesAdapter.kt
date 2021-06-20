@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.SupportedAccessories
@@ -41,11 +42,15 @@ class SupportedAccessoriesAdapter :
             supportedDeviceTitle.text = supportedAccessories.brand
 
             itemView.setOnClickListener {
-                val intent = Intent(itemView.context, SupportedDeviceListActivity::class.java)
-                intent.putExtra("SupportedDevice", supportedAccessories.devices)
-                intent.putExtra("device", device)
-                intent.putExtra("brand", supportedAccessories.brand)
-                itemView.context.startActivity(intent)
+                if(supportedAccessories.devices.size > 0) {
+                    val intent = Intent(itemView.context, SupportedDeviceListActivity::class.java)
+                    intent.putExtra("SupportedDevice", supportedAccessories.devices)
+                    intent.putExtra("device", device)
+                    intent.putExtra("brand", supportedAccessories.brand)
+                    itemView.context.startActivity(intent)
+                } else {
+                    Toast.makeText(itemView.context, "Aucun appareil n'est supporté pour cette marque", Toast.LENGTH_LONG).show()
+                }
             }
         }
     }
