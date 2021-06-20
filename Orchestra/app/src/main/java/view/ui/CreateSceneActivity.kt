@@ -17,13 +17,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
-import com.google.gson.Gson
 import core.rest.model.*
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
-import org.json.JSONObject
 import utils.OnActionClicked
 import utils.OnItemClicked
-import view.adapter.DetailSceneActionsAdapter
+import view.adapter.CreateSceneActionsAdapter
 import view.adapter.ShuffleColorAdapter
 import viewModel.SceneViewModel
 import kotlin.random.Random
@@ -43,7 +41,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked 
     private lateinit var listActionRecyclerView: RecyclerView
 
     private lateinit var sceneColorsAdapter : ShuffleColorAdapter
-    private lateinit var listActionAdapter : DetailSceneActionsAdapter
+    private lateinit var listActionAdapter : CreateSceneActionsAdapter
 
     private lateinit var sceneColorsHashMap : MutableMap<Int, Boolean>
     private lateinit var sceneColors : ArrayList<Int>
@@ -109,7 +107,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked 
         sceneColorsRecyclerView.adapter = sceneColorsAdapter
 
         listActionRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        listActionAdapter = DetailSceneActionsAdapter(this)
+        listActionAdapter = CreateSceneActionsAdapter(this)
         listActionAdapter.detailSceneActions = actionList
         listActionRecyclerView.adapter = listActionAdapter
     }

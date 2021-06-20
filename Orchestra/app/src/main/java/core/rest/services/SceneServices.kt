@@ -14,6 +14,9 @@ interface SceneServices {
     @POST("/scene")
     fun addScene(@Body scene: Scene) : Call<Scene>
 
+    @POST("/scene/{id}")
+    fun launchScene(@Path("id") sceneId : String) : Call<Scene>
+
     @HTTP(method = "DELETE", path = "/scene", hasBody = true)
     fun deleteScenes(@Body scene: ListSceneToDelete) : Call<ListSceneToDelete>
 

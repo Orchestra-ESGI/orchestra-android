@@ -33,6 +33,10 @@ class SceneViewModel : ViewModel() {
         sceneService.addScene(scene)
     }
 
+    fun launchScene(sceneId : String) {
+        sceneService.launchScene(sceneId)
+    }
+
     fun deleteScenes(scenes : ListSceneToDelete) {
         sceneService.deleteScenes(scenes)
     }

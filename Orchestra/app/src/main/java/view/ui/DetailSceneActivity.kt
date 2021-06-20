@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
-import core.rest.model.Scene
+import core.rest.model.*
+import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import view.adapter.CreateSceneActionsAdapter
 import view.adapter.DetailSceneActionsAdapter
 
 class DetailSceneActivity : AppCompatActivity() {
@@ -26,7 +28,7 @@ class DetailSceneActivity : AppCompatActivity() {
         detailSceneDescription = findViewById(R.id.detail_scene_description_tv)
         deviceSceneRecyclerView = findViewById(R.id.detail_scene_actions_rv)
 
-        // detailSceneAdapter = DetailSceneActionsAdapter()
+        detailSceneAdapter = DetailSceneActionsAdapter()
 
         deviceSceneRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
@@ -37,6 +39,8 @@ class DetailSceneActivity : AppCompatActivity() {
         deviceSceneRecyclerView.addItemDecoration(dividerItemDecoration)
 
         val sceneDetail = intent.getSerializableExtra("DetailScene") as? Scene
+        val args = intent.getBundleExtra("BUNDLE")
+        val listDevice = args!!.getSerializable("ARRAYLIST") as ArrayList<HubAccessoryConfiguration>
 
         detailSceneName.text = sceneDetail!!.name
 
@@ -50,8 +54,39 @@ class DetailSceneActivity : AppCompatActivity() {
         }
         detailSceneDescription.text = sceneDetail.description
 
-        // detailSceneAdapter.detailSceneActions = sceneDetail.actions
+        detailSceneAdapter.detailSceneActions = formatSceneToDetailSceneActions(sceneDetail, listDevice)
+
 
         deviceSceneRecyclerView.adapter = detailSceneAdapter
+    }
+
+    private fun formatSceneToDetailSceneActions(scene : Scene, listDevice : ArrayList<HubAccessoryConfiguration>) : ArrayList<HubAccessoryConfiguration> {
+        var listOfSceneDevices = scene.devices
+        var listOfDeviceFormatted : ArrayList<HubAccessoryConfiguration> = ArrayList()
+
+        listOfSceneDevices.forEach {
+            val deviceName = listDevice.first { device -> device.friendly_name == it.friendly_name }
+            val section = (HubAccessoryConfiguration(friendly_name = deviceName.friendly_name, name = deviceName.name))
+            listOfDeviceFormatted.add(section)
+            if (it.actions?.state != null) {
+                var state : DeviceState? = null
+                when(it.actions!!.state) {
+                    "on" -> state = DeviceState.on
+                    "off" -> state = DeviceState.off
+                    "toggle" -> state = DeviceState.toggle
+                }
+                listOfDeviceFormatted.add(HubAccessoryConfiguration(actions = Actions(state = state)))
+            }
+            if (it.actions?.brightness != null) {
+                listOfDeviceFormatted.add(HubAccessoryConfiguration(actions = Actions(brightness = SliderAction(current_state = it.actions!!.brightness!!))))
+            }
+            if (it.actions?.color != null) {
+                listOfDeviceFormatted.add(HubAccessoryConfiguration(actions = Actions(color = it.actions!!.color)))
+            }
+            if (it.actions?.color_temp != null) {
+                listOfDeviceFormatted.add(HubAccessoryConfiguration(actions = Actions(color_temp = SliderAction(current_state = it.actions!!.color_temp!!))))
+            }
+        }
+        return listOfDeviceFormatted
     }
 }

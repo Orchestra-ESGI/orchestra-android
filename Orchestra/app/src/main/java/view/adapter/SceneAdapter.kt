@@ -3,9 +3,12 @@ package view.adapter
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.DrawableCompat
@@ -13,12 +16,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.ListSceneToDelete
 import core.rest.model.Scene
+import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import view.ui.DetailSceneActivity
 import viewModel.HomeViewModel
+import java.io.Serializable
 
 class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
 
     var sceneList: List<Scene>? = null
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    var deviceList: List<HubAccessoryConfiguration>? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -40,7 +51,8 @@ class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
 
     class SceneViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val sceneTitle = itemView.findViewById<TextView>(R.id.cell_scene_title_tv)
-        fun bind(scene : Scene, homeVM : HomeViewModel?) {
+        private val sceneInfo = itemView.findViewById<ImageView>(R.id.cell_scene_info_iv)
+        fun bind(scene : Scene, homeVM : HomeViewModel?, deviceList : List<HubAccessoryConfiguration>?) {
             sceneTitle.text = scene.name
 
             val unwrappedDrawable = AppCompatResources.getDrawable(itemView.context, R.drawable.scene_list_item_shape)
@@ -58,9 +70,16 @@ class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
             itemView.setBackgroundResource(R.drawable.scene_list_item_shape)
 
             itemView.setOnClickListener {
-                val intent = Intent(itemView.context, DetailSceneActivity::class.java)
-                intent.putExtra("DetailScene", scene)
-                itemView.context.startActivity(intent)
+                homeVM!!.launchDevice(sceneId = scene._id)
+            }
+
+            sceneInfo.setOnClickListener {
+                val detailSceneIntent = Intent(itemView.context, DetailSceneActivity::class.java)
+                detailSceneIntent.putExtra("DetailScene", scene)
+                val args = Bundle()
+                args.putSerializable("ARRAYLIST", deviceList as Serializable)
+                detailSceneIntent.putExtra("BUNDLE", args)
+                itemView.context.startActivity(detailSceneIntent)
             }
 
             itemView.setOnLongClickListener {
@@ -79,7 +98,7 @@ class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: SceneViewHolder, position: Int) {
-        holder.bind(scene = sceneList!![position], homeVM = homeVM)
+        holder.bind(scene = sceneList!![position], homeVM = homeVM, deviceList = deviceList)
     }
 
     override fun getItemCount(): Int {

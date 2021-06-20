@@ -65,20 +65,21 @@ class HomeActivity : AppCompatActivity() {
     private fun setUpDeviceRv() {
         devicesRecyclerView.layoutManager = GridLayoutManager(this, 3)
         deviceAdapter = DeviceAdapter()
-        devicesRecyclerView.adapter = deviceAdapter
         deviceAdapter.homeVM = homeViewModel
+        devicesRecyclerView.adapter = deviceAdapter
     }
 
     private fun setUpSceneRv() {
         scenesRecyclerView.layoutManager = GridLayoutManager(this, 2)
         sceneAdapter = SceneAdapter()
-        scenesRecyclerView.adapter = sceneAdapter
         sceneAdapter.homeVM = homeViewModel
+        scenesRecyclerView.adapter = sceneAdapter
     }
 
     private fun setUpObserver() {
         homeViewModel.deviceList.observe(this, Observer {
             deviceAdapter.deviceList = it
+            sceneAdapter.deviceList = deviceAdapter.deviceList
             loader.dismiss()
         })
         homeViewModel.sceneList.observe(this, Observer {

@@ -86,19 +86,21 @@ object SceneClient {
 
                 })
     }
-/*
-    fun getAllScenes(idHouse : String) {
-        getApi()?.getAllScenes(idHouse)?.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())?.subscribe(
-            { result -> Log.d("success", result.toString()) },
-            { error -> Log.d("error", error.message!!) }
-        )
-    }
 
-    fun removeScene(scenesId : List<String>) {
-        getApi()?.removeScene(scenesId)?.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())?.subscribe(
-            { result -> Log.d("success", result.toString()) },
-            { error -> Log.d("error", error.message!!) }
-        )
+    fun launchScene(sceneId : String) {
+        getApi()?.launchScene(sceneId)
+                ?.enqueue(object : Callback<Scene>{
+                    override fun onResponse(
+                            call: Call<Scene>?,
+                            response: Response<Scene>?
+                    ) {
+                        Log.d("TestSuccess", response!!.body().toString())
+                    }
+
+                    override fun onFailure(call: Call<Scene>?, t: Throwable?) {
+                        Log.e("error", t?.message!!)
+                    }
+
+                })
     }
- */
 }
