@@ -87,7 +87,8 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked): RecyclerView.
                 actionsName!!.forEach {
                     arrayAdapter.add(it.key)
                 }
-                actionTv.text = " + Ajouter une action"
+
+                actionTv.text = itemView.context.getString(R.string.create_scene_add_action)
                 itemView.setOnClickListener {
                     val alertDialog: AlertDialog = itemView.context.let {
                         val builder = AlertDialog.Builder(it)

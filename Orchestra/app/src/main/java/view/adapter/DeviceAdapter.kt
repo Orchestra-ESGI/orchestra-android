@@ -79,9 +79,9 @@ class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
 
             itemView.setOnLongClickListener {
                 val builder = AlertDialog.Builder(itemView.context)
-                builder.setTitle("Suppression de l'objet")
-                builder.setMessage("Êtes-vous sûr de vouloir supprimer l'objet ?")
-                builder.setPositiveButton("Supprimer") { dialog, which ->
+                builder.setTitle(R.string.home_device_delete_title)
+                builder.setMessage(R.string.home_device_delete_message)
+                builder.setPositiveButton(R.string.home_device_delete_button) { dialog, which ->
                     if(homeVM != null) {
                         homeVM!!.deleteDevices(ListHubAccessoryConfigurationToDelete(listOf(device.friendly_name!!)))
                     }

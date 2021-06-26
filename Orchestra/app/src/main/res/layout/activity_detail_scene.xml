@@ -29,7 +29,7 @@
         android:textStyle="bold"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
-        tools:text="Détécteur"
+        tools:text="Title"
         tools:textColor="@color/white"/>
 
     <TextView

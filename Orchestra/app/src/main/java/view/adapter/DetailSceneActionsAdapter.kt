@@ -78,7 +78,7 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             if(device.friendly_name != null) {
                 deviceName.text = device.name
             } else {
-                deviceName.text = "Appareil Inconnu"
+                deviceName.text = itemView.context.getString(R.string.detail_scene_action_unknown_device)
             }
         }
     }
@@ -97,7 +97,7 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             } else if(device.actions?.color_temp != null) {
                 name = actionsName.firstOrNull { actionName -> actionName.value == device.actions!!.color_temp!!.current_state.toString() && actionName.type == "color_temp" }?.key
             } else {
-                name = "Action Inconnu"
+                name = itemView.context.getString(R.string.detail_scene_action_unknown_action)
             }
             actionName.text = name
         }

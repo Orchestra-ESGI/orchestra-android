@@ -1,16 +1,11 @@
 package viewModel
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import core.rest.client.DeviceClient
-import core.rest.mock.FakeObjectDataService
-import core.rest.model.Device
 import core.rest.model.ListSceneToDelete
 import core.rest.model.Scene
-import core.rest.model.SupportedAccessories
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import core.rest.model.hubConfiguration.ListHubAccessoryConfigurationToDelete
 

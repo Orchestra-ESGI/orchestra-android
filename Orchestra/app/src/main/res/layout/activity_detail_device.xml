@@ -78,13 +78,13 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="24dp"
-                android:text="Veuillez configurer cet appareil" />
+                android:text="@string/detail_device_config_text" />
 
             <Button
                 android:id="@+id/detail_device_config_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Configurer"/>
+                android:text="@string/detail_device_config_button"/>
 
         </LinearLayout>
 
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="24dp"
-                android:text="État" />
+                android:text="@string/detail_device_state_text" />
 
             <Switch
                 android:id="@+id/detail_device_state_switch"
@@ -129,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="24dp"
-                android:text="Luminosité" />
+                android:text="@string/detail_device_brightness_text" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -172,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="24dp"
-                android:text="Couleur" />
+                android:text="@string/detail_device_color_text" />
 
             <core.utils.ColorPicker
                 android:id="@+id/detail_device_color_picker"
@@ -197,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="24dp"
-                android:text="Température" />
+                android:text="@string/detail_device_temperature_text" />
 
             <LinearLayout
                 android:layout_width="match_parent"

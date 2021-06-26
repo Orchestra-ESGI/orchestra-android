@@ -1,5 +1,18 @@
 <resources>
     <string name="app_name">Orchestra</string>
+
+    <string name="pager_slider1_title">Simplicité</string>
+    <string name="pager_slider2_title">Efficacité</string>
+    <string name="pager_slider3_title">Clarté</string>
+    <string name="pager_slider4_title">Synchronisation</string>
+    <string name="pager_slider5_title">C\'est parti !</string>
+
+    <string name="pager_slider1_text">Gérez votre ou vos domicile et vos objets connectés le tout depuis la même application et simplifiez-vous la vie</string>
+    <string name="pager_slider2_text">Gérez tout votre domicile depuis Orchestra simplement et rapidement</string>
+    <string name="pager_slider3_text">Trop de fils ? Trop de Hub ? Trop d\'applications ? Trop de chose pour gérer votre domotique, avec Orchestra, débarassez vous du surplus, et gardez uniquement l\'essentiel</string>
+    <string name="pager_slider4_text">Vous décidez de changer de téléphone ou de marque? Pas d\'inquiétude, réinstallez Orchestra sur votre nouvel appareil, on se charge de tout synchroniser pour vous</string>
+    <string name="pager_slider5_text">Orchestra, la domotique facile et utile</string>
+
     <string name="login_welcome">Bienvenue sur Orchestra, vous êtes de retour !</string>
     <string name="login_email">Email</string>
     <string name="login_pwd">Mot de passe</string>
@@ -20,9 +33,20 @@
     <string name="create_account_title_page">Création de compte</string>
     <string name="create_account_continue">Continuer</string>
 
-    <string name="scene_list_title">Mon domicile</string>
-    <string name="scene_list_object_title">Mes objets</string>
-    <string name="scene_list_scene_title">Mes scènes</string>
+    <string name="home_title">Mon domicile</string>
+    <string name="home_device_title">Mes objets</string>
+    <string name="home_scene_title">Mes scènes</string>
+
+    <string name="home_device_delete_title">Supprimer l\'appareil</string>
+    <string name="home_device_delete_message">Êtes-vous sûr de vouloir supprimer l\'appareil ?</string>
+    <string name="home_device_delete_button">Supprimer</string>
+
+    <string name="home_scene_delete_title">Supprimer la scène</string>
+    <string name="home_scene_delete_message">Êtes-vous sûr de vouloir supprimer la scène ?</string>
+    <string name="home_scene_delete_button">Supprimer</string>
+
+    <string name="home_add_new_device">Ajouter un appareil</string>
+    <string name="home_add_new_scene">Ajouter une scène</string>
 
     <string name="create_scene_new_scene">Nouvelle scène</string>
     <string name="create_scene_name">Nom</string>
@@ -36,6 +60,12 @@
     <string name="create_scene_list_action_description">Choisir un objet</string>
 
     <string name="detail_device_ok">OK</string>
+    <string name="detail_device_config_text">Veuillez configurer cet appareil</string>
+    <string name="detail_device_config_button">Configurer</string>
+    <string name="detail_device_state_text">État</string>
+    <string name="detail_device_brightness_text">Luminosité</string>
+    <string name="detail_device_color_text">Couleur</string>
+    <string name="detail_device_temperature_text">Température</string>
     <string name="detail_device_room_title">Pièce</string>
     <string name="detail_device_specifications_title">Caractéristiques</string>
 
@@ -51,6 +81,15 @@
     <string name="detail_scene_modify">Modifier</string>
     <string name="detail_scene_description_title">Description</string>
     <string name="detail_scene_action_title">Actions</string>
+    <string name="detail_scene_action_unknown_device">Appareil Inconnu</string>
+    <string name="detail_scene_action_unknown_action">Action Inconnu</string>
+
+    <string name="supported_accessories_not_supported_for_this_brand">Aucun appareil n\'est supporté pour cette marque</string>
+
+    <string name="supported_device_reset_device_title">Attention</string>
+    <string name="supported_device_reset_device_message">Vous devez réinitialiser votre appareil</string>
+    <string name="supported_device_reset_device_button">Réinitialiser</string>
+
     <string name="create_device_new_device">Ajouter l\'appareil</string>
     <string name="create_device_name">Nom de l\'appareil</string>
     <string name="create_device_name_hint">Lampe Salon</string>
@@ -69,4 +108,5 @@
     <string name="search_device_error_title">Oops !</string>
     <string name="search_device_error_description">Un problème est survenu durant l\'ajout !</string>
     <string name="search_device_error_btn">Réessayer</string>
+
 </resources>

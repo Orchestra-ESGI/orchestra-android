@@ -122,7 +122,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         R.id.scene_list_add_btn -> {
-            val listOfAction: List<String> = listOf("Ajouter un objet", "Ajouter une scène")
+            val listOfAction: List<String> = listOf(getString(R.string.home_add_new_device), getString(R.string.home_add_new_scene))
             val listOfActionToCharSequence = listOfAction.toTypedArray<CharSequence>()
 
             val alertDialog: AlertDialog = this@HomeActivity.let {
@@ -130,7 +130,7 @@ class HomeActivity : AppCompatActivity() {
                 builder.apply {
                     this.setItems(listOfActionToCharSequence) { _, which ->
                         val selected = listOfActionToCharSequence[which]
-                        if (selected == "Ajouter un objet") {
+                        if (selected == getString(R.string.home_add_new_device)) {
                             val supportedDeviceIntent = Intent(context, SupportedAccessoriesListActivity::class.java)
                             startActivity(supportedDeviceIntent)
                         } else {

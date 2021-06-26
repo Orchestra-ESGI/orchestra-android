@@ -1,5 +1,18 @@
 <resources>
     <string name="app_name">Orchestra</string>
+
+    <string name="pager_slider1_title">Eenvoud</string>
+    <string name="pager_slider2_title">Efficiëntie</string>
+    <string name="pager_slider3_title">Duidelijkheid</string>
+    <string name="pager_slider4_title">Sychronisatie</string>
+    <string name="pager_slider5_title">Laten we beginnen!</string>
+
+    <string name="pager_slider1_text">Beheer uw huis en uw aangesloten objecten allemaal vanuit dezelfde applicatie en maak uw leven eenvoudiger</string>
+    <string name="pager_slider2_text">Beheer uw volledige docmilice vanuit Orchestra snel en gemakkelijk</string>
+    <string name="pager_slider3_text">Te veel draden? Te veel hubs? Te veel aanvragen? Te veel dingen om uw domotica te beheren, met Orchestra, ontdoe u van het overtollige, en bewaar alleen het essentiële</string>
+    <string name="pager_slider4_text">Je besluit om van telefoon of merk te veranderen? Geen zorgen, installeer Orchestra opnieuw op uw nieuwe toestel, wij zorgen ervoor dat alles gesynchroniseerd wordt</string>
+    <string name="pager_slider5_text">Orchestra, eenvoudige en nuttige domotica</string>
+
     <string name="login_welcome">Welkom terug bij het Orchestra!</string>
     <string name="login_email">E-mail</string>
     <string name="login_pwd">Wachtwoord</string>
@@ -20,9 +33,20 @@
     <string name="create_account_title_page">Maak een account aan</string>
     <string name="create_account_continue">Ga door</string>
 
-    <string name="scene_list_title">Mijn huis</string>
-    <string name="scene_list_object_title">Mijn objecten</string>
-    <string name="scene_list_scene_title">Mijn scènes</string>
+    <string name="home_title">Mijn huis</string>
+    <string name="home_device_title">Mijn objecten</string>
+    <string name="home_scene_title">Mijn scènes</string>
+
+    <string name="home_device_delete_title">Apparaat verwijderen</string>
+    <string name="home_device_delete_message">Weet u zeker dat u het apparaat wilt verwijderen ?</string>
+    <string name="home_device_delete_button">Verwijderen</string>
+
+    <string name="home_scene_delete_title">Scène verwijderen</string>
+    <string name="home_scene_delete_message">Weet u zeker dat u de scène wilt verwijderen ?</string>
+    <string name="home_scene_delete_button">Verwijderen</string>
+
+    <string name="home_add_new_device">Een apparaat toevoegen</string>
+    <string name="home_add_new_scene">een scène toevoegen</string>
 
     <string name="create_scene_new_scene">Nieuwe scène</string>
     <string name="create_scene_name">Naam</string>
@@ -37,6 +61,12 @@
 
     <string name="detail_device_ok">OK</string>
     <string name="detail_device_room_title">Kamer</string>
+    <string name="detail_device_config_text">Configureer dit apparaat a.u.b.</string>
+    <string name="detail_device_config_button">Configureren</string>
+    <string name="detail_device_state_text">Staate</string>
+    <string name="detail_device_brightness_text">Helderheid</string>
+    <string name="detail_device_color_text">Kleur</string>
+    <string name="detail_device_temperature_text">Temperatuur</string>
     <string name="detail_device_specifications_title">Kenmerken</string>
 
     <string name="specification_manufacturer">Fabrikant</string>
@@ -51,22 +81,33 @@
     <string name="detail_scene_modify">Bewerken</string>
     <string name="detail_scene_description_title">Beschrijving</string>
     <string name="detail_scene_action_title">Acties</string>
-    <string name="create_device_new_device">Ajouter l\'appareil</string>
-    <string name="create_device_name">Nom de l\'appareil</string>
-    <string name="create_device_name_hint">Lampe Salon</string>
-    <string name="create_device_which_room">Dans quelle pièce ?</string>
-    <string name="create_device_which_room_hint">Salon</string>
-    <string name="create_device_choose_color">Choisir une couleur</string>
-    <string name="create_device_is_favoris">Ajouter aux favoris ?</string>
-    <string name="device_physical_configuration_title">Suivez ces étapes ppur configurer votre objet</string>
-    <string name="device_physical_configuration_step_one">1. Suivez le lien suivant :</string>
-    <string name="device_physical_configuration_step_two">2. Allez dans la section #Pairing</string>
-    <string name="device_physical_configuration_step_three">3. Suivez les instructions pour appairer votre objet</string>
+    <string name="detail_scene_action_unknown_device">Onbekend apparaat</string>
+    <string name="detail_scene_action_unknown_action">Onbekende actie</string>
 
-    <string name="search_device_success_title">C\'est fait</string>
-    <string name="search_device_success_description">Votre objet a été correctement crée !</string>
-    <string name="search_device_success_btn">Revenir à l\'accueil</string>
+    <string name="supported_accessories_not_supported_for_this_brand">Er wordt geen apparaat ondersteund voor dit merk</string>
+
+    <string name="supported_device_reset_device_title">Aandacht</string>
+    <string name="supported_device_reset_device_message">Je moet je apparaat resetten</string>
+    <string name="supported_device_reset_device_button">Resetten</string>
+
+    <string name="create_device_new_device">Voeg toestel toe</string>
+    <string name="create_device_name">Naam van het apparaat</string>
+    <string name="create_device_name_hint">Woonkamer lamp</string>
+    <string name="create_device_which_room">In welke kamer?</string>
+    <string name="create_device_which_room_hint">Woonkamer</string>
+    <string name="create_device_choose_color">Kies een kleur</string>
+    <string name="create_device_is_favoris">Ajouter aux favoris ?</string>
+
+    <string name="device_physical_configuration_title">Volg deze stappen om uw object te configureren</string>
+    <string name="device_physical_configuration_step_one">1. Volg de volgende link :</string>
+    <string name="device_physical_configuration_step_two">2. Ga naar de sectie #Pairing</string>
+    <string name="device_physical_configuration_step_three">3. Volg de instructies om je object te koppelen</string>
+
+    <string name="search_device_success_title">Het is gebeurd</string>
+    <string name="search_device_success_description">Uw object is succesvol aangemaakt !</string>
+    <string name="search_device_success_btn">Terug naar huis</string>
     <string name="search_device_error_title">Oops !</string>
-    <string name="search_device_error_description">Un problème est survenu durant l\'ajout !</string>
-    <string name="search_device_error_btn">Réessayer</string>
+    <string name="search_device_error_description">Er is een probleem opgetreden bij het toevoegen !</string>
+    <string name="search_device_error_btn">Probeer het opnieuw</string>
+
 </resources>

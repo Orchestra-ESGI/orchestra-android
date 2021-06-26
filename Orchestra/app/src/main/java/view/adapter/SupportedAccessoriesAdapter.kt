@@ -49,7 +49,7 @@ class SupportedAccessoriesAdapter :
                     intent.putExtra("brand", supportedAccessories.brand)
                     itemView.context.startActivity(intent)
                 } else {
-                    Toast.makeText(itemView.context, "Aucun appareil n'est supporté pour cette marque", Toast.LENGTH_LONG).show()
+                    Toast.makeText(itemView.context, itemView.context.getString(R.string.supported_accessories_not_supported_for_this_brand), Toast.LENGTH_LONG).show()
                 }
             }
         }

@@ -1,5 +1,18 @@
 <resources>
     <string name="app_name">Orchestra</string>
+
+    <string name="pager_slider1_title">简洁性</string>
+    <string name="pager_slider2_title">效率</string>
+    <string name="pager_slider3_title">清晰度</string>
+    <string name="pager_slider4_title">同步化</string>
+    <string name="pager_slider5_title">让我们开始吧!</string>
+
+    <string name="pager_slider1_text">从同一个应用程序管理你的家和你的连接物体，并简化你的生活。</string>
+    <string name="pager_slider2_text">从Orchestra快速而轻松地管理你的家</string>
+    <string name="pager_slider3_text">电线太多？枢纽太多？申请太多？太多的东西来管理你的家庭自动化，用Orchestra，摆脱多余的东西，只保留必要的东西。</string>
+    <string name="pager_slider4_text">你决定改变你的手机或品牌？别担心，在你的新设备上重新安装Orchestra，我们将为你处理好一切同步事宜。</string>
+    <string name="pager_slider5_text">Orchestra, 简单而有用的家庭自动化</string>
+
     <string name="login_welcome">欢迎回到Orchestra!</string>
     <string name="login_email">电子邮件</string>
     <string name="login_pwd">密码</string>
@@ -20,9 +33,20 @@
     <string name="create_account_title_page">创建一个账户</string>
     <string name="create_account_continue">继续</string>
 
-    <string name="scene_list_title">我的家</string>
-    <string name="scene_list_object_title">我的对象</string>
-    <string name="scene_list_scene_title">我的场景</string>
+    <string name="home_title">我的家</string>
+    <string name="home_device_title">我的对象</string>
+    <string name="home_scene_title">我的场景</string>
+
+    <string name="home_device_delete_title">删除设备</string>
+    <string name="home_device_delete_message">您确定要删除该设备吗 ?</string>
+    <string name="home_device_delete_button">删除</string>
+
+    <string name="home_scene_delete_title">删除场景</string>
+    <string name="home_scene_delete_message">确定要删除场景吗 ?</string>
+    <string name="home_scene_delete_button">删除</string>
+
+    <string name="home_add_new_device">添加一个对象</string>
+    <string name="home_add_new_scene">添加一个场景</string>
 
     <string name="create_scene_new_scene">新场景</string>
     <string name="create_scene_name">名称</string>
@@ -37,6 +61,12 @@
 
     <string name="detail_device_ok">OK</string>
     <string name="detail_device_room_title">房间</string>
+    <string name="detail_device_config_text">请配置此设备</string>
+    <string name="detail_device_config_button">配置</string>
+    <string name="detail_device_state_text">状态</string>
+    <string name="detail_device_brightness_text">亮度</string>
+    <string name="detail_device_color_text">颜色</string>
+    <string name="detail_device_temperature_text">温度</string>
     <string name="detail_device_specifications_title">特点</string>
 
     <string name="specification_manufacturer">制造商</string>
@@ -51,22 +81,33 @@
     <string name="detail_scene_modify">编辑</string>
     <string name="detail_scene_description_title">说明</string>
     <string name="detail_scene_action_title">行动</string>
-    <string name="create_device_new_device">Ajouter l\'appareil</string>
-    <string name="create_device_name">Nom de l\'appareil</string>
-    <string name="create_device_name_hint">Lampe Salon</string>
-    <string name="create_device_which_room">Dans quelle pièce ?</string>
-    <string name="create_device_which_room_hint">Salon</string>
-    <string name="create_device_choose_color">Choisir une couleur</string>
-    <string name="create_device_is_favoris">Ajouter aux favoris ?</string>
-    <string name="device_physical_configuration_title">Suivez ces étapes ppur configurer votre objet</string>
-    <string name="device_physical_configuration_step_one">1. Suivez le lien suivant :</string>
-    <string name="device_physical_configuration_step_two">2. Allez dans la section #Pairing</string>
-    <string name="device_physical_configuration_step_three">3. Suivez les instructions pour appairer votre objet</string>
+    <string name="detail_scene_action_unknown_device">未知设备</string>
+    <string name="detail_scene_action_unknown_action">未知动作</string>
 
-    <string name="search_device_success_title">C\'est fait</string>
-    <string name="search_device_success_description">Votre objet a été correctement crée !</string>
-    <string name="search_device_success_btn">Revenir à l\'accueil</string>
-    <string name="search_device_error_title">Oops !</string>
-    <string name="search_device_error_description">Un problème est survenu durant l\'ajout !</string>
-    <string name="search_device_error_btn">Réessayer</string>
+    <string name="supported_accessories_not_supported_for_this_brand">此品牌不支持任何设备</string>
+
+    <string name="supported_device_reset_device_title">注意力</string>
+    <string name="supported_device_reset_device_message">您需要重置您的设备</string>
+    <string name="supported_device_reset_device_button">重启</string>
+
+    <string name="create_device_new_device">添加设备</string>
+    <string name="create_device_name">设备名称</string>
+    <string name="create_device_name_hint">客厅灯</string>
+    <string name="create_device_which_room">在哪个房间？</string>
+    <string name="create_device_which_room_hint">客厅</string>
+    <string name="create_device_choose_color">选择颜色</string>
+    <string name="create_device_is_favoris">Ajouter aux favoris ?</string>
+
+    <string name="device_physical_configuration_title">按照以下步骤配置您的对象</string>
+    <string name="device_physical_configuration_step_one">1. 按照以下链接:</string>
+    <string name="device_physical_configuration_step_two">2. 进入栏目 #Pairing</string>
+    <string name="device_physical_configuration_step_three">3. 按照说明配对您的对象</string>
+
+    <string name="search_device_success_title">完成了</string>
+    <string name="search_device_success_description">您的对象已成功创建 !</string>
+    <string name="search_device_success_btn">回家</string>
+    <string name="search_device_error_title">哎呀 !</string>
+    <string name="search_device_error_description">添加时出现问题 !</string>
+    <string name="search_device_error_btn">再试一次</string>
+
 </resources>

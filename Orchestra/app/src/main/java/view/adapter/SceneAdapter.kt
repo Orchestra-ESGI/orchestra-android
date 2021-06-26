@@ -84,9 +84,9 @@ class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
 
             itemView.setOnLongClickListener {
                 val builder = AlertDialog.Builder(itemView.context)
-                builder.setTitle("Suppression de la scène ")
-                builder.setMessage("Êtes-vous sûr de vouloir supprimer la scène ?")
-                builder.setPositiveButton("Supprimer") { dialog, which ->
+                builder.setTitle(itemView.context.getString(R.string.home_scene_delete_title))
+                builder.setMessage(itemView.context.getString(R.string.home_scene_delete_message))
+                builder.setPositiveButton(itemView.context.getString(R.string.home_scene_delete_button)) { dialog, which ->
                     if(homeVM != null) {
                         homeVM!!.deleteScenes(ListSceneToDelete(listOf(scene._id)))
                     }

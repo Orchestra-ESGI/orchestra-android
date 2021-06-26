@@ -1,5 +1,18 @@
 <resources>
     <string name="app_name">Orchestra</string>
+
+    <string name="pager_slider1_title">Simplicidad</string>
+    <string name="pager_slider2_title">Eficiencia</string>
+    <string name="pager_slider3_title">Claridad</string>
+    <string name="pager_slider4_title">Sincronización</string>
+    <string name="pager_slider5_title">Vamos allá!</string>
+
+    <string name="pager_slider1_text">Gestiona tu casa y tus objetos conectados desde la misma aplicación y simplifica tu vida</string>
+    <string name="pager_slider2_text">Gestione toda su docmilicia desde Orchestra de forma rápida y sencilla</string>
+    <string name="pager_slider3_text">¿Demasiados cables? ¿Demasiados centros? ¿Demasiadas solicitudes? Demasiadas cosas para gestionar su domótica, con Orchestra, deshágase de lo que le sobra, y quédese sólo con lo imprescindible</string>
+    <string name="pager_slider4_text">¿Decides cambiar de teléfono o de marca? No te preocupes, reinstala Orchestra en tu nuevo dispositivo, nosotros nos encargamos de sincronizar todo por ti</string>
+    <string name="pager_slider5_text">Orchestra, automatización del hogar fácil y útil</string>
+
     <string name="login_welcome">¡Bienvenido de nuevo a la Orchestra!</string>
     <string name="login_email">Correo electrónico</string>
     <string name="login_pwd">Contraseña</string>
@@ -20,9 +33,20 @@
     <string name="create_account_title_page">Crear una cuenta</string>
     <string name="create_account_continue">Continuar</string>
 
-    <string name="scene_list_title">Mi hogar</string>
-    <string name="scene_list_object_title">Mis objetos</string>
-    <string name="scene_list_scene_title">Mis escenas</string>
+    <string name="home_title">Mi hogar</string>
+    <string name="home_device_title">Mis objetos</string>
+    <string name="home_scene_title">Mis escenas</string>
+
+    <string name="home_device_delete_title">Eliminar dispositivo</string>
+    <string name="home_device_delete_message">¿Estás seguro de que quieres eliminar el dispositivo?</string>
+    <string name="home_device_delete_button">Eliminar</string>
+
+    <string name="home_scene_delete_title">Eliminar escena</string>
+    <string name="home_scene_delete_message">¿Estás seguro de que quieres eliminar la escena?</string>
+    <string name="home_scene_delete_button">Eliminar</string>
+
+    <string name="home_add_new_device">Añadir un objeto</string>
+    <string name="home_add_new_scene">Añadir una escenae</string>
 
     <string name="create_scene_new_scene">Nueva escena</string>
     <string name="create_scene_name">Denominación</string>
@@ -36,6 +60,12 @@
     <string name="create_scene_list_action_description">Elige una acción</string>
 
     <string name="detail_device_ok">OK</string>
+    <string name="detail_device_config_text">Configura este dispositivo</string>
+    <string name="detail_device_config_button">Configurar</string>
+    <string name="detail_device_state_text">Expresar</string>
+    <string name="detail_device_brightness_text">Brillo</string>
+    <string name="detail_device_color_text">Color</string>
+    <string name="detail_device_temperature_text">Température</string>
     <string name="detail_device_room_title">Habitación</string>
     <string name="detail_device_specifications_title">Caracteristicas</string>
 
@@ -51,22 +81,33 @@
     <string name="detail_scene_modify">Editar</string>
     <string name="detail_scene_description_title">Descripción</string>
     <string name="detail_scene_action_title">Acciones</string>
-    <string name="create_device_new_device">Ajouter l\'appareil</string>
-    <string name="create_device_name">Nom de l\'appareil</string>
-    <string name="create_device_name_hint">Lampe Salon</string>
-    <string name="create_device_which_room">Dans quelle pièce ?</string>
-    <string name="create_device_which_room_hint">Salon</string>
-    <string name="create_device_choose_color">Choisir une couleur</string>
-    <string name="create_device_is_favoris">Ajouter aux favoris ?</string>
-    <string name="device_physical_configuration_title">Suivez ces étapes ppur configurer votre objet</string>
-    <string name="device_physical_configuration_step_one">1. Suivez le lien suivant :</string>
-    <string name="device_physical_configuration_step_two">2. Allez dans la section #Pairing</string>
-    <string name="device_physical_configuration_step_three">3. Suivez les instructions pour appairer votre objet</string>
+    <string name="detail_scene_action_unknown_device">Dispositivo desconocido</string>
+    <string name="detail_scene_action_unknown_action">Acción desconocida</string>
 
-    <string name="search_device_success_title">C\'est fait</string>
-    <string name="search_device_success_description">Votre objet a été correctement crée !</string>
-    <string name="search_device_success_btn">Revenir à l\'accueil</string>
-    <string name="search_device_error_title">Oops !</string>
-    <string name="search_device_error_description">Un problème est survenu durant l\'ajout !</string>
-    <string name="search_device_error_btn">Réessayer</string>
+    <string name="supported_accessories_not_supported_for_this_brand">Ningún dispositivo es compatible con esta marca</string>
+
+    <string name="supported_device_reset_device_title">Atención</string>
+    <string name="supported_device_reset_device_message">Necesitas reiniciar tu dispositivo</string>
+    <string name="supported_device_reset_device_button">Reiniciar</string>
+
+    <string name="create_device_new_device">Añadir dispositivo</string>
+    <string name="create_device_name">Nombre del dispositivo</string>
+    <string name="create_device_name_hint">Lámpara de salón</string>
+    <string name="create_device_which_room">¿ En que habitacion ?</string>
+    <string name="create_device_which_room_hint">Salón</string>
+    <string name="create_device_choose_color">Elige un color</string>
+    <string name="create_device_is_favoris">Ajouter aux favoris ?</string>
+
+    <string name="device_physical_configuration_title">Siga estos pasos para configurar su objeto</string>
+    <string name="device_physical_configuration_step_one">1. Siga el siguiente enlace :</string>
+    <string name="device_physical_configuration_step_two">2. Ir a la sección #Pairing</string>
+    <string name="device_physical_configuration_step_three">3. Siga las instrucciones para emparejar su objeto</string>
+
+    <string name="search_device_success_title">Siga las instrucciones para emparejar su objeto</string>
+    <string name="search_device_success_description">Tu objeto ha sido creado con éxito !</string>
+    <string name="search_device_success_btn">Vuelve a casa</string>
+    <string name="search_device_error_title">¡Oops!</string>
+    <string name="search_device_error_description">¡Se produjo un error al agregar!</string>
+    <string name="search_device_error_btn">Volver a intentar</string>
+
 </resources>

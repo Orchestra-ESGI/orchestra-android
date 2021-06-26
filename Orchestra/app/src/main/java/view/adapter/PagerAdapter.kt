@@ -22,18 +22,18 @@ import view.ui.SupportedAccessoriesListActivity
 class PagerAdapter(var context: Context) : RecyclerView.Adapter<PagerAdapter.PagerViewHolder>() {
 
     var titleList = listOf(
-        "Simplicité",
-        "Efficacité",
-        "Clarté",
-        "Sychronisation",
-        "C'est parti"
+        context.getString(R.string.pager_slider1_title),
+        context.getString(R.string.pager_slider2_title),
+        context.getString(R.string.pager_slider3_title),
+        context.getString(R.string.pager_slider4_title),
+        context.getString(R.string.pager_slider5_title)
     )
     var descriptionList = listOf(
-        "Gérez votre ou vos domicile & vos objets connectés le tout depuis la même application et simplifiez-vous la vie.",
-        "Gérez tout votre docmilice depuis Orchestra simplement et rapidement.",
-        "Trop de fils ? Trop de Hub ? Trop d'applications ? Trop de chose pour gérer  votre domotique, avec Orchestra, débarassez vous du surplus, et gardez uniquement l'essentiel.",
-        "Vous décidez de changez de téléphone ou de marque? Pas d'inquiétude, réinstallez Orchestra sur votre nouvel appareil, on se charge de tout synchroniser pour vous.",
-        "Orchestra, la domotique facile et utile."
+            context.getString(R.string.pager_slider1_text),
+            context.getString(R.string.pager_slider2_text),
+            context.getString(R.string.pager_slider3_text),
+            context.getString(R.string.pager_slider4_text),
+            context.getString(R.string.pager_slider5_text)
     )
 
 

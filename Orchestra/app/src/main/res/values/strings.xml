@@ -1,5 +1,18 @@
 <resources>
     <string name="app_name">Orchestra</string>
+    
+    <string name="pager_slider1_title">Simplicity</string>
+    <string name="pager_slider2_title">Efficiency</string>
+    <string name="pager_slider3_title">Clarity</string>
+    <string name="pager_slider4_title">Sychronisation</string>
+    <string name="pager_slider5_title">Here we go!</string>
+
+    <string name="pager_slider1_text">Manage your home(s) and your connected objects all from the same application and simplify your life</string>
+    <string name="pager_slider2_text">Manage your entire home from Orchestra simply and quickly</string>
+    <string name="pager_slider3_text">Too many wires? Too many hubs? Too many applications? Too many things to manage your home automation, with Orchestra, get rid of excess, and keep only the essentials</string>
+    <string name="pager_slider4_text">Do you decide to change your phone or brand? No worries, reinstall Orchestra on your new device, we\'ll sync everything for you</string>
+    <string name="pager_slider5_text">Orchestra, easy and useful home automation</string>
+    
     <string name="login_welcome">Welcome back to Orchestra!</string>
     <string name="login_email">Email</string>
     <string name="login_pwd">Password</string>
@@ -20,9 +33,20 @@
     <string name="create_account_title_page">Account creation</string>
     <string name="create_account_continue">Continue</string>
 
-    <string name="scene_list_title">My Home</string>
-    <string name="scene_list_object_title">My Devices</string>
-    <string name="scene_list_scene_title">My Scenes</string>
+    <string name="home_title">My Home</string>
+    <string name="home_device_title">My Devices</string>
+    <string name="home_scene_title">My Scenes</string>
+
+    <string name="home_device_delete_title">Delete Device</string>
+    <string name="home_device_delete_message">Are you sure you want to delete the device ?</string>
+    <string name="home_device_delete_button">Delete</string>
+
+    <string name="home_scene_delete_title">Delete Scene</string>
+    <string name="home_scene_delete_message">Are you sure you want to delete the scene ?</string>
+    <string name="home_scene_delete_button">Delete</string>
+
+    <string name="home_add_new_device">Add a device</string>
+    <string name="home_add_new_scene">Add a scene</string>
 
     <string name="create_scene_new_scene">New Scene</string>
     <string name="create_scene_name">Name</string>
@@ -36,6 +60,12 @@
     <string name="create_scene_list_action_description">Choose a device</string>
 
     <string name="detail_device_ok">OK</string>
+    <string name="detail_device_config_text">Please configure this device</string>
+    <string name="detail_device_config_button">Configurate</string>
+    <string name="detail_device_state_text">State</string>
+    <string name="detail_device_brightness_text">Brightness</string>
+    <string name="detail_device_color_text">Color</string>
+    <string name="detail_device_temperature_text">Temperature</string>
     <string name="detail_device_room_title">Room</string>
     <string name="detail_device_specifications_title">Features</string>
 
@@ -51,25 +81,33 @@
     <string name="detail_scene_modify">Modify</string>
     <string name="detail_scene_description_title">Description</string>
     <string name="detail_scene_action_title">Actions</string>
+    <string name="detail_scene_action_unknown_device">Unknown Device</string>
+    <string name="detail_scene_action_unknown_action">Unknown Action</string>
 
-    <string name="create_device_new_device">Ajouter l\'appareil</string>
-    <string name="create_device_name">Nom de l\'appareil</string>
-    <string name="create_device_name_hint">Lampe Salon</string>
-    <string name="create_device_which_room">Dans quelle pièce ?</string>
-    <string name="create_device_which_room_hint">Salon</string>
-    <string name="create_device_choose_color">Choisir une couleur</string>
+    <string name="supported_accessories_not_supported_for_this_brand">No device is supported for this brand</string>
+
+    <string name="supported_device_reset_device_title">Attention</string>
+    <string name="supported_device_reset_device_message">You need to reset your device</string>
+    <string name="supported_device_reset_device_button">Reset</string>
+
+    <string name="create_device_new_device">Add device</string>
+    <string name="create_device_name">Name of the device</string>
+    <string name="create_device_name_hint">Lightbulb Living Room</string>
+    <string name="create_device_which_room">In which room ?</string>
+    <string name="create_device_which_room_hint">Living Room</string>
+    <string name="create_device_choose_color">Choose a color</string>
     <string name="create_device_is_favoris">Ajouter aux favoris ?</string>
 
-    <string name="device_physical_configuration_title">Suivez ces étapes ppur configurer votre objet</string>
-    <string name="device_physical_configuration_step_one">1. Suivez le lien suivant :</string>
-    <string name="device_physical_configuration_step_two">2. Allez dans la section #Pairing</string>
-    <string name="device_physical_configuration_step_three">3. Suivez les instructions pour appairer votre objet</string>
+    <string name="device_physical_configuration_title">Follow these steps to configure your object</string>
+    <string name="device_physical_configuration_step_one">1. Follow the following link :</string>
+    <string name="device_physical_configuration_step_two">2. Go to the section #Pairing</string>
+    <string name="device_physical_configuration_step_three">3. Follow the instructions to pair your object</string>
 
-    <string name="search_device_success_title">C\'est fait</string>
-    <string name="search_device_success_description">Votre objet a été correctement crée !</string>
-    <string name="search_device_success_btn">Revenir à l\'accueil</string>
+    <string name="search_device_success_title">It\'s done</string>
+    <string name="search_device_success_description">Your object has been successfully created !</string>
+    <string name="search_device_success_btn">Return to home</string>
     <string name="search_device_error_title">Oops !</string>
-    <string name="search_device_error_description">Un problème est survenu durant l\'ajout !</string>
-    <string name="search_device_error_btn">Réessayer</string>
+    <string name="search_device_error_description">There was a problem when adding device !</string>
+    <string name="search_device_error_btn">Retry</string>
 
 </resources>

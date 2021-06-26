@@ -1,5 +1,18 @@
 <resources>
     <string name="app_name">Orchestra</string>
+
+    <string name="pager_slider1_title">Semplicità</string>
+    <string name="pager_slider2_title">Efficienza</string>
+    <string name="pager_slider3_title">Chiarezza</string>
+    <string name="pager_slider4_title">Sincronizzazione</string>
+    <string name="pager_slider5_title">Cominciamo!</string>
+
+    <string name="pager_slider1_text">Gestisci la tua casa e i tuoi oggetti connessi dalla stessa applicazione e semplifica la tua vita</string>
+    <string name="pager_slider2_text">Gestisci tutto il tuo docmilice da Orchestra in modo facile e veloce</string>
+    <string name="pager_slider3_text">Troppi fili? Troppi hub? Troppe applicazioni? Troppe cose per gestire la vostra automazione domestica, con Orchestra, sbarazzarsi del surplus, e mantenere solo l\'essenziale</string>
+    <string name="pager_slider4_text">Hai deciso di cambiare il tuo telefono o la tua marca? Non preoccuparti, reinstalla Orchestra sul tuo nuovo dispositivo, ci occuperemo di sincronizzare tutto per te</string>
+    <string name="pager_slider5_text">Orchestra, automazione domestica facile e utile</string>
+
     <string name="login_welcome">Bentornato all\'Orchestra!</string>
     <string name="login_email">Email</string>
     <string name="login_pwd">Password</string>
@@ -20,9 +33,20 @@
     <string name="create_account_title_page">Creare un account</string>
     <string name="create_account_continue">Continua</string>
 
-    <string name="scene_list_title">Casa mia</string>
-    <string name="scene_list_object_title">I miei oggetti</string>
-    <string name="scene_list_scene_title">Le mie scene</string>
+    <string name="home_title">Casa mia</string>
+    <string name="home_device_title">I miei oggetti</string>
+    <string name="home_scene_title">Le mie scene</string>
+
+    <string name="home_device_delete_title">Elimina dispositivo</string>
+    <string name="home_device_delete_message">Sei sicuro di voler eliminare il dispositivo ?</string>
+    <string name="home_device_delete_button">Elimina</string>
+
+    <string name="home_scene_delete_title">Elimina scena</string>
+    <string name="home_scene_delete_message">Sei sicuro di voler eliminare la scena ?</string>
+    <string name="home_scene_delete_button">Elimina</string>
+
+    <string name="home_add_new_device">Aggiungere un dispositivo</string>
+    <string name="home_add_new_scene">Aggiungere una scena</string>
 
     <string name="create_scene_new_scene">Nuova scena</string>
     <string name="create_scene_name">Nome</string>
@@ -37,6 +61,12 @@
 
     <string name="detail_device_ok">OK</string>
     <string name="detail_device_room_title">Camera</string>
+    <string name="detail_device_config_text">Si prega di configurare questo dispositivo</string>
+    <string name="detail_device_config_button">Configura</string>
+    <string name="detail_device_state_text">stato</string>
+    <string name="detail_device_brightness_text">Luminosità</string>
+    <string name="detail_device_color_text">Colore</string>
+    <string name="detail_device_temperature_text">Temperatura</string>
     <string name="detail_device_specifications_title">Caratteristiche</string>
 
     <string name="specification_manufacturer">Produttore</string>
@@ -51,22 +81,33 @@
     <string name="detail_scene_modify">Modificare</string>
     <string name="detail_scene_description_title">Descrizione</string>
     <string name="detail_scene_action_title">Azioni</string>
-    <string name="create_device_new_device">Ajouter l\'appareil</string>
-    <string name="create_device_name">Nom de l\'appareil</string>
-    <string name="create_device_name_hint">Lampe Salon</string>
-    <string name="create_device_which_room">Dans quelle pièce ?</string>
-    <string name="create_device_which_room_hint">Salon</string>
-    <string name="create_device_choose_color">Choisir une couleur</string>
-    <string name="create_device_is_favoris">Ajouter aux favoris ?</string>
-    <string name="device_physical_configuration_title">Suivez ces étapes ppur configurer votre objet</string>
-    <string name="device_physical_configuration_step_one">1. Suivez le lien suivant :</string>
-    <string name="device_physical_configuration_step_two">2. Allez dans la section #Pairing</string>
-    <string name="device_physical_configuration_step_three">3. Suivez les instructions pour appairer votre objet</string>
+    <string name="detail_scene_action_unknown_device">Dispositivo sconosciuto</string>
+    <string name="detail_scene_action_unknown_action">Azione sconosciuta</string>
 
-    <string name="search_device_success_title">C\'est fait</string>
-    <string name="search_device_success_description">Votre objet a été correctement crée !</string>
-    <string name="search_device_success_btn">Revenir à l\'accueil</string>
+    <string name="supported_accessories_not_supported_for_this_brand">Nessun dispositivo è supportato per questo marchio</string>
+
+    <string name="supported_device_reset_device_title">Attenzione</string>
+    <string name="supported_device_reset_device_message">Devi resettare il tuo dispositivo</string>
+    <string name="supported_device_reset_device_button">Ripristina</string>
+
+    <string name="create_device_new_device">Aggiungi dispositivo</string>
+    <string name="create_device_name">Nome del dispositivo</string>
+    <string name="create_device_name_hint">Lampada da soggiorno</string>
+    <string name="create_device_which_room">In quale stanza?</string>
+    <string name="create_device_which_room_hint">Soggiorno</string>
+    <string name="create_device_choose_color">Scegli un colore</string>
+    <string name="create_device_is_favoris">Ajouter aux favoris ?</string>
+
+    <string name="device_physical_configuration_title">Segui questi passaggi per configurare il tuo oggetto</string>
+    <string name="device_physical_configuration_step_one">1. Segui il seguente link :</string>
+    <string name="device_physical_configuration_step_two">2. Vai alla sezione #Pairing</string>
+    <string name="device_physical_configuration_step_three">3. Segui le istruzioni per abbinare il tuo oggetto</string>
+
+    <string name="search_device_success_title">È fatta</string>
+    <string name="search_device_success_description">Il tuo articolo è stato creato con successo!</string>
+    <string name="search_device_success_btn">Tornare a casa</string>
     <string name="search_device_error_title">Oops !</string>
-    <string name="search_device_error_description">Un problème est survenu durant l\'ajout !</string>
-    <string name="search_device_error_btn">Réessayer</string>
+    <string name="search_device_error_description">Si è verificato un problema durante l\'aggiunta !</string>
+    <string name="search_device_error_btn">Riprova</string>
+
 </resources>

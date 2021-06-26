@@ -2,25 +2,17 @@ package view.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
-import core.rest.mock.FakeObjectDataService
 import core.rest.model.SupportedAccessories
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import view.adapter.SupportedAccessoriesAdapter
 import viewModel.DeviceViewModel
-import java.util.Observer
 
 class SupportedAccessoriesListActivity : AppCompatActivity() {
-
-    private lateinit var supportedAccessoriesTypeList : List<SupportedAccessories>
-    private lateinit var mapper : ObjectMapper
     private lateinit var deviceViewModel : DeviceViewModel
 
     private lateinit var supportedDeviceTypeListRecyclerView: RecyclerView
