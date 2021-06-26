@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +20,7 @@ import com.kaopiz.kprogresshud.KProgressHUD
 import core.rest.model.ActionsToSet
 import core.rest.model.ActionsToSetIn
 import core.rest.model.ColorAction
+import org.w3c.dom.Text
 import view.adapter.DeviceAdapter
 import view.adapter.SceneAdapter
 import viewModel.HomeViewModel
@@ -26,12 +29,17 @@ import java.io.Serializable
 
 class HomeActivity : AppCompatActivity() {
 
+    private lateinit var sceneTitle : TextView
+    private lateinit var noDataTitle : TextView
     private lateinit var scenesRecyclerView: RecyclerView
     private lateinit var devicesRecyclerView: RecyclerView
     private lateinit var sceneAdapter : SceneAdapter
     private lateinit var deviceAdapter : DeviceAdapter
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var loader: KProgressHUD
+
+    private var deviceLoaded : Boolean = false
+    private var sceneLoaded : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +56,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun bind() {
+        sceneTitle = findViewById(R.id.scene_list_tv)
+        noDataTitle = findViewById(R.id.home_no_device_tv)
         devicesRecyclerView = findViewById(R.id.list_device_rv)
         scenesRecyclerView = findViewById(R.id.list_scene_rv)
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
@@ -80,11 +90,15 @@ class HomeActivity : AppCompatActivity() {
     private fun setUpObserver() {
         homeViewModel.deviceList.observe(this, Observer {
             deviceAdapter.deviceList = it
+            deviceLoaded = true
+            checkLoaded()
             sceneAdapter.deviceList = deviceAdapter.deviceList
             loader.dismiss()
         })
         homeViewModel.sceneList.observe(this, Observer {
             sceneAdapter.sceneList = it
+            sceneLoaded = true
+            checkLoaded()
         })
     }
 
@@ -93,6 +107,22 @@ class HomeActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_user_params)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+    }
+
+    private fun checkLoaded() {
+        if(sceneLoaded && deviceLoaded) {
+            if(deviceAdapter.deviceList?.isEmpty() == true) {
+                sceneTitle.visibility = View.GONE
+                devicesRecyclerView.visibility = View.GONE
+                scenesRecyclerView.visibility = View.GONE
+                noDataTitle.visibility = View.VISIBLE
+            } else {
+                noDataTitle.visibility = View.GONE
+                sceneTitle.visibility = View.VISIBLE
+                devicesRecyclerView.visibility = View.VISIBLE
+                scenesRecyclerView.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
