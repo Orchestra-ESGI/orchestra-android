@@ -165,6 +165,8 @@ class DetailDeviceActivity : AppCompatActivity() {
         when(deviceDetail!!.type) {
             HubAccessoryType.lightbulb -> {
                 configLinearLayout.visibility = View.GONE
+                colorTemperatureLayout.visibility = if(deviceDetail!!.actions?.color_temp == null) View.GONE else View.VISIBLE
+                colorLayout.visibility = if(deviceDetail!!.actions?.color == null) View.GONE else View.VISIBLE
             }
             HubAccessoryType.switch -> {
                 configLinearLayout.visibility = View.GONE
