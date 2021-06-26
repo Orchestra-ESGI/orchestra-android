@@ -11,44 +11,65 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_orchestra"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_orchestra"
         android:supportsRtl="true"
-        android:screenOrientation="sensorPortrait"
-        android:theme="@style/Theme.Orchestra">
-        <activity android:name="view.ui.SearchDeviceActivity"
-            android:theme="@style/SearchDeviceActivityPage"></activity>
-        <activity android:name="view.ui.DevicePhysicalConfigurationActivity"
-            android:theme="@style/DevicePhysicalConfigurationActivityPage"/>
-        <activity android:name="view.ui.CreateDeviceActivity"
-            android:theme="@style/CreateDeviceActivityPage"/>
-        <activity android:name="view.ui.SupportedAccessoriesListActivity"
-            android:theme="@style/SupportedAccessoriesListActivityPage"/>
-        <activity android:name="view.ui.SupportedDeviceListActivity"
-            android:theme="@style/SupportedDeviceListActivityPage"/>
+        android:theme="@style/Theme.Orchestra"
+        android:usesCleartextTraffic="true">
+        <activity android:name="view.ui.PagerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBarPage">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="view.ui.SearchDeviceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SearchDeviceActivityPage" />
+        <activity
+            android:name="view.ui.DevicePhysicalConfigurationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/DevicePhysicalConfigurationActivityPage" />
+        <activity
+            android:name="view.ui.CreateDeviceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CreateDeviceActivityPage" />
+        <activity
+            android:name="view.ui.SupportedAccessoriesListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SupportedAccessoriesListActivityPage" />
+        <activity
+            android:name="view.ui.SupportedDeviceListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SupportedDeviceListActivityPage" />
         <activity
             android:name="view.ui.DetailSceneActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/DetailScenePage" />
         <activity
             android:name="view.ui.DetailDeviceActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/DetailDevicePage" />
         <activity
             android:name="view.ui.CreateSceneActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/CreateScenePage" />
         <activity
             android:name="view.ui.HomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/SceneListPage" />
         <activity
             android:name="view.ui.SignInActivity"
             android:label="@string/create_account_title_page"
+            android:screenOrientation="portrait"
             android:theme="@style/CreateAccountPage" />
         <activity
             android:name="view.ui.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/LoginPage">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity android:name="view.ui.MainActivity" />
     </application>

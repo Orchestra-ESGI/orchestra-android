@@ -12,9 +12,9 @@
         android:orientation="vertical">
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:layout_gravity="right"
                 android:id="@+id/detail_device_ok_tv"
                 android:text="@string/detail_device_ok"
                 android:textSize="24dp"
