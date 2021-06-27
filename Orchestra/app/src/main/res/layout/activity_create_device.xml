@@ -111,27 +111,5 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/create_device_is_favoris_tv"
-        app:layout_constraintTop_toBottomOf="@id/create_device_colors_rv"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/create_device_is_favoris"
-        android:textColor="@color/white"
-        android:textSize="24dp"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"/>
-
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:id="@+id/create_device_is_favoris_switch"
-        app:layout_constraintTop_toBottomOf="@id/create_device_colors_rv"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="30dp"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

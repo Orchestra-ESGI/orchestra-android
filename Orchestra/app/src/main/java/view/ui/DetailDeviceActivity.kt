@@ -1,27 +1,31 @@
 package view.ui
 
 import android.annotation.SuppressLint
-import android.bluetooth.BluetoothClass
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
-import com.squareup.moshi.Json
+import com.kaopiz.kprogresshud.KProgressHUD
 import core.rest.model.*
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import core.rest.model.hubConfiguration.HubAccessoryType
 import core.utils.ColorPicker
 import view.adapter.DetailDeviceSpecificationAdapter
 import viewModel.DeviceViewModel
+import java.io.Serializable
 
 
 class DetailDeviceActivity : AppCompatActivity() {
@@ -30,7 +34,6 @@ class DetailDeviceActivity : AppCompatActivity() {
     private lateinit var detailDeviceSpecificationInfoNames: ArrayList<String>
     private lateinit var detailDeviceAdapter : DetailDeviceSpecificationAdapter
 
-    private lateinit var okTextView : TextView
     private lateinit var detailDeviceName : TextView
     private lateinit var detailDeviceRoom : TextView
     private lateinit var deviceDetailRecyclerView: RecyclerView
@@ -75,7 +78,6 @@ class DetailDeviceActivity : AppCompatActivity() {
     }
 
     private fun bind() {
-        okTextView = findViewById(R.id.detail_device_ok_tv)
         detailDeviceName = findViewById(R.id.detail_device_title_tv)
         detailDeviceRoom = findViewById(R.id.detail_device_room_tv)
         configLinearLayout = findViewById(R.id.detail_device_config_linear_layout)
@@ -101,10 +103,6 @@ class DetailDeviceActivity : AppCompatActivity() {
 
         if(deviceDetail?.actions?.state != null) {
             stateSwitch.isChecked = deviceDetail?.actions?.state!! == DeviceState.on
-        }
-
-        okTextView.setOnClickListener {
-            onBackPressed()
         }
 
         configurateButton.setOnClickListener {
@@ -247,5 +245,27 @@ class DetailDeviceActivity : AppCompatActivity() {
         val actions = ActionsToSetIn(state = state, brightness = brightness, color = color, color_temp = temp)
         actionToSend = ActionsToSet(deviceDetail?.friendly_name!!, actions)
         deviceVM.sendDeviceAction(actionToSend!!)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.detail_modifier_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+
+        R.id.detail_modifier_btn -> {
+            val deviceModificationIntent = Intent(this, CreateDeviceActivity::class.java)
+            deviceModificationIntent.putExtra("device", deviceDetail!!)
+            startActivity(deviceModificationIntent)
+            true
+        }
+
+
+
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 }

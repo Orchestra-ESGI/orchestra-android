@@ -28,6 +28,7 @@
         <!-- Customize your theme here. -->
     </style>
 
+
     <style name="LoginPage" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>

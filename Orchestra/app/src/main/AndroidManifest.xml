@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.orchestra">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -14,7 +12,8 @@
         android:roundIcon="@mipmap/ic_orchestra"
         android:supportsRtl="true"
         android:theme="@style/Theme.Orchestra"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:allowClearUserData="true">
         <activity android:name="view.ui.PagerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarPage">
@@ -47,11 +46,11 @@
         <activity
             android:name="view.ui.DetailSceneActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/DetailScenePage" />
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
         <activity
             android:name="view.ui.DetailDeviceActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/DetailDevicePage" />
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
         <activity
             android:name="view.ui.CreateSceneActivity"
             android:screenOrientation="portrait"

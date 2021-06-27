@@ -33,8 +33,6 @@ class CreateDeviceActivity : AppCompatActivity(), OnItemClicked {
     private lateinit var chooseColorTitleTextView: TextView
     private lateinit var shuffleColorButton: ImageView
     private lateinit var deviceColorsRecyclerView: RecyclerView
-    private lateinit var isFavorisTextView: TextView
-    private lateinit var isFavorisSwitch: Switch
 
     private lateinit var deviceColorsAdapter : ShuffleColorAdapter
     private lateinit var deviceColorsHashMap : MutableMap<Int, Boolean>
@@ -48,8 +46,8 @@ class CreateDeviceActivity : AppCompatActivity(), OnItemClicked {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_device)
 
-        getIntentInfos()
         bind()
+        getIntentInfos()
         generateBackGroundColor()
         setUpRv()
         setUpShuffleColor()
@@ -59,6 +57,9 @@ class CreateDeviceActivity : AppCompatActivity(), OnItemClicked {
         device = intent.getSerializableExtra("device") as? HubAccessoryConfiguration
         supportedDevice = intent.getSerializableExtra("SupportedDevice") as? SupportedDeviceInformations
         brand = intent.getStringExtra("brand")
+
+        nameEditText.setText(device?.name)
+        whichRoomEditText.setText(device?.room_name)
     }
 
     private fun bind() {
@@ -70,8 +71,6 @@ class CreateDeviceActivity : AppCompatActivity(), OnItemClicked {
         deviceColorsRecyclerView = findViewById(R.id.create_device_colors_rv)
         whichRoomTitleTextView = findViewById(R.id.create_device_which_room_tv)
         whichRoomEditText = findViewById(R.id.create_device_which_room_et)
-        isFavorisTextView = findViewById(R.id.create_device_is_favoris_tv)
-        isFavorisSwitch = findViewById(R.id.create_device_is_favoris_switch)
     }
 
     private fun generateBackGroundColor() {
@@ -136,31 +135,37 @@ class CreateDeviceActivity : AppCompatActivity(), OnItemClicked {
         val backgroundColor = deviceColorsHashMap.filterValues { it }.keys.first()
         var type : HubAccessoryType?
 
-        when (supportedDevice!!.type) {
+        when (supportedDevice?.type) {
             "lightbulb" -> {type = HubAccessoryType.lightbulb}
             "switch" -> type = HubAccessoryType.switch
             "sensor" -> type = HubAccessoryType.sensor
             else -> { // Note the block
-                type = null
+                type = device?.type
             }
         }
 
         val friendlyName = if(device == null) null else device!!.friendly_name
 
-        return HubAccessoryConfiguration(name, roomName, String.format("#%06X", 0xFFFFFF and backgroundColor), brand, supportedDevice!!.model, null, null, type, Actions(null, null, null, null), friendlyName)
+        return HubAccessoryConfiguration(name, roomName, String.format("#%06X", 0xFFFFFF and backgroundColor), brand, supportedDevice?.model, null, null, type, Actions(null, null, null, null), friendlyName)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.create_scene_add_btn -> {
             val intent = Intent()
             intent.putExtra("CreatedScene", retrieveData())
-            if (supportedDevice!!.documentation != null) {
-                intent.setClass(applicationContext, DevicePhysicalConfigurationActivity::class.java)
-                startActivity(intent)
+            if(supportedDevice == null) {
+                // Faire appel Update
+                onBackPressed()
             } else {
-                intent.setClass(applicationContext, SearchDeviceActivity::class.java)
-                startActivity(intent)
+                if (supportedDevice?.documentation != null) {
+                    intent.setClass(applicationContext, DevicePhysicalConfigurationActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    intent.setClass(applicationContext, SearchDeviceActivity::class.java)
+                    startActivity(intent)
+                }
             }
+
             true
         }
 
