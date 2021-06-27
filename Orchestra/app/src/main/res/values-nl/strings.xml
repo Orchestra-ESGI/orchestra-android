@@ -109,5 +109,7 @@
     <string name="search_device_error_title">Oops !</string>
     <string name="search_device_error_description">Er is een probleem opgetreden bij het toevoegen !</string>
     <string name="search_device_error_btn">Probeer het opnieuw</string>
+    <string name="create_scene_delete_action">Supprimer</string>
+    <string name="create_scene_cancel">Cancel</string>
 
 </resources>

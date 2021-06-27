@@ -3,6 +3,7 @@ package view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -11,9 +12,10 @@ import com.example.orchestra.R
 import core.rest.model.SceneActionsName
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import utils.OnActionClicked
+import utils.OnActionLongClicked
 import java.util.ArrayList
 
-class CreateSceneActionsAdapter(onActionClicked: OnActionClicked): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongClicked: OnActionLongClicked): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val DEVICE = 0
@@ -21,7 +23,8 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked): RecyclerView.
     }
 
     private lateinit var layoutInflater: LayoutInflater
-    private val itemListener: OnActionClicked = onActionClicked
+    private val itemClickListener: OnActionClicked = onActionClicked
+    private val itemLongClickListener: OnActionLongClicked = onActionLongClicked
 
     var detailSceneActions: ArrayList<HubAccessoryConfiguration>? = null
         set(value) {
@@ -61,11 +64,11 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked): RecyclerView.
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (detailSceneActions!![position].friendly_name != null) {
-            (holder as DetailSceneDevicesViewHolder).bind(detailSceneActions!![position])
+            (holder as DetailSceneDevicesViewHolder).bind(detailSceneActions!![position], position, itemLongClickListener)
         } else {
             val section = getSectionTypeViaElementPosition(position)
             val actionsName = parseDeviceActionToGetName(device = section!!)
-            (holder as DetailSceneActionsViewHolder).bind(detailSceneActions!![position], position, actionsName, itemListener)
+            (holder as DetailSceneActionsViewHolder).bind(detailSceneActions!![position], position, actionsName, itemClickListener, itemLongClickListener)
         }
     }
 
@@ -79,29 +82,9 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked): RecyclerView.
     class DetailSceneActionsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val actionTv = itemView.findViewById<TextView>(R.id.cell_detail_scene_action_name)
 
-        fun bind(action : HubAccessoryConfiguration, position : Int, actionsName : ArrayList<SceneActionsName>?, listener : OnActionClicked) {
-
+        fun bind(action : HubAccessoryConfiguration, position : Int, actionsName : ArrayList<SceneActionsName>?, listener : OnActionClicked, longClicked: OnActionLongClicked) {
             if(action.actions == null && action.friendly_name == null) {
-
-                val arrayAdapter = ArrayAdapter<String>(itemView.context, android.R.layout.select_dialog_item)
-                actionsName!!.forEach {
-                    arrayAdapter.add(it.key)
-                }
-
                 actionTv.text = itemView.context.getString(R.string.create_scene_add_action)
-                itemView.setOnClickListener {
-                    val alertDialog: AlertDialog = itemView.context.let {
-                        val builder = AlertDialog.Builder(it)
-                        builder.apply {
-                            this.setTitle(R.string.create_scene_list_action_description)
-                            setAdapter(arrayAdapter) {_, which ->
-                                listener.actionClicked(actionsName[which], position = position)
-                            }
-                        }
-                        builder.create()
-                    }
-                    alertDialog.show()
-                }
             } else {
                 if(action.actions?.state != null) {
                     val state = actionsName!!.filter { elem -> action.actions!!.state!!.name == elem.value }
@@ -120,7 +103,44 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked): RecyclerView.
                 } else {
                     actionTv.text = "Error"
                 }
+            }
 
+            val arrayAdapter = ArrayAdapter<String>(itemView.context, android.R.layout.select_dialog_item)
+            actionsName!!.forEach {
+                arrayAdapter.add(it.key)
+            }
+
+            itemView.setOnClickListener {
+                if(action.actions == null && action.friendly_name == null) {
+                    val alertDialog: AlertDialog = itemView.context.let {
+                        val builder = AlertDialog.Builder(it)
+                        builder.apply {
+                            this.setTitle(R.string.create_scene_list_action_description)
+                            setAdapter(arrayAdapter) {_, which ->
+                                listener.actionClicked(actionsName[which], position = position)
+                            }
+                        }
+                        builder.create()
+                    }
+                    alertDialog.show()
+                }
+            }
+
+            itemView.setOnLongClickListener {
+                if(actionTv.text != itemView.context.getString(R.string.create_scene_add_action)) {
+                    AlertDialog.Builder(itemView.context)
+                            .setTitle("Supprimer l'action")
+                            .setMessage("Êtes-vous sûr de vouloir supprimer cet action ?")
+                            .setPositiveButton(R.string.create_scene_delete_action) { _, _ ->
+                                longClicked.actionLongClicked(action, position, true)
+                            }
+                            .setNegativeButton(R.string.create_scene_cancel) { dialog, _ ->
+                                dialog.cancel()
+                            }
+                            .create()
+                            .show()
+                }
+                true
             }
         }
     }
@@ -128,8 +148,23 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked): RecyclerView.
     class DetailSceneDevicesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val actionTv = itemView.findViewById<TextView>(R.id.cell_detail_scene_device_name)
 
-        fun bind(action : HubAccessoryConfiguration) {
+        fun bind(action : HubAccessoryConfiguration, position: Int, itemLongClickListener: OnActionLongClicked) {
             actionTv.text = action.name
+
+            itemView.setOnLongClickListener {
+                AlertDialog.Builder(itemView.context)
+                        .setTitle("Supprimer l'objet")
+                        .setMessage("Êtes-vous sûr de vouloir supprimer cet objet de la scène actuelle ?")
+                        .setPositiveButton(R.string.create_scene_delete_action) { _, _ ->
+                            itemLongClickListener.actionLongClicked(action, position, false)
+                        }
+                        .setNegativeButton(R.string.create_scene_cancel) {dialog, _ ->
+                            dialog.cancel()
+                        }
+                        .create()
+                        .show()
+                true
+            }
         }
     }
 

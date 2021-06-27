@@ -109,5 +109,7 @@
     <string name="search_device_error_title">哎呀 !</string>
     <string name="search_device_error_description">添加时出现问题 !</string>
     <string name="search_device_error_btn">再试一次</string>
+    <string name="create_scene_delete_action">Supprimer</string>
+    <string name="create_scene_cancel">Cancel</string>
 
 </resources>

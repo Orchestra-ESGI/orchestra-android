@@ -108,5 +108,7 @@
     <string name="search_device_error_title">Oops !</string>
     <string name="search_device_error_description">Un problème est survenu durant l\'ajout !</string>
     <string name="search_device_error_btn">Réessayer</string>
+    <string name="create_scene_delete_action">Supprimer</string>
+    <string name="create_scene_cancel">Cancel</string>
 
 </resources>

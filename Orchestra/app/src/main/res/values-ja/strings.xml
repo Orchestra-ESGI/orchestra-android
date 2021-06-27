@@ -109,4 +109,6 @@
     <string name="search_device_error_title">おっとっと !</string>
     <string name="search_device_error_description">追加に問題がありました !</string>
     <string name="search_device_error_btn">再試行</string>
+    <string name="create_scene_delete_action">Supprimer</string>
+    <string name="create_scene_cancel">Cancel</string>
 </resources>

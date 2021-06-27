@@ -20,6 +20,7 @@ import com.example.orchestra.R
 import core.rest.model.*
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import utils.OnActionClicked
+import utils.OnActionLongClicked
 import utils.OnItemClicked
 import view.adapter.CreateSceneActionsAdapter
 import view.adapter.ShuffleColorAdapter
@@ -27,7 +28,7 @@ import viewModel.SceneViewModel
 import kotlin.random.Random
 
 
-class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked {
+class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked, OnActionLongClicked {
 
     private lateinit var titleTextView: TextView
     private lateinit var nameTitleTextView: TextView
@@ -107,7 +108,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked 
         sceneColorsRecyclerView.adapter = sceneColorsAdapter
 
         listActionRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        listActionAdapter = CreateSceneActionsAdapter(this)
+        listActionAdapter = CreateSceneActionsAdapter(this, this)
         listActionAdapter.detailSceneActions = actionList
         listActionRecyclerView.adapter = listActionAdapter
     }
@@ -287,6 +288,33 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked 
             }
         }
         addAction(device, position)
+    }
+
+    override fun actionLongClicked(device: HubAccessoryConfiguration, position: Int, isAction: Boolean) {
+        if(isAction) {
+            actionList.removeAt(position)
+            listActionAdapter.notifyDataSetChanged()
+            listActionRecyclerView.adapter!!.notifyDataSetChanged()
+        } else {
+            var listActionToRemove : ArrayList<Int> = ArrayList()
+            listActionToRemove.add(position)
+            actionList.forEachIndexed { index, hubAccessory ->
+                if (index > position) {
+                    if(actionList[index].friendly_name == null) {
+                        listActionToRemove.add(index)
+                    } else {
+                        return
+                    }
+                }
+            }
+
+            listActionToRemove.forEach {
+                actionList.removeAt(position)
+            }
+            availableDeviceList.add(device)
+            listActionAdapter.notifyDataSetChanged()
+            listActionRecyclerView.adapter!!.notifyDataSetChanged()
+        }
     }
 
 }

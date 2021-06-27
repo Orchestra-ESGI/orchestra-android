@@ -109,4 +109,6 @@
     <string name="search_device_error_title">Opa !</string>
     <string name="search_device_error_description">Ocorreu um problema ao adicionar !</string>
     <string name="search_device_error_btn">Tente novamente</string>
+    <string name="create_scene_delete_action">Supprimer</string>
+    <string name="create_scene_cancel">Cancel</string>
 </resources>

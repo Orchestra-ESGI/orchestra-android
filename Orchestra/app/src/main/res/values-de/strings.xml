@@ -109,5 +109,7 @@
     <string name="search_device_error_title">Scheiße !</string>
     <string name="search_device_error_description">Beim Hinzufügen ist ein Problem aufgetreten !</string>
     <string name="search_device_error_btn">Versuchen Sie es nochmal</string>
+    <string name="create_scene_delete_action">Supprimer</string>
+    <string name="create_scene_cancel">Cancel</string>
 
 </resources>
