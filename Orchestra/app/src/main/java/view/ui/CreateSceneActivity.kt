@@ -53,34 +53,30 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     private var deviceList : ArrayList<HubAccessoryConfiguration> = ArrayList()
     private var availableDeviceList : ArrayList<HubAccessoryConfiguration> = ArrayList()
 
+    private var sceneDetail : Scene? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_scene)
 
         val intent = intent
-        val args = intent.getBundleExtra("BUNDLE")
-        deviceList = args!!.getSerializable("ARRAYLIST") as ArrayList<HubAccessoryConfiguration>
+        sceneDetail = intent.getSerializableExtra("scene") as? Scene
+
+        if(sceneDetail != null) {
+            deviceList = intent.getSerializableExtra("deviceList") as ArrayList<HubAccessoryConfiguration>
+        } else {
+            val args = intent.getBundleExtra("BUNDLE")
+            deviceList = args!!.getSerializable("ARRAYLIST") as ArrayList<HubAccessoryConfiguration>
+        }
+
         availableDeviceList = deviceList
 
         bind()
+        loadDataIfModeModify()
         generateBackGroundColor()
         setUpRv()
         setUpShuffleColor()
         setUpAddActions()
-    }
-
-    private fun generateBackGroundColor() {
-        this.sceneColorsHashMap = mutableMapOf()
-        this.sceneColors = ArrayList()
-        val size = 5
-        var randomColor : Int = Color.argb(255, Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
-        this.sceneColorsHashMap[randomColor] = true
-        this.sceneColors.add(randomColor)
-        for (i in 1..size) {
-            randomColor = Color.argb(255, Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
-            this.sceneColorsHashMap[randomColor] = false
-            this.sceneColors.add(randomColor)
-        }
     }
 
     private fun bind() {
@@ -97,6 +93,28 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
 
         sceneViewModel = ViewModelProviders.of(this).get(SceneViewModel::class.java)
         sceneViewModel.context = this
+    }
+
+    private fun loadDataIfModeModify() {
+        if(sceneDetail != null) {
+            nameEditText.setText(sceneDetail!!.name)
+            descriptionEditText.setText(sceneDetail!!.description)
+            actionList = formatSceneToHubAccessoryConfiguration()
+        }
+    }
+
+    private fun generateBackGroundColor() {
+        this.sceneColorsHashMap = mutableMapOf()
+        this.sceneColors = ArrayList()
+        val size = 5
+        var randomColor : Int = Color.argb(255, Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
+        this.sceneColorsHashMap[randomColor] = true
+        this.sceneColors.add(randomColor)
+        for (i in 1..size) {
+            randomColor = Color.argb(255, Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
+            this.sceneColorsHashMap[randomColor] = false
+            this.sceneColors.add(randomColor)
+        }
     }
 
     private fun setUpRv() {
@@ -177,7 +195,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
             var color : ColorAction? = null
             var temperature : Int? = null
             var actionsToSetIn : ActionsToSetIn?
-            var nextIndex = if(i != indexOfDevices!!.size-1) indexOfDevices[i + 1] else actionList.size-1
+            var nextIndex = if(i != indexOfDevices.size-1) indexOfDevices[i + 1] else actionList.size-1
             for(j in indexOfDevices[i] until nextIndex step 1) {
                 if(actionList[j].actions != null && actionList[j].friendly_name == null) {
                     val actionItem = actionList[j]
@@ -191,23 +209,6 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
             var actionToSet = ActionsToSet(friendly_name = distinctListOfFriendlyName[i], actions = actionsToSetIn)
             listActionToSet.add(actionToSet)
         }
-/*
-        actionList.forEach {
-            var friendlyName = ""
-            if(it.friendly_name != null) {
-                friendlyName = it.friendly_name!!
-            }
-            if(it.friendly_name == null && it.actions != null) {
-                val brightness = if(it.actions!!.brightness != null) it.actions!!.brightness!!.current_state else null
-                val color = if(it.actions!!.color != null) ColorAction(hex = it.actions!!.color!!.hex) else null
-                val temperature = if(it.actions!!.color_temp != null) it.actions!!.color_temp!!.current_state else null
-                var actionsToSetIn = ActionsToSetIn(it.actions!!.state?.name, brightness, color, temperature)
-                var actionToSet = ActionsToSet(friendly_name = friendlyName, actions = actionsToSetIn)
-                listActionToSet.add(actionToSet)
-            }
-        }
-
- */
 
         return Scene(name = name.toString(), description = description.toString(), color = color, devices = listActionToSet)
     }
@@ -244,7 +245,12 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
             val intent = Intent()
             val scene = retrieveData()
             intent.putExtra("CreatedScene", scene)
-            sceneViewModel.saveScene(scene)
+            if(scene._id == "") {
+                sceneViewModel.saveScene(scene)
+            } else {
+                sceneViewModel.updateScene(scene)
+            }
+
             setResult(RESULT_OK, intent)
             finish()
             true
@@ -258,36 +264,65 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     override fun actionClicked(actionsName: SceneActionsName, position: Int) {
         var actions = Actions(null, null, null, null)
         var device = HubAccessoryConfiguration(actions = actions)
-        if(actionsName.type != null) {
-            when(actionsName.type) {
-                "state" -> {
-                    when(actionsName.value) {
-                        "on" -> {
-                            device.actions!!.state = DeviceState.on
-                        }
-                        "off" -> {
-                            device.actions!!.state = DeviceState.off
-                        }
-                        "toggle" -> {
-                            device.actions!!.state = DeviceState.off
-                        }
+        when(actionsName.type) {
+            "state" -> {
+                when(actionsName.value) {
+                    "on" -> {
+                        device.actions!!.state = DeviceState.on
+                    }
+                    "off" -> {
+                        device.actions!!.state = DeviceState.off
+                    }
+                    "toggle" -> {
+                        device.actions!!.state = DeviceState.toggle
                     }
                 }
-                "brightness" -> {
-                    device.actions!!.brightness = SliderAction(current_state = actionsName.value.toInt())
-                }
-                "color_temp" -> {
-                    device.actions!!.color_temp = SliderAction(current_state = actionsName.value.toInt())
-                }
-                "color" -> {
-                    device.actions!!.color = ColorAction(actionsName.value)
-                }
-                else -> {
+            }
+            "brightness" -> {
+                device.actions!!.brightness = SliderAction(current_state = actionsName.value.toInt())
+            }
+            "color_temp" -> {
+                device.actions!!.color_temp = SliderAction(current_state = actionsName.value.toInt())
+            }
+            "color" -> {
+                device.actions!!.color = ColorAction(actionsName.value)
+            }
+            else -> {
 
-                }
             }
         }
         addAction(device, position)
+    }
+
+    private fun formatSceneToHubAccessoryConfiguration() : ArrayList<HubAccessoryConfiguration>{
+        val listOfSceneDevices = sceneDetail?.devices
+        var listOfDeviceFormatted : ArrayList<HubAccessoryConfiguration> = ArrayList()
+
+        listOfSceneDevices?.forEach {
+            val section = deviceList.first { device -> device.friendly_name == it.friendly_name }
+            availableDeviceList.remove(section)
+            listOfDeviceFormatted.add(section)
+            if (it.actions?.state != null) {
+                var state : DeviceState? = null
+                when(it.actions!!.state) {
+                    "on" -> state = DeviceState.on
+                    "off" -> state = DeviceState.off
+                    "toggle" -> state = DeviceState.toggle
+                }
+                listOfDeviceFormatted.add(HubAccessoryConfiguration(actions = Actions(state = state)))
+            }
+            if (it.actions?.brightness != null) {
+                listOfDeviceFormatted.add(HubAccessoryConfiguration(actions = Actions(brightness = SliderAction(current_state = it.actions!!.brightness!!))))
+            }
+            if (it.actions?.color != null) {
+                listOfDeviceFormatted.add(HubAccessoryConfiguration(actions = Actions(color = it.actions!!.color)))
+            }
+            if (it.actions?.color_temp != null) {
+                listOfDeviceFormatted.add(HubAccessoryConfiguration(actions = Actions(color_temp = SliderAction(current_state = it.actions!!.color_temp!!))))
+            }
+            listOfDeviceFormatted.add(HubAccessoryConfiguration())
+        }
+        return listOfDeviceFormatted
     }
 
     override fun actionLongClicked(device: HubAccessoryConfiguration, position: Int, isAction: Boolean) {
@@ -298,17 +333,19 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         } else {
             var listActionToRemove : ArrayList<Int> = ArrayList()
             listActionToRemove.add(position)
-            actionList.forEachIndexed { index, hubAccessory ->
+
+            var otherSection = false
+            actionList.forEachIndexed { index, _ ->
                 if (index > position) {
-                    if(actionList[index].friendly_name == null) {
+                    if(actionList[index].friendly_name == null && !otherSection) {
                         listActionToRemove.add(index)
                     } else {
-                        return
+                        otherSection = true
                     }
                 }
             }
 
-            listActionToRemove.forEach {
+            listActionToRemove.forEach { _ ->
                 actionList.removeAt(position)
             }
             availableDeviceList.add(device)

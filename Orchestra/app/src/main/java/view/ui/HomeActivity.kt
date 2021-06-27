@@ -1,6 +1,5 @@
 package view.ui
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -17,10 +16,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import com.kaopiz.kprogresshud.KProgressHUD
-import core.rest.model.ActionsToSet
-import core.rest.model.ActionsToSetIn
-import core.rest.model.ColorAction
-import org.w3c.dom.Text
 import view.adapter.DeviceAdapter
 import view.adapter.SceneAdapter
 import viewModel.HomeViewModel
@@ -43,7 +38,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_scene_list)
+        setContentView(R.layout.activity_home)
 
         bind()
         init()

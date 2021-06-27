@@ -1,8 +1,11 @@
 package view.ui
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,10 +23,12 @@ class DetailSceneActivity : AppCompatActivity() {
     private lateinit var deviceSceneRecyclerView: RecyclerView
     private lateinit var detailSceneAdapter : DetailSceneActionsAdapter
 
+    private var sceneDetail : Scene? = null
+    private var listDevice : ArrayList<HubAccessoryConfiguration>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_scene)
-
         detailSceneName = findViewById(R.id.detail_scene_title_tv)
         detailSceneDescription = findViewById(R.id.detail_scene_description_tv)
         deviceSceneRecyclerView = findViewById(R.id.detail_scene_actions_rv)
@@ -38,13 +43,13 @@ class DetailSceneActivity : AppCompatActivity() {
         )
         deviceSceneRecyclerView.addItemDecoration(dividerItemDecoration)
 
-        val sceneDetail = intent.getSerializableExtra("DetailScene") as? Scene
+        sceneDetail = intent.getSerializableExtra("DetailScene") as? Scene
         val args = intent.getBundleExtra("BUNDLE")
-        val listDevice = args!!.getSerializable("ARRAYLIST") as ArrayList<HubAccessoryConfiguration>
+        listDevice = args!!.getSerializable("ARRAYLIST") as ArrayList<HubAccessoryConfiguration>
 
         detailSceneName.text = sceneDetail!!.name
 
-        sceneDetail.color?.let {
+        sceneDetail!!.color?.let {
             val sceneBackgroundColor = if(it.first() == '#') {
                 Color.parseColor(it)
             } else {
@@ -52,9 +57,9 @@ class DetailSceneActivity : AppCompatActivity() {
             }
             detailSceneName.setTextColor(sceneBackgroundColor)
         }
-        detailSceneDescription.text = sceneDetail.description
+        detailSceneDescription.text = sceneDetail!!.description
 
-        detailSceneAdapter.detailSceneActions = formatSceneToDetailSceneActions(sceneDetail, listDevice)
+        detailSceneAdapter.detailSceneActions = formatSceneToDetailSceneActions(sceneDetail!!, listDevice!!)
 
 
         deviceSceneRecyclerView.adapter = detailSceneAdapter
@@ -88,5 +93,25 @@ class DetailSceneActivity : AppCompatActivity() {
             }
         }
         return listOfDeviceFormatted
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.detail_modifier_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.detail_modifier_btn -> {
+            val sceneModificationIntent = Intent(this, CreateSceneActivity::class.java)
+            sceneModificationIntent.putExtra("scene", sceneDetail!!)
+            sceneModificationIntent.putExtra("deviceList", listDevice!!)
+            startActivity(sceneModificationIntent)
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 }

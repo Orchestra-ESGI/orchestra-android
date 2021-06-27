@@ -1,30 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_gray"
+    android:orientation="vertical"
     tools:context="view.ui.DetailSceneActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/detail_scene_modify_tv"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/detail_scene_modify"
-        android:textSize="24dp"
-        android:textColor="@color/blue_pwd"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/detail_scene_title_tv"
-        app:layout_constraintTop_toBottomOf="@+id/detail_scene_modify_tv"
-        app:layout_constraintStart_toStartOf="parent"
         android:textSize="36dp"
         android:textStyle="bold"
         android:layout_marginTop="20dp"
@@ -36,8 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/detail_scene_description_title_tv"
-        app:layout_constraintTop_toBottomOf="@id/detail_scene_title_tv"
-        app:layout_constraintStart_toStartOf="parent"
         android:text="@string/detail_scene_description_title"
         android:textSize="24dp"
         android:textColor="@color/white"
@@ -49,8 +34,6 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:id="@+id/detail_scene_description_tv"
-        app:layout_constraintTop_toBottomOf="@id/detail_scene_description_title_tv"
-        app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/detail_scene_description_shape"
         android:textColor="@color/white"
         android:layout_marginTop="20dp"
@@ -61,8 +44,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/detail_scene_action_title_tv"
-        app:layout_constraintTop_toBottomOf="@id/detail_scene_description_tv"
-        app:layout_constraintStart_toStartOf="parent"
         android:text="@string/detail_scene_action_title"
         android:textSize="24dp"
         android:textColor="@color/white"
@@ -74,9 +55,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/detail_scene_actions_rv"
-        app:layout_constraintTop_toBottomOf="@id/detail_scene_action_title_tv"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

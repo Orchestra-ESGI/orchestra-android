@@ -31,4 +31,8 @@ class SceneViewModel : ViewModel() {
     fun deleteScenes(scenes : ListSceneToDelete) {
         sceneService.deleteScenes(scenes, context)
     }
+
+    fun updateScene(scene : Scene) {
+
+    }
 }

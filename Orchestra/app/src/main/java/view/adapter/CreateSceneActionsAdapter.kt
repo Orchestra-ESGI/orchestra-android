@@ -9,8 +9,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
+import core.rest.model.Actions
 import core.rest.model.SceneActionsName
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.HubAccessoryType
 import utils.OnActionClicked
 import utils.OnActionLongClicked
 import java.util.ArrayList
@@ -34,7 +36,7 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
 
     override fun getItemViewType(position: Int): Int {
         if(detailSceneActions != null) {
-            if(detailSceneActions!![position].friendly_name != null) return DEVICE else ACTION
+            return if(detailSceneActions!![position].friendly_name != null) DEVICE else ACTION
         }
         return -1
     }
@@ -68,7 +70,8 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
         } else {
             val section = getSectionTypeViaElementPosition(position)
             val actionsName = parseDeviceActionToGetName(device = section!!)
-            (holder as DetailSceneActionsViewHolder).bind(detailSceneActions!![position], position, actionsName, itemClickListener, itemLongClickListener)
+            val alreadySelectedActionTypes = getAlreadySelectedActionTypesForDevice(position)
+            (holder as DetailSceneActionsViewHolder).bind(detailSceneActions!![position], position, alreadySelectedActionTypes, actionsName, itemClickListener, itemLongClickListener)
         }
     }
 
@@ -82,7 +85,10 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
     class DetailSceneActionsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val actionTv = itemView.findViewById<TextView>(R.id.cell_detail_scene_action_name)
 
-        fun bind(action : HubAccessoryConfiguration, position : Int, actionsName : ArrayList<SceneActionsName>?, listener : OnActionClicked, longClicked: OnActionLongClicked) {
+        fun bind(action : HubAccessoryConfiguration, position : Int, usedActionTypes : List<HubAccessoryConfiguration>, actionsName : ArrayList<SceneActionsName>?, listener : OnActionClicked, longClicked: OnActionLongClicked) {
+
+
+
             if(action.actions == null && action.friendly_name == null) {
                 actionTv.text = itemView.context.getString(R.string.create_scene_add_action)
             } else {
@@ -102,6 +108,22 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
                     actionTv.text = if(temperature.isNotEmpty()) temperature[0].key else ""
                 } else {
                     actionTv.text = "Error"
+                }
+            }
+
+            val actionTypes = usedActionTypes.map { action -> action.actions }
+            actionTypes.forEach {
+                if(it?.state != null) {
+                    actionsName?.removeAll { scene -> scene.type == "state" }
+                }
+                if(it?.brightness != null) {
+                    actionsName?.removeAll { scene -> scene.type == "brightness" }
+                }
+                if(it?.color != null) {
+                    actionsName?.removeAll { scene -> scene.type == "color" }
+                }
+                if(it?.color_temp != null) {
+                    actionsName?.removeAll { scene -> scene.type == "color_temp" }
                 }
             }
 
@@ -169,8 +191,8 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
     }
 
     private fun parseDeviceActionToGetName(device: HubAccessoryConfiguration) : ArrayList<SceneActionsName> {
-        var actions: java.util.ArrayList<String> = java.util.ArrayList()
-        var values: java.util.ArrayList<String> = java.util.ArrayList()
+        var actions: ArrayList<String>
+        var values: ArrayList<String>
         var actionsName = ArrayList<SceneActionsName>()
         if (device.actions?.state != null) {
             actions = arrayListOf("Allumer l'appareil", "Éteindre l'appareil", "Basculer")
@@ -221,5 +243,17 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
             }
         }
         return null
+    }
+
+    private fun getAlreadySelectedActionTypesForDevice(position: Int) : List<HubAccessoryConfiguration> {
+        var listActions : ArrayList<HubAccessoryConfiguration> = ArrayList()
+        for (i in position downTo 0 step 1) {
+            if(detailSceneActions!![i].friendly_name == null) {
+                listActions.add(detailSceneActions!![i])
+            } else {
+                return listActions
+            }
+        }
+        return listActions
     }
 }
