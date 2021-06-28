@@ -1,18 +1,20 @@
 package view.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
-import core.rest.model.Actions
 import core.rest.model.SceneActionsName
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
-import core.rest.model.hubConfiguration.HubAccessoryType
+import core.utils.ColorPicker
 import utils.OnActionClicked
 import utils.OnActionLongClicked
 import java.util.ArrayList
@@ -69,7 +71,7 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
             (holder as DetailSceneDevicesViewHolder).bind(detailSceneActions!![position], position, itemLongClickListener)
         } else {
             val section = getSectionTypeViaElementPosition(position)
-            val actionsName = parseDeviceActionToGetName(device = section!!)
+            val actionsName = parseDeviceActionToGetName(device = section!!, deviceAction = detailSceneActions!![position])
             val alreadySelectedActionTypes = getAlreadySelectedActionTypesForDevice(position)
             (holder as DetailSceneActionsViewHolder).bind(detailSceneActions!![position], position, alreadySelectedActionTypes, actionsName, itemClickListener, itemLongClickListener)
         }
@@ -84,11 +86,10 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
 
     class DetailSceneActionsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val actionTv = itemView.findViewById<TextView>(R.id.cell_detail_scene_action_name)
+        private val actionIv = itemView.findViewById<ImageView>(R.id.cell_detail_scene_action_iv)
 
         fun bind(action : HubAccessoryConfiguration, position : Int, usedActionTypes : List<HubAccessoryConfiguration>, actionsName : ArrayList<SceneActionsName>?, listener : OnActionClicked, longClicked: OnActionLongClicked) {
-
-
-
+            actionIv.visibility = View.GONE
             if(action.actions == null && action.friendly_name == null) {
                 actionTv.text = itemView.context.getString(R.string.create_scene_add_action)
             } else {
@@ -101,7 +102,19 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
                     actionTv.text = if(brightness.isNotEmpty()) brightness[0].key else ""
                 } else if (action.actions?.color?.hex != null) {
                     val hex = actionsName!!.filter { elem -> action.actions!!.color!!.hex == elem.value }
-                    actionTv.text = if(hex.isNotEmpty()) hex[0].key else ""
+                    actionTv.text = ""
+                    if(hex.isNotEmpty()){
+                        actionTv.text = hex[0].key
+
+                        val actionDrawable = AppCompatResources.getDrawable(
+                                actionIv.context,
+                                R.drawable.create_scene_shuffle_color_shape
+                        )
+                        val color = Color.parseColor(hex[0].value)
+                        actionIv.setImageDrawable(actionDrawable)
+                        DrawableCompat.setTint(actionIv.drawable,color);
+                        actionIv.visibility = View.VISIBLE
+                    }
                 } else if (action.actions?.color_temp?.current_state != null) {
                     val temperatureTypes = actionsName!!.filter { elem -> elem.type == "color_temp"}
                     val temperature = temperatureTypes!!.filter { elem -> action.actions!!.color_temp!!.current_state == elem.value.toInt() }
@@ -137,9 +150,33 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
                     val alertDialog: AlertDialog = itemView.context.let {
                         val builder = AlertDialog.Builder(it)
                         builder.apply {
-                            this.setTitle(R.string.create_scene_list_action_description)
+                            this.setTitle(R.string.create_scene_add_action_text)
                             setAdapter(arrayAdapter) {_, which ->
-                                listener.actionClicked(actionsName[which], position = position)
+                                if (actionsName[which].key == "Choisir une couleur") {
+                                    val view = LayoutInflater.from(itemView.context).inflate(R.layout.custom_view_color_picker, null)
+                                    val colorPicker = view.findViewById<ColorPicker>(R.id.custom_view_color_picker)
+                                    var colorSelected = String.format("#%06X", 0xFFFFFF and colorPicker.color)
+                                    colorPicker.setOnColorChangedListener(object :
+                                            ColorPicker.OnColorChangedListener {
+                                        override fun onColorChanged(color: Int) {
+                                            colorSelected = String.format("#%06X", 0xFFFFFF and color)
+                                        }
+                                    })
+                                    val builder = AlertDialog.Builder(itemView.context)
+                                            .setTitle("Choisir une couleur")
+                                            .setPositiveButton("Ok") {_, which ->
+                                                listener.actionClicked(SceneActionsName(type = "color", key = "Changer la couleur à", value = colorSelected), position = position)
+                                            }
+                                            .setNegativeButton("Cancel") {dialog, _ ->
+                                                dialog.cancel()
+                                            }
+                                            .create()
+                                    builder.setView(view)
+                                    builder.setCanceledOnTouchOutside(false)
+                                    builder.show()
+                                } else {
+                                    listener.actionClicked(actionsName[which], position = position)
+                                }
                             }
                         }
                         builder.create()
@@ -190,10 +227,15 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
         }
     }
 
-    private fun parseDeviceActionToGetName(device: HubAccessoryConfiguration) : ArrayList<SceneActionsName> {
+    private fun parseDeviceActionToGetName(device: HubAccessoryConfiguration, deviceAction: HubAccessoryConfiguration) : ArrayList<SceneActionsName> {
         var actions: ArrayList<String>
         var values: ArrayList<String>
         var actionsName = ArrayList<SceneActionsName>()
+
+        if (deviceAction.actions?.color != null) {
+            actionsName.add(SceneActionsName(key = "Changer la couleur à", value = "${deviceAction.actions?.color?.hex}", type = "color"))
+        }
+
         if (device.actions?.state != null) {
             actions = arrayListOf("Allumer l'appareil", "Éteindre l'appareil", "Basculer")
             values = arrayListOf("on", "off", "toggle")
@@ -205,10 +247,19 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
         }
 
         if(device.actions?.brightness != null){
-            actions = arrayListOf("Régler la luminosité à 25%", "Régler la luminosité à 50%", "Régler la luminosité à 100%")
+            actions = arrayListOf("Luminosité à 25%", "Luminosité à 50%", "Luminosité à 100%")
             values = arrayListOf("25", "50", "100")
             for (index in actions.indices) {
                 val action = SceneActionsName(key = actions[index], value = values[index], type = "brightness")
+                actionsName.add(action)
+            }
+        }
+
+        if(device.actions?.color_temp != null){
+            actions = arrayListOf("Température à 25%", "Température à 50%", "Température à 100%")
+            values = arrayListOf("25", "50", "100")
+            for (index in actions.indices) {
+                val action = SceneActionsName(key = actions[index], value = values[index], type = "color_temp")
                 actionsName.add(action)
             }
         }
@@ -218,15 +269,6 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
             values = arrayListOf("#FF0000")
             for (index in actions.indices) {
                 val action = SceneActionsName(key = actions[index], value = values[index], type = "color")
-                actionsName.add(action)
-            }
-        }
-
-        if(device.actions?.color_temp != null){
-            actions = arrayListOf("Choisir la température")
-            values = arrayListOf("200")
-            for (index in actions.indices) {
-                val action = SceneActionsName(key = actions[index], value = values[index], type = "color_temp")
                 actionsName.add(action)
             }
         }

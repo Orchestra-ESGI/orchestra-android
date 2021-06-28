@@ -111,5 +111,6 @@
     <string name="search_device_error_btn">Retry</string>
     <string name="create_scene_delete_action">Supprimer</string>
     <string name="create_scene_cancel">Cancel</string>
+    <string name="create_scene_add_action_text">Ajouter une action</string>
 
 </resources>

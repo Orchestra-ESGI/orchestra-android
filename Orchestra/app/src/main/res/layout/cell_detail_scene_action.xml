@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
+    android:layout_marginStart="40dp"
+    android:layout_marginTop="5dp"
     tools:background="@color/black">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cell_detail_scene_action_name"
-        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
         android:textSize="18sp"
         android:textColor="@color/white"
-        android:layout_marginStart="20dp"
         tools:text="Action Name"
         />
+
+    <ImageView
+        android:id="@+id/cell_detail_scene_action_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:visibility="gone"
+        android:background="@drawable/create_scene_shuffle_color_shape"/>
 
 </LinearLayout>

@@ -70,7 +70,7 @@ class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
             itemView.setBackgroundResource(R.drawable.scene_list_item_shape)
 
             itemView.setOnClickListener {
-                homeVM!!.launchDevice(sceneId = scene._id)
+                homeVM!!.launchDevice(sceneId = scene._id!!)
             }
 
             sceneInfo.setOnClickListener {
@@ -88,7 +88,7 @@ class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
                 builder.setMessage(itemView.context.getString(R.string.home_scene_delete_message))
                 builder.setPositiveButton(itemView.context.getString(R.string.home_scene_delete_button)) { dialog, which ->
                     if(homeVM != null) {
-                        homeVM!!.deleteScenes(ListSceneToDelete(listOf(scene._id)))
+                        homeVM!!.deleteScenes(ListSceneToDelete(listOf(scene._id!!)))
                     }
                 }
                 builder.show()

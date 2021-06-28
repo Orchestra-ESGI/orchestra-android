@@ -1,10 +1,14 @@
 package view.adapter
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.SceneActionsName
@@ -59,7 +63,7 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         if (detailSceneActions!![position].friendly_name != null) {
             (holder as DetailDeviceViewHolder).bind(device = detailSceneActions!![position])
         } else {
-            val actionsName = getListSceneDeviceName()
+            val actionsName = getListSceneDeviceName(detailSceneActions!![position])
             (holder as DetailActionViewHolder).bind(device = detailSceneActions!![position], actionsName = actionsName, position = position)
         }
     }
@@ -85,15 +89,31 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
     class DetailActionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val actionName = itemView.findViewById<TextView>(R.id.cell_detail_scene_action_name)
+        private val actionIv = itemView.findViewById<ImageView>(R.id.cell_detail_scene_action_iv)
 
         fun bind(device: HubAccessoryConfiguration, actionsName: ArrayList<SceneActionsName>, position: Int) {
-            var name : String? = null
+            var name : String?
+            actionIv.visibility = View.GONE
+
             if(device.actions?.state != null) {
                 name = actionsName.firstOrNull { actionName -> actionName.value == device.actions!!.state!!.name && actionName.type == "state" }?.key
             } else if(device.actions?.brightness != null) {
                 name = actionsName.firstOrNull { actionName -> actionName.value == device.actions!!.brightness!!.current_state.toString() && actionName.type == "brightness" }?.key
             } else if(device.actions?.color != null) {
-                name = actionsName.firstOrNull { actionName -> actionName.value == device.actions!!.color!!.hex && actionName.type == "color" }?.key
+                val hex = actionsName!!.filter { elem -> device.actions!!.color!!.hex == elem.value }
+                name = ""
+                if(hex.isNotEmpty()){
+                    name = hex[0].key
+
+                    val actionDrawable = AppCompatResources.getDrawable(
+                            actionIv.context,
+                            R.drawable.create_scene_shuffle_color_shape
+                    )
+                    val color = Color.parseColor(hex[0].value)
+                    actionIv.setImageDrawable(actionDrawable)
+                    DrawableCompat.setTint(actionIv.drawable,color);
+                    actionIv.visibility = View.VISIBLE
+                }
             } else if(device.actions?.color_temp != null) {
                 name = actionsName.firstOrNull { actionName -> actionName.value == device.actions!!.color_temp!!.current_state.toString() && actionName.type == "color_temp" }?.key
             } else {
@@ -103,10 +123,14 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         }
     }
 
-    private fun getListSceneDeviceName() : ArrayList<SceneActionsName> {
+    private fun getListSceneDeviceName(deviceAction: HubAccessoryConfiguration) : ArrayList<SceneActionsName> {
         var actions: ArrayList<String>
         var values: ArrayList<String>
         var actionsName = ArrayList<SceneActionsName>()
+
+        if (deviceAction.actions?.color != null) {
+            actionsName.add(SceneActionsName(key = "Changer la couleur à", value = "${deviceAction.actions?.color?.hex}", type = "color"))
+        }
 
         actions = arrayListOf("Allumer l'appareil", "Éteindre l'appareil", "Basculer")
         values = arrayListOf("on", "off", "toggle")

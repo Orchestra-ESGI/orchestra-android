@@ -245,7 +245,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
             val intent = Intent()
             val scene = retrieveData()
             intent.putExtra("CreatedScene", scene)
-            if(scene._id == "") {
+            if(scene._id == null) {
                 sceneViewModel.saveScene(scene)
             } else {
                 sceneViewModel.updateScene(scene)

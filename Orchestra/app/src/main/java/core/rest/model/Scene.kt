@@ -3,7 +3,7 @@ package core.rest.model
 import java.io.Serializable
 
 class Scene (
-        val _id: String = "",
+        val _id: String? = null,
         val name: String = "",
         val description: String = "",
         val color: String?,
