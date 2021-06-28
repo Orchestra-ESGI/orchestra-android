@@ -146,17 +146,17 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             actionsName.add(action)
         }
 
+        actions = arrayListOf("Température à 25%", "Température à 50%", "Température à 100%")
+        values = arrayListOf("25", "50", "100")
+        for (index in actions.indices) {
+            val action = SceneActionsName(key = actions[index], value = values[index], type = "color_temp")
+            actionsName.add(action)
+        }
+
         actions = arrayListOf("Choisir une couleur")
         values = arrayListOf("#FF0000")
         for (index in actions.indices) {
             val action = SceneActionsName(key = actions[index], value = values[index], type = "color")
-            actionsName.add(action)
-        }
-
-        actions = arrayListOf("Choisir la température")
-        values = arrayListOf("200")
-        for (index in actions.indices) {
-            val action = SceneActionsName(key = actions[index], value = values[index], type = "color_temp")
             actionsName.add(action)
         }
 

@@ -4,12 +4,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +23,8 @@ import utils.OnItemClicked
 import view.adapter.CreateSceneActionsAdapter
 import view.adapter.ShuffleColorAdapter
 import viewModel.SceneViewModel
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 import kotlin.random.Random
 
 
@@ -59,24 +59,27 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_scene)
 
-        val intent = intent
-        sceneDetail = intent.getSerializableExtra("scene") as? Scene
 
-        if(sceneDetail != null) {
-            deviceList = intent.getSerializableExtra("deviceList") as ArrayList<HubAccessoryConfiguration>
-        } else {
-            val args = intent.getBundleExtra("BUNDLE")
-            deviceList = args!!.getSerializable("ARRAYLIST") as ArrayList<HubAccessoryConfiguration>
-        }
-
-        availableDeviceList = deviceList
-
+        getIntentInfos()
         bind()
         loadDataIfModeModify()
         generateBackGroundColor()
         setUpRv()
         setUpShuffleColor()
         setUpAddActions()
+        setObserversOnEditText()
+    }
+
+    private fun getIntentInfos() {
+        val intent = intent
+        sceneDetail = intent.getSerializableExtra("scene") as? Scene
+        deviceList = if(sceneDetail != null) {
+            intent.getSerializableExtra("deviceList") as ArrayList<HubAccessoryConfiguration>
+        } else {
+            val args = intent.getBundleExtra("BUNDLE")
+            args!!.getSerializable("ARRAYLIST") as ArrayList<HubAccessoryConfiguration>
+        }
+        availableDeviceList = deviceList
     }
 
     private fun bind() {
@@ -176,43 +179,6 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         listActionRecyclerView.adapter!!.notifyDataSetChanged()
     }
 
-    private fun retrieveData() : Scene {
-        val name = nameEditText.text
-        val description = descriptionEditText.text
-        val backgroundColor = sceneColorsHashMap.filterValues { it }.keys.first()
-        val color = String.format("#%06X", 0xFFFFFF and backgroundColor)
-
-        var listActionToSet : ArrayList<ActionsToSet> = ArrayList()
-
-        var distinctListOfDevice = actionList.filter { action -> action.friendly_name != null }
-        var distinctListOfFriendlyName = distinctListOfDevice.map { action -> action.friendly_name }
-        var indexOfDevices = distinctListOfDevice.map { action -> actionList.indexOf(action) }
-
-
-        for (i in indexOfDevices.indices) {
-            var state : String? = null
-            var brightness : Int? = null
-            var color : ColorAction? = null
-            var temperature : Int? = null
-            var actionsToSetIn : ActionsToSetIn?
-            var nextIndex = if(i != indexOfDevices.size-1) indexOfDevices[i + 1] else actionList.size-1
-            for(j in indexOfDevices[i] until nextIndex step 1) {
-                if(actionList[j].actions != null && actionList[j].friendly_name == null) {
-                    val actionItem = actionList[j]
-                    if(state == null) state = actionItem.actions!!.state?.name
-                    if(brightness == null) brightness = if(actionItem.actions!!.brightness != null) actionItem.actions!!.brightness!!.current_state else null
-                    if(color == null) color = if(actionItem.actions!!.color != null) ColorAction(hex = actionItem.actions!!.color!!.hex) else null
-                    if(temperature == null) temperature = if(actionItem.actions!!.color_temp != null) actionItem.actions!!.color_temp!!.current_state else null
-                }
-            }
-            actionsToSetIn = ActionsToSetIn(state, brightness, color, temperature)
-            var actionToSet = ActionsToSet(friendly_name = distinctListOfFriendlyName[i], actions = actionsToSetIn)
-            listActionToSet.add(actionToSet)
-        }
-
-        return Scene(name = name.toString(), description = description.toString(), color = color, devices = listActionToSet)
-    }
-
     @RequiresApi(Build.VERSION_CODES.N)
     override fun colorClicked(color: Int, position: Int) {
         val oldSelectedColor = sceneColorsHashMap.filterValues {
@@ -234,6 +200,65 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         sceneColorsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
 
+    private fun setObserversOnEditText() {
+
+        val filter = InputFilter { source, start, end, dest, dstart, dend ->
+
+            for (i in start until end) {
+                if (Character.isWhitespace(source[i])) {
+                    return@InputFilter ""
+                }
+            }
+
+/*
+            val speChat = "\\s+"
+            val pattern: Pattern = Pattern.compile(speChat)
+            val matcher: Matcher = pattern.matcher(source.toString())
+            if (matcher.find()) return@InputFilter ""
+
+ */
+            null
+        }
+
+        nameEditText.filters = arrayOf(filter)
+        descriptionEditText.filters = arrayOf(filter)
+    }
+
+    private fun retrieveData() : Scene {
+        val name = nameEditText.text
+        val description = descriptionEditText.text
+        val backgroundColor = sceneColorsHashMap.filterValues { it }.keys.first()
+        val colorPicked = String.format("#%06X", 0xFFFFFF and backgroundColor)
+
+        val listActionToSet : ArrayList<ActionsToSet> = ArrayList()
+
+        val distinctListOfDevice = actionList.filter { action -> action.friendly_name != null }
+        val distinctListOfFriendlyName = distinctListOfDevice.map { action -> action.friendly_name }
+        val indexOfDevices = distinctListOfDevice.map { action -> actionList.indexOf(action) }
+
+        for (i in indexOfDevices.indices) {
+            var state : String? = null
+            var brightness : Int? = null
+            var color : ColorAction? = null
+            var temperature : Int? = null
+            var actionsToSetIn : ActionsToSetIn?
+            val nextIndex = if(i != indexOfDevices.size-1) indexOfDevices[i + 1] else actionList.size-1
+            for(j in indexOfDevices[i] until nextIndex step 1) {
+                if(actionList[j].actions != null && actionList[j].friendly_name == null) {
+                    val actionItem = actionList[j]
+                    if(state == null) state = actionItem.actions!!.state?.name
+                    if(brightness == null) brightness = if(actionItem.actions!!.brightness != null) actionItem.actions!!.brightness!!.current_state else null
+                    if(color == null) color = if(actionItem.actions!!.color != null) ColorAction(hex = actionItem.actions!!.color!!.hex) else null
+                    if(temperature == null) temperature = if(actionItem.actions!!.color_temp != null) actionItem.actions!!.color_temp!!.current_state else null
+                }
+            }
+            actionsToSetIn = ActionsToSetIn(state, brightness, color, temperature)
+            val actionToSet = ActionsToSet(friendly_name = distinctListOfFriendlyName[i], actions = actionsToSetIn)
+            listActionToSet.add(actionToSet)
+        }
+        return Scene(name = name.toString(), description = description.toString(), color = colorPicked, devices = listActionToSet)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.create_scene_menu, menu)
@@ -244,15 +269,19 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         R.id.create_scene_add_btn -> {
             val intent = Intent()
             val scene = retrieveData()
-            intent.putExtra("CreatedScene", scene)
-            if(scene._id == null) {
-                sceneViewModel.saveScene(scene)
+            if (sceneNotEmpty(scene)) {
+                intent.putExtra("CreatedScene", scene)
+                if (scene._id == null) {
+                    sceneViewModel.saveScene(scene)
+                } else {
+                    sceneViewModel.updateScene(scene)
+                }
+                setResult(RESULT_OK, intent)
+                finish()
             } else {
-                sceneViewModel.updateScene(scene)
+                Toast.makeText(this, "Veuillez renseigner les informations manquantes", Toast.LENGTH_SHORT).show()
             }
 
-            setResult(RESULT_OK, intent)
-            finish()
             true
         }
 
@@ -261,12 +290,12 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         }
     }
 
-    override fun actionClicked(actionsName: SceneActionsName, position: Int) {
-        var actions = Actions(null, null, null, null)
-        var device = HubAccessoryConfiguration(actions = actions)
-        when(actionsName.type) {
+    override fun actionClicked(action: SceneActionsName, position: Int) {
+        val actions = Actions(null, null, null, null)
+        val device = HubAccessoryConfiguration(actions = actions)
+        when(action.type) {
             "state" -> {
-                when(actionsName.value) {
+                when (action.value) {
                     "on" -> {
                         device.actions!!.state = DeviceState.on
                     }
@@ -279,13 +308,13 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
                 }
             }
             "brightness" -> {
-                device.actions!!.brightness = SliderAction(current_state = actionsName.value.toInt())
+                device.actions!!.brightness = SliderAction(current_state = action.value.toInt())
             }
             "color_temp" -> {
-                device.actions!!.color_temp = SliderAction(current_state = actionsName.value.toInt())
+                device.actions!!.color_temp = SliderAction(current_state = action.value.toInt())
             }
             "color" -> {
-                device.actions!!.color = ColorAction(actionsName.value)
+                device.actions!!.color = ColorAction(action.value)
             }
             else -> {
 
@@ -296,7 +325,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
 
     private fun formatSceneToHubAccessoryConfiguration() : ArrayList<HubAccessoryConfiguration>{
         val listOfSceneDevices = sceneDetail?.devices
-        var listOfDeviceFormatted : ArrayList<HubAccessoryConfiguration> = ArrayList()
+        val listOfDeviceFormatted : ArrayList<HubAccessoryConfiguration> = ArrayList()
 
         listOfSceneDevices?.forEach {
             val section = deviceList.first { device -> device.friendly_name == it.friendly_name }
@@ -331,7 +360,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
             listActionAdapter.notifyDataSetChanged()
             listActionRecyclerView.adapter!!.notifyDataSetChanged()
         } else {
-            var listActionToRemove : ArrayList<Int> = ArrayList()
+            val listActionToRemove : ArrayList<Int> = ArrayList()
             listActionToRemove.add(position)
 
             var otherSection = false
@@ -352,6 +381,24 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
             listActionAdapter.notifyDataSetChanged()
             listActionRecyclerView.adapter!!.notifyDataSetChanged()
         }
+    }
+
+    private fun sceneNotEmpty(scene: Scene) : Boolean {
+
+        if(scene.name == "") return false
+        if(scene.color == null || scene.color == "") return false
+        if(scene.description == "") return false
+        if(scene.devices.isEmpty()) return false
+
+        scene.devices.forEach {
+            if (it.friendly_name == null || it.friendly_name == "" || it.actions == null) {
+                return false
+            } else if (it.actions?.state == null && it.actions?.brightness == null && it.actions?.color_temp == null && it.actions?.color == null) {
+                return false
+            }
+        }
+
+        return true
     }
 
 }
