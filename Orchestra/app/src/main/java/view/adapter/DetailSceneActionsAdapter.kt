@@ -23,6 +23,13 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     }
 
     private lateinit var layoutInflater: LayoutInflater
+
+    var availableDeviceList : ArrayList<HubAccessoryConfiguration>? = null
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
     var detailSceneActions: ArrayList<HubAccessoryConfiguration>? = null
         set(value) {
             field = value
@@ -63,8 +70,12 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         if (detailSceneActions!![position].friendly_name != null) {
             (holder as DetailDeviceViewHolder).bind(device = detailSceneActions!![position])
         } else {
-            val actionsName = getListSceneDeviceName(detailSceneActions!![position])
-            (holder as DetailActionViewHolder).bind(device = detailSceneActions!![position], actionsName = actionsName, position = position)
+            val section = getSectionTypeViaElementPosition(position)
+            if(section != null) {
+                val deviceParent = getDeviceParent(section.friendly_name!!)
+                val actionsName = getListSceneDeviceName(detailSceneActions!![position], deviceParent)
+                (holder as DetailActionViewHolder).bind(device = detailSceneActions!![position], actionsName = actionsName, position = position)
+            }
         }
     }
 
@@ -123,7 +134,7 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         }
     }
 
-    private fun getListSceneDeviceName(deviceAction: HubAccessoryConfiguration) : ArrayList<SceneActionsName> {
+    private fun getListSceneDeviceName(deviceAction: HubAccessoryConfiguration, deviceParent: HubAccessoryConfiguration?) : ArrayList<SceneActionsName> {
         var actions: ArrayList<String>
         var values: ArrayList<String>
         var actionsName = ArrayList<SceneActionsName>()
@@ -132,34 +143,61 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             actionsName.add(SceneActionsName(key = "Changer la couleur à", value = "${deviceAction.actions?.color?.hex}", type = "color"))
         }
 
-        actions = arrayListOf("Allumer l'appareil", "Éteindre l'appareil", "Basculer")
-        values = arrayListOf("on", "off", "toggle")
-        for (index in actions.indices) {
-            val action = SceneActionsName(key = actions[index], value = values[index], type = "state")
-            actionsName.add(action)
+        if(deviceParent?.actions?.brightness != null) {
+            actions = arrayListOf("Allumer l'appareil", "Éteindre l'appareil", "Basculer")
+            values = arrayListOf("on", "off", "toggle")
+            for (index in actions.indices) {
+                val action = SceneActionsName(key = actions[index], value = values[index], type = "state")
+                actionsName.add(action)
+            }
         }
 
-        actions = arrayListOf("Régler la luminosité à 25%", "Régler la luminosité à 50%", "Régler la luminosité à 100%")
-        values = arrayListOf("25", "50", "100")
-        for (index in actions.indices) {
-            val action = SceneActionsName(key = actions[index], value = values[index], type = "brightness")
-            actionsName.add(action)
+        if (deviceParent?.actions?.brightness != null) {
+            val maxValBrightness = deviceParent?.actions?.brightness?.max_val!!
+            actions = arrayListOf("Luminosité à 25%", "Luminosité à 50%", "Luminosité à 75%", "Luminosité à 100%")
+            values = arrayListOf("${maxValBrightness.div(4)}", "${maxValBrightness.div(2)}" ,"${3*(maxValBrightness.div(4))}" ,"$maxValBrightness")
+
+            for (index in actions.indices) {
+                val action = SceneActionsName(key = actions[index], value = values[index], type = "brightness")
+                actionsName.add(action)
+            }
         }
 
-        actions = arrayListOf("Température à 25%", "Température à 50%", "Température à 100%")
-        values = arrayListOf("25", "50", "100")
-        for (index in actions.indices) {
-            val action = SceneActionsName(key = actions[index], value = values[index], type = "color_temp")
-            actionsName.add(action)
+        if (deviceParent?.actions?.color_temp != null) {
+            val maxValTemp = deviceParent?.actions?.color_temp?.max_val!!
+            actions = arrayListOf("Température à 25%", "Température à 50%", "Température à 75%", "Température à 100%")
+            values = arrayListOf("${maxValTemp.div(4)}", "${maxValTemp.div(2)}" , "${(3*(maxValTemp.div(4)))}" ,"$maxValTemp")
+            for (index in actions.indices) {
+                val action = SceneActionsName(key = actions[index], value = values[index], type = "color_temp")
+                actionsName.add(action)
+            }
         }
 
-        actions = arrayListOf("Choisir une couleur")
-        values = arrayListOf("#FF0000")
-        for (index in actions.indices) {
-            val action = SceneActionsName(key = actions[index], value = values[index], type = "color")
-            actionsName.add(action)
+        if(deviceParent?.actions?.color != null) {
+            actions = arrayListOf("Choisir une couleur")
+            values = arrayListOf("#FF0000")
+            for (index in actions.indices) {
+                val action = SceneActionsName(key = actions[index], value = values[index], type = "color")
+                actionsName.add(action)
+            }
         }
 
         return actionsName
+    }
+
+
+    private fun getSectionTypeViaElementPosition(position: Int) : HubAccessoryConfiguration? {
+        for (i in (detailSceneActions!!.size - 1) downTo 0 step 1) {
+            if(detailSceneActions!![i].friendly_name != null) {
+                if(i <= position) {
+                    return detailSceneActions!![i]
+                }
+            }
+        }
+        return null
+    }
+
+    private fun getDeviceParent(friendlyName : String) : HubAccessoryConfiguration? {
+        return availableDeviceList?.firstOrNull { device -> device.friendly_name == friendlyName }
     }
 }

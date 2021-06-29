@@ -9,23 +9,22 @@ import core.rest.client.DeviceClient
 import core.rest.model.*
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import core.rest.model.hubConfiguration.ListHubAccessoryConfigurationToDelete
+import core.rest.model.hubConfiguration.Room
 
 class DeviceViewModel : ViewModel() {
     lateinit var context : AppCompatActivity
     var deviceList : MutableLiveData<List<HubAccessoryConfiguration>> = MutableLiveData()
     var supportedAccessorieList : MutableLiveData<List<SupportedAccessories>> = MutableLiveData()
+    var roomList : MutableLiveData<List<Room>> = MutableLiveData()
+    var apiError : MutableLiveData<ApiError> = MutableLiveData()
     val deviceService = DeviceClient
 
-    init {
-        // deviceList.value = FakeObjectDataService.getDevices()
-        // val hub1 = HubAccessoryConfiguration("Lampe", "Cuisine", "#000000", "", "", true, true, HubAccessoryType.lightbulb, Actions(DeviceState.ON, SliderAction(0, 100, 0), ColorAction("#FF0000"), SliderAction(0, 100, 0)), friendly_name = "x3049defadea" )
-        // deviceList.value = listOf<HubAccessoryConfiguration>(hub1)
-    }
-
     fun getDevices() {
-        // deviceList.value = FakeObjectDataService.getDevices()
         deviceService.deviceList.observe(context, Observer {
             deviceList.value = it
+        })
+        deviceService.apiError.observe(context, Observer {
+            apiError.value = it
         })
         deviceService.getAllDevices(context)
     }
@@ -51,5 +50,12 @@ class DeviceViewModel : ViewModel() {
 
     fun deleteDevices(friendlyName : ListHubAccessoryConfigurationToDelete) {
         deviceService.deleteDevices(friendlyName, context)
+    }
+
+    fun getAllRoom() {
+        deviceService.roomList.observe(context, Observer {
+            roomList.value = it.rooms
+        })
+        deviceService.getAllRoom(context)
     }
 }

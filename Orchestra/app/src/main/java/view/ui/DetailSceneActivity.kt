@@ -60,8 +60,7 @@ class DetailSceneActivity : AppCompatActivity() {
         detailSceneDescription.text = sceneDetail!!.description
 
         detailSceneAdapter.detailSceneActions = formatSceneToDetailSceneActions(sceneDetail!!, listDevice!!)
-
-
+        detailSceneAdapter.availableDeviceList = listDevice
         deviceSceneRecyclerView.adapter = detailSceneAdapter
     }
 

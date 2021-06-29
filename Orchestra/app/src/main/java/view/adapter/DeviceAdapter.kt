@@ -57,7 +57,7 @@ class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
 
             }
             objectTitle.text = device.name
-            objectRoom.text = device.room_name
+            objectRoom.text = device.room?.name
             if (device.is_reachable == true) {
                     objectStatus.text = itemView.context.getString(R.string.reachable_ok)
             } else {

@@ -7,8 +7,8 @@ class ActionScene (
         ) : Serializable
 
 class SliderAction (
-        var min_val: Int = 100,
-        var max_val: Int = 500,
+        var min_val: Int = 0,
+        var max_val: Int = 0,
         var current_state: Int = 0
         ) : Serializable
 

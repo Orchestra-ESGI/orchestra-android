@@ -4,13 +4,12 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import core.rest.model.*
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
-import core.rest.model.hubConfiguration.ListHubAccessoryConfiguration
-import core.rest.model.hubConfiguration.ListHubAccessoryConfigurationToDelete
+import core.rest.model.hubConfiguration.*
 import core.rest.services.DeviceService
 import core.rest.services.RootApiService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,6 +20,8 @@ object DeviceClient {
     private var deviceServices: DeviceService? = getApi()
     var supportedDevices: MutableLiveData<List<SupportedAccessories>> = MutableLiveData()
     var deviceList: MutableLiveData<List<HubAccessoryConfiguration>> = MutableLiveData()
+    var roomList: MutableLiveData<ListRoom> = MutableLiveData()
+    var apiError : MutableLiveData<ApiError> = MutableLiveData()
 
     private fun getApi(context: Context? = null): DeviceService? {
         if(context != null) {
@@ -36,6 +37,7 @@ object DeviceClient {
                         }
                 )
             }.build()
+
             if (deviceServices == null) {
                 val retrofit = Retrofit.Builder()
                         .baseUrl(RootApiService.ROOT_PATH)
@@ -55,11 +57,18 @@ object DeviceClient {
                     call: Call<ListHubAccessoryConfiguration>,
                     response: Response<ListHubAccessoryConfiguration>
                 ) {
-                    deviceList.value = response.body()?.devices
-                    Log.d("TestSuccess", response.body().toString())
+                    if (response.isSuccessful) {
+                        deviceList.value = response.body()?.devices
+                        Log.d("TestSuccess", response.body().toString())
+                    } else {
+                        val jObjError = JSONObject(response.errorBody()!!.string())
+                        apiError.value = ApiError(error = jObjError["error"].toString())
+                    }
+
                 }
 
                 override fun onFailure(call: Call<ListHubAccessoryConfiguration>, t: Throwable?) {
+                    apiError.value = ApiError(error = t?.message!!)
                     Log.e("error", t?.message!!)
                 }
 
@@ -140,6 +149,27 @@ object DeviceClient {
 
             override fun onFailure(call: Call<ListHubAccessoryConfigurationToDelete>, t: Throwable) {
                 Log.d("Test Send Device", "NOK")
+            }
+        })
+    }
+
+    fun getAllRoom(context: Context) {
+        getApi(context)?.getAllRooms()?.enqueue(object : Callback<ListRoom> {
+            override fun onResponse(
+                    call: Call<ListRoom>,
+                    response: Response<ListRoom>
+            ) {
+                if (response.isSuccessful) {
+                    roomList.value = response.body()
+                    Log.d("Test Room Get", "OK")
+                } else {
+                    Log.d("Test Room Get", "NOK")
+                }
+
+            }
+
+            override fun onFailure(call: Call<ListRoom>, t: Throwable) {
+                Log.d("Test Room Get", "FAILED")
             }
         })
     }

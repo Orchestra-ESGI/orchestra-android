@@ -247,8 +247,9 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
         }
 
         if(device.actions?.brightness != null){
-            actions = arrayListOf("Luminosité à 25%", "Luminosité à 50%", "Luminosité à 100%")
-            values = arrayListOf("25", "50", "100")
+            val maxValBrightness = device.actions?.brightness?.max_val!!
+            actions = arrayListOf("Luminosité à 25%", "Luminosité à 50%", "Luminosité à 75%", "Luminosité à 100%")
+            values = arrayListOf("${maxValBrightness.div(4)}", "${maxValBrightness.div(2)}" ,"${3*(maxValBrightness.div(4))}" ,"$maxValBrightness")
             for (index in actions.indices) {
                 val action = SceneActionsName(key = actions[index], value = values[index], type = "brightness")
                 actionsName.add(action)
@@ -256,8 +257,9 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
         }
 
         if(device.actions?.color_temp != null){
-            actions = arrayListOf("Température à 25%", "Température à 50%", "Température à 100%")
-            values = arrayListOf("25", "50", "100")
+            val maxValTemp = device.actions?.color_temp?.max_val!!
+            actions = arrayListOf("Température à 25%", "Température à 50%", "Température à 75%", "Température à 100%")
+            values = arrayListOf("${maxValTemp.div(4)}", "${maxValTemp.div(2)}" ,"${(3*(maxValTemp.div(4)))}" ,"$maxValTemp")
             for (index in actions.indices) {
                 val action = SceneActionsName(key = actions[index], value = values[index], type = "color_temp")
                 actionsName.add(action)

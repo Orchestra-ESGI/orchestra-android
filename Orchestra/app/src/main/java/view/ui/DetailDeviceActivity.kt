@@ -125,7 +125,7 @@ class DetailDeviceActivity : AppCompatActivity() {
     private fun setupDeviceInfos() {
         detailDeviceName.text = deviceDetail!!.name
         detailDeviceName.setTextColor(Color.parseColor(deviceDetail!!.background_color))
-        detailDeviceRoom.text = deviceDetail!!.room_name
+        detailDeviceRoom.text = deviceDetail!!.room?.name
 
         val manufacturerLabel = getString(R.string.specification_manufacturer)
         val modelLabel = getString(R.string.specification_model)
