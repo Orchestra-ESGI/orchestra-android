@@ -17,12 +17,15 @@
         <activity android:name="view.ui.PagerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarPage">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+        <activity
+            android:name="view.ui.WebViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.DayNight" />
+        <activity
+            android:name="view.ui.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.DayNight" />
         <activity
             android:name="view.ui.SearchDeviceActivity"
             android:screenOrientation="portrait"
@@ -68,7 +71,11 @@
             android:name="view.ui.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/LoginPage">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name="view.ui.MainActivity" />
     </application>

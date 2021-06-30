@@ -23,8 +23,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var connexionBtn: Button
     private lateinit var userVM: UserViewModel
 
-    private lateinit var Prefs: SharedPreferences
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -35,7 +33,6 @@ class LoginActivity : AppCompatActivity() {
         passwordEditText = findViewById(R.id.login_pwd_et)
         userVM = ViewModelProviders.of(this).get(UserViewModel::class.java)
         userVM.context = this
-
 
         val sharedPref = getSharedPreferences("com.example.orchestra.API_TOKEN", Context.MODE_PRIVATE)
 
@@ -52,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
                         if (it.token != "") {
                             with (sharedPref.edit()) {
                                 putString("Token", it.token)
+                                putString("Email", emailEditText.text.toString())
                                 apply()
                             }
                             val sceneListIntent = Intent(this, HomeActivity::class.java)
@@ -74,5 +72,10 @@ class LoginActivity : AppCompatActivity() {
 
     private fun retrieveData() : User {
         return User(email = emailEditText.text.toString(), password = passwordEditText.text.toString())
+    }
+
+    override fun onBackPressed() {
+        finishAffinity()
+        finish()
     }
 }

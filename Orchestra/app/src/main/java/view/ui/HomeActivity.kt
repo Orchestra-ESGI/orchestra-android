@@ -98,10 +98,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setUpProfilBtn() {
-        supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_user_params)
+        // supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        // supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     private fun checkLoaded() {
@@ -127,9 +127,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+
         android.R.id.home -> {
-            Toast.makeText(this, "Hello", Toast.LENGTH_LONG)
-            Log.d("Pass", "Pass")
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
             true
         }
 

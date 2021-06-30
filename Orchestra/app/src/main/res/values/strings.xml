@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Orchestra</string>
-    
+
     <string name="pager_slider1_title">Simplicity</string>
     <string name="pager_slider2_title">Efficiency</string>
     <string name="pager_slider3_title">Clarity</string>
@@ -12,7 +12,7 @@
     <string name="pager_slider3_text">Too many wires? Too many hubs? Too many applications? Too many things to manage your home automation, with Orchestra, get rid of excess, and keep only the essentials</string>
     <string name="pager_slider4_text">Do you decide to change your phone or brand? No worries, reinstall Orchestra on your new device, we\'ll sync everything for you</string>
     <string name="pager_slider5_text">Orchestra, easy and useful home automation</string>
-    
+
     <string name="login_welcome">Welcome back to Orchestra!</string>
     <string name="login_email">Email</string>
     <string name="login_pwd">Password</string>
