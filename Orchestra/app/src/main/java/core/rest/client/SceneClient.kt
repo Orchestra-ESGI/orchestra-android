@@ -5,15 +5,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import core.rest.model.ListScene
 import core.rest.model.ListSceneToDelete
-import core.rest.model.hubConfiguration.ListHubAccessoryConfiguration
 import core.rest.services.RootApiService
 import core.rest.services.SceneServices
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import core.rest.model.Scene
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
-import core.rest.services.DeviceService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -21,7 +15,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 object SceneClient {
     private var sceneServices: SceneServices? = getApi()
@@ -61,7 +54,7 @@ object SceneClient {
                     response: Response<ListScene>?
                 ) {
                     sceneList.value = response!!.body()!!.scenes
-                    Log.d("TestSuccess", response!!.body().toString())
+                    Log.d("TestSuccess", response.body().toString())
                 }
 
                 override fun onFailure(call: Call<ListScene>?, t: Throwable?) {
@@ -120,5 +113,22 @@ object SceneClient {
                     }
 
                 })
+    }
+
+    fun updateScene(scene : Scene, context: Context?) {
+        getApi(context)?.updateScene(scene)
+            ?.enqueue(object : Callback<Scene>{
+                override fun onResponse(
+                    call: Call<Scene>?,
+                    response: Response<Scene>?
+                ) {
+                    Log.d("TestSuccess", response!!.body().toString())
+                }
+
+                override fun onFailure(call: Call<Scene>?, t: Throwable?) {
+                    Log.e("error", t?.message!!)
+                }
+
+            })
     }
 }

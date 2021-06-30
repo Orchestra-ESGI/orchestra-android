@@ -158,21 +158,21 @@ object DeviceClient {
     }
 
     fun getAllRoom(context: Context) {
-        getApi(context)?.getAllRooms()?.enqueue(object : Callback<HashMap<String, Any>> {
+        getApi(context)?.getAllRooms()?.enqueue(object : Callback<ListRoom> {
             override fun onResponse(
-                    call: Call<HashMap<String, Any>>,
-                    response: Response<HashMap<String, Any>>
+                    call: Call<ListRoom>,
+                    response: Response<ListRoom>
             ) {
                 if (response.isSuccessful) {
-                    val res = response.body()
-                    roomList.value = res?.get("rooms") as? List<Room>
+                    val listRoom = response.body()
+                    roomList.value = listRoom?.rooms
                     Log.d("Test Room Get", "OK")
                 } else {
                     Log.d("Test Room Get", "NOK")
                 }
             }
 
-            override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+            override fun onFailure(call: Call<ListRoom>, t: Throwable) {
                 Log.d("Test Room Get", "FAILED")
             }
         })

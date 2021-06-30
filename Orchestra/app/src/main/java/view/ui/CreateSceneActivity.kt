@@ -23,8 +23,6 @@ import utils.OnItemClicked
 import view.adapter.CreateSceneActionsAdapter
 import view.adapter.ShuffleColorAdapter
 import viewModel.SceneViewModel
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 import kotlin.random.Random
 
 
@@ -225,6 +223,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     }
 
     private fun retrieveData() : Scene {
+        val id = sceneDetail?._id
         val name = nameEditText.text
         val description = descriptionEditText.text
         val backgroundColor = sceneColorsHashMap.filterValues { it }.keys.first()
@@ -256,7 +255,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
             val actionToSet = ActionsToSet(friendly_name = distinctListOfFriendlyName[i], actions = actionsToSetIn)
             listActionToSet.add(actionToSet)
         }
-        return Scene(name = name.toString(), description = description.toString(), color = colorPicked, devices = listActionToSet)
+        return Scene(_id = id, name = name.toString(), description = description.toString(), color = colorPicked, devices = listActionToSet)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -281,10 +280,8 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
             } else {
                 Toast.makeText(this, "Veuillez renseigner les informations manquantes", Toast.LENGTH_SHORT).show()
             }
-
             true
         }
-
         else -> {
             super.onOptionsItemSelected(item)
         }

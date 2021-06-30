@@ -20,5 +20,6 @@ interface SceneServices {
     @HTTP(method = "DELETE", path = "/scene", hasBody = true)
     fun deleteScenes(@Body scene: ListSceneToDelete) : Call<ListSceneToDelete>
 
-
+    @PATCH("scene")
+    fun updateScene(@Body scene: Scene) : Call<Scene>
 }

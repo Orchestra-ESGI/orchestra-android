@@ -33,6 +33,6 @@ class SceneViewModel : ViewModel() {
     }
 
     fun updateScene(scene : Scene) {
-
+        sceneService.updateScene(scene, context)
     }
 }
