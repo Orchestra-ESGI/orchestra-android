@@ -3,6 +3,7 @@ package core.rest.client
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.internal.LinkedTreeMap
 import core.rest.model.*
 import core.rest.model.hubConfiguration.*
 import core.rest.services.DeviceService
@@ -52,13 +53,16 @@ object DeviceClient {
 
     fun getAllDevices(context: Context) {
         getApi(context)?.getAllDevices()
-            ?.enqueue(object : Callback<ListHubAccessoryConfiguration> {
+            ?.enqueue(object : Callback<HashMap<String, Any>> {
                 override fun onResponse(
-                    call: Call<ListHubAccessoryConfiguration>,
-                    response: Response<ListHubAccessoryConfiguration>
+                    call: Call<HashMap<String, Any>>,
+                    response: Response<HashMap<String, Any>>
                 ) {
                     if (response.isSuccessful) {
-                        deviceList.value = response.body()?.devices
+                        val res = response.body()
+                        val devices = res?.get("devices") as ArrayList<LinkedTreeMap<String, Any>>
+                        val listHub = toSerialize(devices)
+                        deviceList.value = listHub
                         Log.d("TestSuccess", response.body().toString())
                     } else {
                         val jObjError = JSONObject(response.errorBody()!!.string())
@@ -67,7 +71,7 @@ object DeviceClient {
 
                 }
 
-                override fun onFailure(call: Call<ListHubAccessoryConfiguration>, t: Throwable?) {
+                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable?) {
                     apiError.value = ApiError(error = t?.message!!)
                     Log.e("error", t?.message!!)
                 }
