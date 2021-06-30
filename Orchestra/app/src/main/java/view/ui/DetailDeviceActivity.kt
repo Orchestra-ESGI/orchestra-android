@@ -111,11 +111,13 @@ class DetailDeviceActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        if(deviceDetail?.actions?.brightness != null && deviceDetail?.actions?.color_temp != null) {
+        if(deviceDetail?.actions?.brightness != null) {
             brightnessSlider.min = deviceDetail?.actions?.brightness?.min_val!!
             brightnessSlider.max = deviceDetail?.actions?.brightness?.max_val!!
             brightnessSlider.progress = deviceDetail?.actions?.brightness?.current_state!!
+        }
 
+        if(deviceDetail?.actions?.color_temp != null) {
             colorTemperatureSlider.min = deviceDetail?.actions?.color_temp?.min_val!!
             colorTemperatureSlider.max = deviceDetail?.actions?.color_temp?.max_val!!
             colorTemperatureSlider.progress = deviceDetail?.actions?.color_temp?.current_state!!
