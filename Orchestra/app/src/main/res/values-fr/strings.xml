@@ -111,5 +111,6 @@
     <string name="create_scene_delete_action">Supprimer</string>
     <string name="create_scene_cancel">Cancel</string>
     <string name="create_scene_add_action_text">Ajouter une action</string>
+    <string name="home_add_new_room">Ajouter une chambre</string>
 
 </resources>

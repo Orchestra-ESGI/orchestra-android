@@ -2,14 +2,17 @@ package view.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.text.InputFilter
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -40,6 +43,9 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        delegate.applyDayNight()
+
         bind()
         init()
         setUpDeviceRv()
@@ -60,12 +66,14 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        title = ""
+
        loader = KProgressHUD.create(this)
        loader.setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
             .setCancellable(true)
             .setAnimationSpeed(2)
             .setDimAmount(0.5f)
-            .show();
+            .show()
     }
 
     private fun setUpDeviceRv() {
@@ -99,9 +107,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setUpProfilBtn() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_user_params)
-        // supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        // supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     private fun checkLoaded() {
@@ -141,36 +147,14 @@ class HomeActivity : AppCompatActivity() {
                     .setCancellable(true)
                     .setAnimationSpeed(2)
                     .setDimAmount(0.5f)
-                    .show();
+                    .show()
             deviceAdapter.notifyDataSetChanged()
             sceneAdapter.notifyDataSetChanged()
             true
         }
 
         R.id.scene_list_add_btn -> {
-            val listOfAction: List<String> = listOf(getString(R.string.home_add_new_device), getString(R.string.home_add_new_scene))
-            val listOfActionToCharSequence = listOfAction.toTypedArray<CharSequence>()
-
-            val alertDialog: AlertDialog = this@HomeActivity.let {
-                val builder = AlertDialog.Builder(it)
-                builder.apply {
-                    this.setItems(listOfActionToCharSequence) { _, which ->
-                        val selected = listOfActionToCharSequence[which]
-                        if (selected == getString(R.string.home_add_new_device)) {
-                            val supportedDeviceIntent = Intent(context, SupportedAccessoriesListActivity::class.java)
-                            startActivity(supportedDeviceIntent)
-                        } else {
-                            val createSceneIntent = Intent(context, CreateSceneActivity::class.java)
-                            val args = Bundle()
-                            args.putSerializable("ARRAYLIST", deviceAdapter.deviceList as Serializable)
-                            createSceneIntent.putExtra("BUNDLE", args)
-                            startActivityForResult(createSceneIntent, 1)
-                        }
-                    }
-                }
-                builder.create()
-            }
-            alertDialog.show()
+            alertForCreations()
             true
         }
 
@@ -179,10 +163,69 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    private fun alertForCreations() {
+        val listOfAction: List<String> = listOf(getString(R.string.home_add_new_device), getString(R.string.home_add_new_scene), getString(R.string.home_add_new_room))
+        val listOfActionToCharSequence = listOfAction.toTypedArray<CharSequence>()
+
+        AlertDialog.Builder(this)
+            .setItems(listOfActionToCharSequence) { dialog, which ->
+                when(listOfActionToCharSequence[which]) {
+                    getString(R.string.home_add_new_device) -> {
+                        val supportedDeviceIntent = Intent(this, SupportedAccessoriesListActivity::class.java)
+                        startActivity(supportedDeviceIntent)
+                        dialog.dismiss()
+                    }
+                    getString(R.string.home_add_new_scene) -> {
+                        val createSceneIntent = Intent(this, CreateSceneActivity::class.java)
+                        val args = Bundle()
+                        args.putSerializable("ARRAYLIST", deviceAdapter.deviceList as Serializable)
+                        createSceneIntent.putExtra("BUNDLE", args)
+                        startActivityForResult(createSceneIntent, 1)
+                    }
+                    getString(R.string.home_add_new_room) -> {
+                        alertForCreateNewRoom()
+                    }
+                }
+            }
+            .show()
+    }
+
+    private fun alertForCreateNewRoom() {
+        val view = LayoutInflater.from(this).inflate(R.layout.custom_view_add_room, null)
+        val dialogBuilder = AlertDialog.Builder(this)
+            .setTitle(getString(R.string.home_add_new_room))
+            .setView(view)
+
+        val editText = view.findViewById<EditText>(R.id.custom_view_add_room_et)
+        val filter = InputFilter { source, start, end, _, _, _ ->
+            for (i in start until end) {
+                if (Character.isWhitespace(source[i])) {
+                    return@InputFilter ""
+                }
+            }
+            null
+        }
+        editText.filters = arrayOf(filter)
+
+        dialogBuilder.setPositiveButton("Créer") { _, _ ->
+            if (editText.text.isNotEmpty()) {
+                homeViewModel.addRoom(editText.text.toString())
+            } else {
+                Toast.makeText(this, "Veuillez remplir le champ", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+        .setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
+        }
+        .show()
+
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode === 1) {
-            if (resultCode === RESULT_OK) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
                 homeViewModel.getAllScene()
             }
         }

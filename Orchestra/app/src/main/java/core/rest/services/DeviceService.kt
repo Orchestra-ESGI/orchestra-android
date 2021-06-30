@@ -27,5 +27,8 @@ interface DeviceService {
     fun deleteDevices(@Body friendly_name: ListHubAccessoryConfigurationToDelete): Call<ListHubAccessoryConfigurationToDelete>
 
     @GET("room/all")
-    fun getAllRooms() : Call<ListRoom>
+    fun getAllRooms() : Call<HashMap<String, Any>>
+
+    @POST("room")
+    fun addRoom(@Body body: HashMap<String, String>): Call<HashMap<String, Any>>
 }

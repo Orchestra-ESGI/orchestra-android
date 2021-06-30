@@ -54,8 +54,12 @@ class DeviceViewModel : ViewModel() {
 
     fun getAllRoom() {
         deviceService.roomList.observe(context, Observer {
-            roomList.value = it.rooms
+            roomList.value = it
         })
         deviceService.getAllRoom(context)
+    }
+
+    fun addRoom(room : String) {
+        deviceService.addRoom(context, room)
     }
 }

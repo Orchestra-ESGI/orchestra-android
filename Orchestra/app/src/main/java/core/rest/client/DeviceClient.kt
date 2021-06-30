@@ -21,7 +21,7 @@ object DeviceClient {
     private var deviceServices: DeviceService? = getApi()
     var supportedDevices: MutableLiveData<List<SupportedAccessories>> = MutableLiveData()
     var deviceList: MutableLiveData<List<HubAccessoryConfiguration>> = MutableLiveData()
-    var roomList: MutableLiveData<ListRoom> = MutableLiveData()
+    var roomList: MutableLiveData<List<Room>> = MutableLiveData()
     var apiError : MutableLiveData<ApiError> = MutableLiveData()
 
     private fun getApi(context: Context? = null): DeviceService? {
@@ -158,21 +158,44 @@ object DeviceClient {
     }
 
     fun getAllRoom(context: Context) {
-        getApi(context)?.getAllRooms()?.enqueue(object : Callback<ListRoom> {
+        getApi(context)?.getAllRooms()?.enqueue(object : Callback<HashMap<String, Any>> {
             override fun onResponse(
-                    call: Call<ListRoom>,
-                    response: Response<ListRoom>
+                    call: Call<HashMap<String, Any>>,
+                    response: Response<HashMap<String, Any>>
             ) {
                 if (response.isSuccessful) {
-                    roomList.value = response.body()
+                    val res = response.body()
+                    roomList.value = res?.get("rooms") as? List<Room>
                     Log.d("Test Room Get", "OK")
                 } else {
                     Log.d("Test Room Get", "NOK")
                 }
-
             }
 
-            override fun onFailure(call: Call<ListRoom>, t: Throwable) {
+            override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
+                Log.d("Test Room Get", "FAILED")
+            }
+        })
+    }
+
+    fun addRoom(context: Context, room: String) {
+        val body : HashMap<String, String> = HashMap()
+        body["name"] = room
+        getApi(context)?.addRoom(body)?.enqueue(object : Callback<HashMap<String, Any>> {
+            override fun onResponse(
+                call: Call<HashMap<String, Any>>,
+                response: Response<HashMap<String, Any>>
+            ) {
+                if (response.isSuccessful) {
+                    val res = response.body()
+                    val erreur = res?.get("error") as? List<Room>
+                    Log.d("Test Room Get", "OK")
+                } else {
+                    Log.d("Test Room Get", "NOK")
+                }
+            }
+
+            override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
                 Log.d("Test Room Get", "FAILED")
             }
         })

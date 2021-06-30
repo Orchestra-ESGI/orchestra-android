@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import core.rest.model.ApiError
 import core.rest.model.ListSceneToDelete
 import core.rest.model.Scene
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import core.rest.model.hubConfiguration.ListHubAccessoryConfigurationToDelete
+import core.rest.model.hubConfiguration.ListRoom
+import core.rest.model.hubConfiguration.Room
 
 class HomeViewModel: ViewModel() {
     lateinit var context : AppCompatActivity
@@ -15,6 +18,8 @@ class HomeViewModel: ViewModel() {
     var sceneViewModel : SceneViewModel? = null
     var deviceList : MutableLiveData<List<HubAccessoryConfiguration>> = MutableLiveData()
     var sceneList : MutableLiveData<List<Scene>> = MutableLiveData()
+    var roomList : MutableLiveData<List<Room>> = MutableLiveData()
+    var apiError : MutableLiveData<ApiError> = MutableLiveData()
 
     init {
         deviceViewModel = DeviceViewModel()
@@ -25,6 +30,9 @@ class HomeViewModel: ViewModel() {
         deviceViewModel!!.context = context
         deviceViewModel!!.deviceList.observe(context, Observer {
             deviceList.value = it
+        })
+        deviceViewModel!!.apiError.observe(context, Observer {
+            apiError.value = it
         })
         deviceViewModel!!.getDevices()
     }
@@ -49,6 +57,19 @@ class HomeViewModel: ViewModel() {
     fun deleteScenes(scenes : ListSceneToDelete) {
         sceneViewModel!!.context = context
         sceneViewModel!!.deleteScenes(scenes)
+    }
+
+    fun getAllRooms() {
+        deviceViewModel!!.context = context
+        deviceViewModel!!.roomList.observe(context, Observer {
+            roomList.value = it
+        })
+        deviceViewModel!!.getAllRoom()
+    }
+
+    fun addRoom(room : String) {
+        deviceViewModel!!.context = context
+        deviceViewModel!!.addRoom(room)
     }
 
     override fun onCleared() {
