@@ -144,7 +144,7 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             actionsName.add(SceneActionsName(key = context.getString(R.string.create_scene_actions_adapter_choosen_color), value = "${deviceAction.actions?.color?.hex}", type = "color"))
         }
 
-        if(deviceParent?.actions?.brightness != null) {
+        if(deviceParent?.actions?.state != null) {
             actions = arrayListOf(context.getString(R.string.create_scene_actions_adapter_device_state_on), context.getString(R.string.create_scene_actions_adapter_device_state_off), context.getString(R.string.create_scene_actions_adapter_device_state_toggle))
             values = arrayListOf("on", "off", "toggle")
             for (index in actions.indices) {
