@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.InputFilter
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -36,6 +37,9 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     private lateinit var sceneColorsRecyclerView: RecyclerView
     private lateinit var descriptionTitleTextView: TextView
     private lateinit var descriptionEditText: EditText
+    private lateinit var triggerLinearLayout: LinearLayout
+    private lateinit var triggerTitleTextView: TextView
+    private lateinit var triggerEditText: EditText
     private lateinit var addActionTextView: TextView
     private lateinit var listActionRecyclerView: RecyclerView
 
@@ -52,14 +56,15 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     private var availableDeviceList : ArrayList<HubAccessoryConfiguration> = ArrayList()
 
     private var sceneDetail : Scene? = null
+    private var isAutomatisation : Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_scene)
 
-
         getIntentInfos()
         bind()
+        setupScreen()
         loadDataIfModeModify()
         generateBackGroundColor()
         setUpRv()
@@ -71,6 +76,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     private fun getIntentInfos() {
         val intent = intent
         sceneDetail = intent.getSerializableExtra("scene") as? Scene
+        isAutomatisation = intent.getSerializableExtra("isAutomatisation") as? Boolean
         deviceList = if(sceneDetail != null) {
             intent.getSerializableExtra("deviceList") as ArrayList<HubAccessoryConfiguration>
         } else {
@@ -89,11 +95,20 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         sceneColorsRecyclerView = findViewById(R.id.create_scene_colors_rv)
         descriptionTitleTextView = findViewById(R.id.create_scene_description_tv)
         descriptionEditText = findViewById(R.id.create_scene_description_et)
+        triggerLinearLayout = findViewById(R.id.create_scene_trigger_linear_layout)
+        triggerTitleTextView = findViewById(R.id.create_scene_add_trigger_tv)
+        triggerEditText = findViewById(R.id.create_scene_add_trigger_et)
         addActionTextView = findViewById(R.id.create_scene_add_action_tv)
         listActionRecyclerView = findViewById(R.id.create_scene_list_action_rv)
 
         sceneViewModel = ViewModelProviders.of(this).get(SceneViewModel::class.java)
         sceneViewModel.context = this
+    }
+
+    private fun setupScreen() {
+        if (isAutomatisation == true) {
+            triggerLinearLayout.visibility = View.VISIBLE
+        }
     }
 
     private fun loadDataIfModeModify() {

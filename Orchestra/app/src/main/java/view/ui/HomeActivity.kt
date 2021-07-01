@@ -182,8 +182,13 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun alertForCreations() {
-        val listOfAction: List<String> = listOf(getString(R.string.home_add_new_device), getString(R.string.home_add_new_scene), getString(R.string.home_add_new_room))
+        val listOfAction: List<String> = listOf(getString(R.string.home_add_new_device), getString(R.string.home_add_new_scene), getString(R.string.home_add_new_room), "Ajouter une automatisation")
         val listOfActionToCharSequence = listOfAction.toTypedArray<CharSequence>()
+
+        val createSceneIntent = Intent(this, CreateSceneActivity::class.java)
+        val args = Bundle()
+        args.putSerializable("ARRAYLIST", deviceAdapter.deviceList as Serializable)
+        createSceneIntent.putExtra("BUNDLE", args)
 
         AlertDialog.Builder(this)
             .setItems(listOfActionToCharSequence) { dialog, which ->
@@ -194,14 +199,16 @@ class HomeActivity : AppCompatActivity() {
                         dialog.dismiss()
                     }
                     getString(R.string.home_add_new_scene) -> {
-                        val createSceneIntent = Intent(this, CreateSceneActivity::class.java)
-                        val args = Bundle()
-                        args.putSerializable("ARRAYLIST", deviceAdapter.deviceList as Serializable)
-                        createSceneIntent.putExtra("BUNDLE", args)
                         startActivityForResult(createSceneIntent, 1)
+                        dialog.dismiss()
                     }
                     getString(R.string.home_add_new_room) -> {
                         alertForCreateNewRoom()
+                        dialog.dismiss()
+                    }
+                    "Ajouter une automatisation" -> {
+                        createSceneIntent.putExtra("isAutomatisation", true)
+                        startActivityForResult(createSceneIntent, 1)
                     }
                 }
             }
