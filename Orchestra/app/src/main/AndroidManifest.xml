@@ -61,7 +61,8 @@
         <activity
             android:name="view.ui.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.MaterialComponents.DayNight" />
+            android:theme="@style/Theme.MaterialComponents.DayNight">
+        </activity>
         <activity
             android:name="view.ui.SignInActivity"
             android:label="@string/create_account_title_page"

@@ -67,7 +67,7 @@ class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
                 DrawableCompat.setTint(wrappedDrawable, sceneBackgroundColor)
             }
 
-            itemView.setBackgroundResource(R.drawable.scene_list_item_shape)
+            itemView.background = unwrappedDrawable
 
             itemView.setOnClickListener {
                 homeVM!!.launchDevice(sceneId = scene._id!!)

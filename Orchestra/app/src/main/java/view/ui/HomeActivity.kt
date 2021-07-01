@@ -1,8 +1,12 @@
 package view.ui
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.InputFilter
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -13,12 +17,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.kaopiz.kprogresshud.KProgressHUD
+import core.rest.model.Scene
+import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.Room
 import view.adapter.DeviceAdapter
 import view.adapter.SceneAdapter
 import viewModel.HomeViewModel
@@ -31,10 +41,14 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var noDataTitle : TextView
     private lateinit var scenesRecyclerView: RecyclerView
     private lateinit var devicesRecyclerView: RecyclerView
+    private lateinit var roomChipGroup: ChipGroup
     private lateinit var sceneAdapter : SceneAdapter
     private lateinit var deviceAdapter : DeviceAdapter
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var loader: KProgressHUD
+
+    private lateinit var deviceList : List<HubAccessoryConfiguration>
+    private lateinit var sceneList : List<Scene>
 
     private var deviceLoaded : Boolean = false
     private var sceneLoaded : Boolean = false
@@ -43,8 +57,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        delegate.applyDayNight()
+        // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        // delegate.applyDayNight()
 
         bind()
         init()
@@ -61,6 +75,7 @@ class HomeActivity : AppCompatActivity() {
         noDataTitle = findViewById(R.id.home_no_device_tv)
         devicesRecyclerView = findViewById(R.id.list_device_rv)
         scenesRecyclerView = findViewById(R.id.list_scene_rv)
+        roomChipGroup = findViewById(R.id.home_room_filter_chip_group)
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         homeViewModel.context = this
     }
@@ -92,21 +107,24 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setUpObserver() {
         homeViewModel.deviceList.observe(this, Observer {
-            deviceAdapter.deviceList = it
+            deviceList = it
+            deviceAdapter.deviceList = deviceList
+            setUpRoomFilter()
             deviceLoaded = true
             checkLoaded()
-            sceneAdapter.deviceList = deviceAdapter.deviceList
+            sceneAdapter.deviceList = deviceList
             loader.dismiss()
         })
         homeViewModel.sceneList.observe(this, Observer {
-            sceneAdapter.sceneList = it
+            sceneList = it
+            sceneAdapter.sceneList = sceneList
             sceneLoaded = true
             checkLoaded()
         })
     }
 
     private fun setUpProfilBtn() {
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_user_params)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_settings)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -222,6 +240,77 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    private fun setUpRoomFilter() {
+            val listRoom = deviceList.map { device -> device.room }
+            val chipAll = Chip(roomChipGroup.context)
+            var chipSelected: Chip = chipAll
+            val defaultColor = chipAll.chipBackgroundColor
+
+            chipAll.text = "Tous"
+            roomFilterSelected(chipAll)
+            roomChipGroup.addView(chipAll)
+
+            listRoom.forEach { room ->
+                val chip = Chip(roomChipGroup.context)
+                chip.text = room?.name
+                roomFilterUnselected(chip, defaultColor)
+                roomChipGroup.addView(chip)
+            }
+
+            roomChipGroup.setOnCheckedChangeListener { group, checkedId ->
+                val chip: Chip? = findViewById(checkedId)
+                if(chip != null) {
+                    if(chip != chipSelected) {
+                        roomFilterUnselected(chipSelected, defaultColor)
+                        filterRoom(room = chip.text.toString())
+                        roomFilterSelected(chip)
+                        chipSelected = chip
+                    }
+
+                }
+            }
+    }
+
+    private fun roomFilterSelected(chip: Chip) {
+        chip.setTextColor(ContextCompat.getColor(this, R.color.white))
+        chip.typeface = Typeface.DEFAULT_BOLD
+        chip.setChipBackgroundColorResource(R.color.app_primary_red)
+        chip.isSelected = true
+        chip.isCheckable = true
+        chip.isClickable = true
+        chip.isCheckedIconVisible = false
+    }
+
+    private fun roomFilterUnselected(chip: Chip, defaultColor: ColorStateList?) {
+        chip.setTextColor(ContextCompat.getColor(this, R.color.app_primary_blue))
+        chip.typeface = Typeface.DEFAULT_BOLD
+        chip.chipBackgroundColor = defaultColor
+        chip.isSelected = false
+        chip.isCheckable = true
+        chip.isClickable = true
+        chip.isCheckedIconVisible = false
+    }
+
+    private fun filterRoom(room : String) {
+        if (room == "Tous") {
+            deviceAdapter.deviceList = deviceList
+            sceneAdapter.sceneList = sceneList
+        } else {
+            val filterDeviceList = deviceList.filter { device -> device.room?.name == room }
+            var filterSceneList = ArrayList<Scene>()
+
+            deviceAdapter.deviceList = filterDeviceList
+
+            val mapFilteredDeviceFriendlyName = filterDeviceList.map { device -> device.friendly_name }
+            sceneList.forEach { scene ->
+                val deviceExistInScene = scene.devices.firstOrNull { device -> mapFilteredDeviceFriendlyName.contains(device.friendly_name) }
+                if(deviceExistInScene != null) filterSceneList.add(scene)
+            }
+
+            sceneAdapter.sceneList = filterSceneList
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1) {
@@ -238,3 +327,4 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 }
+

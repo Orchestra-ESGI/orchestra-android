@@ -69,7 +69,7 @@ class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
             val deviceBackgroundColor = Color.parseColor(device.background_color)
             DrawableCompat.setTint(wrappedDrawable, deviceBackgroundColor)
 
-            itemView.setBackgroundResource(R.drawable.scene_list_item_shape)
+            itemView.background = unwrappedDrawable
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, DetailDeviceActivity::class.java)
