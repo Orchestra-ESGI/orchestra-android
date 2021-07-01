@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Orchestra</string>
 
+    <!-- Pager -->
     <string name="pager_slider1_title">Simplicité</string>
     <string name="pager_slider2_title">Efficacité</string>
     <string name="pager_slider3_title">Clarté</string>
@@ -12,7 +13,9 @@
     <string name="pager_slider3_text">Trop de fils ? Trop de Hub ? Trop d\'applications ? Trop de chose pour gérer votre domotique, avec Orchestra, débarassez vous du surplus, et gardez uniquement l\'essentiel</string>
     <string name="pager_slider4_text">Vous décidez de changer de téléphone ou de marque? Pas d\'inquiétude, réinstallez Orchestra sur votre nouvel appareil, on se charge de tout synchroniser pour vous</string>
     <string name="pager_slider5_text">Orchestra, la domotique facile et utile</string>
+    <string name="pager_content_next">Continuer</string>
 
+    <!-- Login -->
     <string name="login_welcome">Bienvenue sur Orchestra, vous êtes de retour !</string>
     <string name="login_email">Email</string>
     <string name="login_pwd">Mot de passe</string>
@@ -21,6 +24,7 @@
     <string name="login_forgot_pwd">Mot de passe oublié ?</string>
     <string name="login_no_account">Vous n\'avez pas de compte ?</string>
 
+    <!-- Create Account -->
     <string name="create_account_title">Créez un compte pour synchroniser toutes vos informations</string>
     <string name="create_account_email">Email</string>
     <string name="create_account_email_hint">ex: toto@gmail.com</string>
@@ -33,6 +37,7 @@
     <string name="create_account_title_page">Création de compte</string>
     <string name="create_account_continue">Continuer</string>
 
+    <!-- Home -->
     <string name="home_title">Mon domicile</string>
     <string name="home_device_title">Mes objets</string>
     <string name="home_scene_title">Mes scènes</string>
@@ -47,7 +52,16 @@
 
     <string name="home_add_new_device">Ajouter un appareil</string>
     <string name="home_add_new_scene">Ajouter une scène</string>
+    <string name="home_add_new_room">Ajouter une chambre</string>
+    <string name="home_add_new_automatisation">Ajouter une automatisation</string>
 
+    <string name="home_automatisation_alert_create">Créer</string>
+    <string name="home_automatisation_empty_field_toast">Veuillez remplir le champ</string>
+    <string name="home_automatisation_alert_cancel">Annuler</string>
+
+    <string name="home_room_filter_all">Tous</string>
+
+    <!-- Create Scene -->
     <string name="create_scene_new_scene">Nouvelle scène</string>
     <string name="create_scene_name">Nom</string>
     <string name="create_scene_name_hint">"Allumer la lumière au coucher du soleil"</string>
@@ -55,10 +69,12 @@
     <string name="create_scene_description">Description</string>
     <string name="create_scene_description_hint">"Allumer les lampes s'il fait nuit"</string>
     <string name="create_scene_add_action">+ Ajouter une action</string>
+    <string name="create_scene_add_trigger">Ajouter un déclencheur</string>
 
     <string name="create_scene_list_action">Liste des actions</string>
     <string name="create_scene_list_action_description">Choisir un objet</string>
 
+    <!-- Detail Device -->
     <string name="detail_device_ok">OK</string>
     <string name="detail_device_config_text">Veuillez configurer cet appareil</string>
     <string name="detail_device_config_button">Configurer</string>
@@ -78,18 +94,21 @@
     <string name="reachable_ok">Disponible</string>
     <string name="reachable_nok">Non disponible</string>
 
+    <!-- Detail Scene -->
     <string name="detail_scene_modify">Modifier</string>
     <string name="detail_scene_description_title">Description</string>
     <string name="detail_scene_action_title">Actions</string>
     <string name="detail_scene_action_unknown_device">Appareil Inconnu</string>
     <string name="detail_scene_action_unknown_action">Action Inconnu</string>
 
+    <!-- Supported Device -->
     <string name="supported_accessories_not_supported_for_this_brand">Aucun appareil n\'est supporté pour cette marque</string>
 
     <string name="supported_device_reset_device_title">Attention</string>
     <string name="supported_device_reset_device_message">Vous devez réinitialiser votre appareil</string>
     <string name="supported_device_reset_device_button">Réinitialiser</string>
 
+    <!-- Create device -->
     <string name="create_device_new_device">Ajouter l\'appareil</string>
     <string name="create_device_name">Nom de l\'appareil</string>
     <string name="create_device_name_hint">Lampe Salon</string>
@@ -108,9 +127,60 @@
     <string name="search_device_error_title">Oops !</string>
     <string name="search_device_error_description">Un problème est survenu durant l\'ajout !</string>
     <string name="search_device_error_btn">Réessayer</string>
+
     <string name="create_scene_delete_action">Supprimer</string>
-    <string name="create_scene_cancel">Cancel</string>
+    <string name="create_scene_cancel">Annuler</string>
     <string name="create_scene_add_action_text">Ajouter une action</string>
-    <string name="home_add_new_room">Ajouter une chambre</string>
+
+    <!-- Create scene action adapter -->
+    <string name="create_scene_actions_adapter_error">Error</string>
+    <string name="create_scene_actions_adapter_choose_color">Choisir une couleur</string>
+    <string name="create_scene_actions_adapter_choosen_color">Changer la couleur en</string>
+    <string name="create_scene_actions_adapter_ok">Ok</string>
+    <string name="create_scene_actions_adapter_cancel">Annuler</string>
+    <string name="create_scene_actions_adapter_delete_action">Supprimer l\'action</string>
+    <string name="create_scene_actions_adapter_delete_action_confirmation">Êtes-vous sûr de vouloir supprimer cet action ?</string>
+    <string name="create_scene_actions_adapter_delete_device">Supprimer l\'objet</string>
+    <string name="create_scene_actions_adapter_delete_device_confirmation">Êtes-vous sûr de vouloir supprimer cet objet de la scène actuelle ?</string>
+
+    <string name="create_scene_actions_adapter_device_state_on">Allumer l\'appareil</string>
+    <string name="create_scene_actions_adapter_device_state_off">Éteindre l\'appareil</string>
+    <string name="create_scene_actions_adapter_device_state_toggle">Basculer</string>
+    <string name="create_scene_actions_adapter_device_brightness_25">Luminosité à 25%</string>
+    <string name="create_scene_actions_adapter_device_brightness_50">Luminosité à 50%</string>
+    <string name="create_scene_actions_adapter_device_brightness_75">Luminosité à 75%</string>
+    <string name="create_scene_actions_adapter_device_brightness_100">Luminosité à 100%</string>
+    <string name="create_scene_actions_adapter_device_temperature_25">Température à 25%</string>
+    <string name="create_scene_actions_adapter_device_temperature_50">Température à 50%</string>
+    <string name="create_scene_actions_adapter_device_temperature_75">Température à 75%</string>
+    <string name="create_scene_actions_adapter_device_temperature_100">Température à 100%</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Paramètres</string>
+    <string name="settings_rate_us">Évaluez nous</string>
+    <string name="settings_share_the_app">Partager l\'application</string>
+    <string name="settings_about_us">À propos de nous</string>
+    <string name="settings_contact">Contacter</string>
+    <string name="settings_libraries_we_use">Les bibliothèques que nous utilisons</string>
+    <string name="settings_privacy_policy">Politique de confidentialité</string>
+    <string name="settings_terms_of_use">Conditions d\'utilisation</string>
+    <string name="settings_sign_out">Déconnexion</string>
+    <string name="settings_delete_your_account">Supprimer votre compte</string>
+    <string name="settings_rate_app_impossible">Impossible de trouver Orchestra sur le marché</string>
+    <string name="settings_share_app_text">Découvrez l\'application Orchestra :</string>
+    <string name="settings_share_app_title">Partager à:</string>
+    <string name="settings_sign_out_alert_title">Déconnexion</string>
+    <string name="settings_sign_out_alert_message">Êtes-vous sûr de vouloir vous déconnecter ?</string>
+    <string name="settings_sign_out_alert_cancel">Annuler</string>
+    <string name="settings_delete_your_account_alert_title">Supprimer votre compte</string>
+    <string name="settings_delete_your_account_alert_message">Êtes-vous sûr de vouloir supprimer votre compte ?</string>
+    <string name="settings_delete_your_account_alert_delete">Supprimer</string>
+    <string name="settings_delete_your_account_alert_cancel">Annuler</string>
+    <string name="settings_sign_out_alert_sign_out">Déconnexion</string>
+
+    <string name="create_scene_missing_information_toast">Veuillez renseigner les informations manquantes</string>
+
+
+
 
 </resources>

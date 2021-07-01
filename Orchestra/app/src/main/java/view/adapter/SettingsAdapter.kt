@@ -17,24 +17,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import view.ui.LoginActivity
 import view.ui.WebViewActivity
-import viewModel.UserViewModel
 
-class SettingsAdapter : RecyclerView.Adapter<SettingsAdapter.SettingsViewHolder>() {
+class SettingsAdapter(context: Context) : RecyclerView.Adapter<SettingsAdapter.SettingsViewHolder>() {
 
     private var titleList = listOf(
-            "Rate Us",
-            "Share the app",
+            context.getString(R.string.settings_rate_us),
+            context.getString(R.string.settings_share_the_app),
             "",
-            "About Us",
-            "Contact",
+            context.getString(R.string.settings_about_us),
+            context.getString(R.string.settings_contact),
             "",
-            "Librairies we use",
+            context.getString(R.string.settings_libraries_we_use),
             "",
-            "Privacy policy",
-            "Terms of use",
+            context.getString(R.string.settings_privacy_policy),
+            context.getString(R.string.settings_terms_of_use),
             "",
-            "Sign out",
-            "Delete your account"
+            context.getString(R.string.settings_sign_out),
+            context.getString(R.string.settings_delete_your_account)
     )
     private var descriptionList = listOf(
             R.drawable.ic_star,
@@ -87,17 +86,17 @@ class SettingsAdapter : RecyclerView.Adapter<SettingsAdapter.SettingsViewHolder>
                 settingsNextImageView.setImageResource(0)
             }
 
-            if (title == "Delete your account") {
+            if (title == itemView.context.getString(R.string.settings_delete_your_account)) {
                 // val appRedColor = ContextCompat.getColor(itemView.context, R.color.app_primary_red)
                 settingsTextView.setTextColor(Color.RED)
             }
 
             itemView.setOnClickListener {
                 when (title) {
-                    "Rate Us" -> rateApp()
-                    "Share the app" -> shareApp()
-                    "Sign out" -> signOut()
-                    "Delete your account" -> deleteAccount()
+                    itemView.context.getString(R.string.settings_rate_us) -> rateApp()
+                    itemView.context.getString(R.string.settings_share_the_app) -> shareApp()
+                    itemView.context.getString(R.string.settings_sign_out) -> signOut()
+                    itemView.context.getString(R.string.settings_delete_your_account) -> deleteAccount()
                     else -> otherViews()
                 }
             }
@@ -110,22 +109,22 @@ class SettingsAdapter : RecyclerView.Adapter<SettingsAdapter.SettingsViewHolder>
             try {
                 itemView.context.startActivity(myAppLinkToMarket)
             } catch (e: ActivityNotFoundException) {
-                Toast.makeText(itemView.context, "Impossible to find an application for the market", Toast.LENGTH_LONG).show()
+                Toast.makeText(itemView.context, itemView.context.getString(R.string.settings_rate_app_impossible), Toast.LENGTH_LONG).show()
             }
         }
 
         private fun shareApp() {
             val intent = Intent()
             intent.action = Intent.ACTION_SEND
-            intent.putExtra(Intent.EXTRA_TEXT, "Hey Check out this Great app:")
+            intent.putExtra(Intent.EXTRA_TEXT, itemView.context.getString(R.string.settings_share_app_text))
             intent.type = "text/plain"
-            itemView.context.startActivity(Intent.createChooser(intent, "Share To:"))
+            itemView.context.startActivity(Intent.createChooser(intent, itemView.context.getString(R.string.settings_share_app_title)))
         }
 
         private fun signOut() {
-            AlertDialog.Builder(itemView.context).setTitle("Deconnexion")
-                .setMessage("Êtes-vous sûr de vouloir vous déconnecter ?")
-                .setPositiveButton("Deconnexion") { dialog, _ ->
+            AlertDialog.Builder(itemView.context).setTitle(itemView.context.getString(R.string.settings_sign_out_alert_title))
+                .setMessage(itemView.context.getString(R.string.settings_sign_out_alert_message))
+                .setPositiveButton(itemView.context.getString(R.string.settings_sign_out_alert_sign_out)) { dialog, _ ->
                     val sharedPref = itemView.context.getSharedPreferences("com.example.orchestra.API_TOKEN", Context.MODE_PRIVATE)
                     with (sharedPref.edit()) {
                         putString("Token", null)
@@ -135,7 +134,7 @@ class SettingsAdapter : RecyclerView.Adapter<SettingsAdapter.SettingsViewHolder>
                     itemView.context.startActivity(intent)
                     dialog.dismiss()
                 }
-                .setNegativeButton("Cancel") { dialog, _ ->
+                .setNegativeButton(itemView.context.getString(R.string.settings_sign_out_alert_cancel)) { dialog, _ ->
                     dialog.dismiss()
                 }
                 .show()
@@ -148,13 +147,13 @@ class SettingsAdapter : RecyclerView.Adapter<SettingsAdapter.SettingsViewHolder>
 
         private fun deleteAccount() {
             AlertDialog.Builder(itemView.context)
-                .setTitle("Supprimer votre compte")
-                .setMessage("Êtes-vous sûr de vouloir supprimer votre compte ?")
-                .setPositiveButton("Supprimer") { dialog, _ ->
+                .setTitle(itemView.context.getString(R.string.settings_delete_your_account_alert_title))
+                .setMessage(itemView.context.getString(R.string.settings_delete_your_account_alert_message))
+                .setPositiveButton(itemView.context.getString(R.string.settings_delete_your_account_alert_delete)) { dialog, _ ->
 
                     dialog.dismiss()
                 }
-                .setNegativeButton("Cancel") { dialog, _ ->
+                .setNegativeButton(itemView.context.getString(R.string.settings_delete_your_account_alert_cancel)) { dialog, _ ->
                     dialog.dismiss()
                 }
                 .show()

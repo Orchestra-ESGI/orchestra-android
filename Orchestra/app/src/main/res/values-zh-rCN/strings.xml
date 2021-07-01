@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Orchestra</string>
 
+    <!-- Pager -->
     <string name="pager_slider1_title">简洁性</string>
     <string name="pager_slider2_title">效率</string>
     <string name="pager_slider3_title">清晰度</string>
@@ -12,7 +13,9 @@
     <string name="pager_slider3_text">电线太多？枢纽太多？申请太多？太多的东西来管理你的家庭自动化，用Orchestra，摆脱多余的东西，只保留必要的东西。</string>
     <string name="pager_slider4_text">你决定改变你的手机或品牌？别担心，在你的新设备上重新安装Orchestra，我们将为你处理好一切同步事宜。</string>
     <string name="pager_slider5_text">Orchestra, 简单而有用的家庭自动化</string>
+    <string name="pager_content_next">下一个</string>
 
+    <!-- Login -->
     <string name="login_welcome">欢迎回到Orchestra!</string>
     <string name="login_email">电子邮件</string>
     <string name="login_pwd">密码</string>
@@ -21,6 +24,7 @@
     <string name="login_forgot_pwd">忘记密码?</string>
     <string name="login_no_account">没有账户?</string>
 
+    <!-- Create Account -->
     <string name="create_account_title">创建一个账户来同步您的所有信息</string>
     <string name="create_account_email">电子邮件</string>
     <string name="create_account_email_hint">ex: toto@gmail.com</string>
@@ -33,6 +37,7 @@
     <string name="create_account_title_page">创建一个账户</string>
     <string name="create_account_continue">继续</string>
 
+    <!-- Home -->
     <string name="home_title">我的家</string>
     <string name="home_device_title">我的对象</string>
     <string name="home_scene_title">我的场景</string>
@@ -47,7 +52,16 @@
 
     <string name="home_add_new_device">添加一个对象</string>
     <string name="home_add_new_scene">添加一个场景</string>
+    <string name="home_add_new_room">添加房间</string>
+    <string name="home_add_new_automatisation">添加自动化</string>
 
+    <string name="home_automatisation_alert_create">创造</string>
+    <string name="home_automatisation_empty_field_toast">请填写该字段</string>
+    <string name="home_automatisation_alert_cancel">取消</string>
+
+    <string name="home_room_filter_all">全部</string>
+
+    <!-- Create Scene -->
     <string name="create_scene_new_scene">新场景</string>
     <string name="create_scene_name">名称</string>
     <string name="create_scene_name_hint">"日落时开灯"</string>
@@ -55,10 +69,12 @@
     <string name="create_scene_description">说明</string>
     <string name="create_scene_description_hint">"天黑就开灯"</string>
     <string name="create_scene_add_action">+ 增加行动</string>
+    <string name="create_scene_add_trigger">添加触发器</string>
 
     <string name="create_scene_list_action">动作列表</string>
     <string name="create_scene_list_action_description">选择一个动作</string>
 
+    <!-- Detail Device -->
     <string name="detail_device_ok">OK</string>
     <string name="detail_device_room_title">房间</string>
     <string name="detail_device_config_text">请配置此设备</string>
@@ -78,18 +94,21 @@
     <string name="reachable_ok">可用</string>
     <string name="reachable_nok">不可用</string>
 
+    <!-- Detail Scene -->
     <string name="detail_scene_modify">编辑</string>
     <string name="detail_scene_description_title">说明</string>
     <string name="detail_scene_action_title">行动</string>
     <string name="detail_scene_action_unknown_device">未知设备</string>
     <string name="detail_scene_action_unknown_action">未知动作</string>
 
+    <!-- Supported Accessories -->
     <string name="supported_accessories_not_supported_for_this_brand">此品牌不支持任何设备</string>
 
     <string name="supported_device_reset_device_title">注意力</string>
     <string name="supported_device_reset_device_message">您需要重置您的设备</string>
     <string name="supported_device_reset_device_button">重启</string>
 
+    <!-- Create Device -->
     <string name="create_device_new_device">添加设备</string>
     <string name="create_device_name">设备名称</string>
     <string name="create_device_name_hint">客厅灯</string>
@@ -109,9 +128,59 @@
     <string name="search_device_error_title">哎呀 !</string>
     <string name="search_device_error_description">添加时出现问题 !</string>
     <string name="search_device_error_btn">再试一次</string>
-    <string name="create_scene_delete_action">Supprimer</string>
-    <string name="create_scene_cancel">Cancel</string>
-    <string name="create_scene_add_action_text">Ajouter une action</string>
-    <string name="home_add_new_room">Ajouter une chambre</string>
+
+    <string name="create_scene_delete_action">删除</string>
+    <string name="create_scene_cancel">取消</string>
+    <string name="create_scene_add_action_text">添加动作</string>
+
+    <!-- Create Scene Action Adapter -->
+    <string name="create_scene_actions_adapter_error">错误</string>
+    <string name="create_scene_actions_adapter_choose_color">选择颜色</string>
+    <string name="create_scene_actions_adapter_choosen_color">将颜色更改为</string>
+    <string name="create_scene_actions_adapter_ok">好的</string>
+    <string name="create_scene_actions_adapter_cancel">取消</string>
+    <string name="create_scene_actions_adapter_delete_action">删除操作</string>
+    <string name="create_scene_actions_adapter_delete_action_confirmation">您确定要删除此操作吗 ?</string>
+    <string name="create_scene_actions_adapter_delete_device">删除对象</string>
+    <string name="create_scene_actions_adapter_delete_device_confirmation">您确定要从当前场景中删除此对象吗 ?</string>
+
+    <string name="create_scene_actions_adapter_device_state_on">打开设备</string>
+    <string name="create_scene_actions_adapter_device_state_off">关闭设备</string>
+    <string name="create_scene_actions_adapter_device_state_toggle">切换</string>
+    <string name="create_scene_actions_adapter_device_brightness_25">亮度为 25%</string>
+    <string name="create_scene_actions_adapter_device_brightness_50">亮度为 50%</string>
+    <string name="create_scene_actions_adapter_device_brightness_75">亮度为 75%</string>
+    <string name="create_scene_actions_adapter_device_brightness_100">亮度为 100%</string>
+    <string name="create_scene_actions_adapter_device_temperature_25">温度为 25%</string>
+    <string name="create_scene_actions_adapter_device_temperature_50">温度为 50%</string>
+    <string name="create_scene_actions_adapter_device_temperature_75">温度为 75%</string>
+    <string name="create_scene_actions_adapter_device_temperature_100">温度为 100%</string>
+
+    <!-- Settings -->
+    <string name="settings_title">设置</string>
+    <string name="settings_rate_us">评价我们</string>
+    <string name="settings_share_the_app">分享应用</string>
+    <string name="settings_about_us">关于我们</string>
+    <string name="settings_contact">接触</string>
+    <string name="settings_libraries_we_use">我们使用的图书馆</string>
+    <string name="settings_privacy_policy">隐私政策</string>
+    <string name="settings_terms_of_use">使用条款</string>
+    <string name="settings_sign_out">登出</string>
+    <string name="settings_delete_your_account">删除您的帐户</string>
+    <string name="settings_rate_app_impossible">无法在市场上找到 Orchestra</string>
+    <string name="settings_share_app_text">嘿，看看 Orchestra 应用程序：</string>
+    <string name="settings_share_app_title">分享给：</string>
+    <string name="settings_sign_out_alert_title">登出</string>
+    <string name="settings_sign_out_alert_message">您确定要退出吗 ?</string>
+    <string name="settings_sign_out_alert_cancel">取消</string>
+    <string name="settings_delete_your_account_alert_title">删除您的帐户</string>
+    <string name="settings_delete_your_account_alert_message">您确定要删除您的帐户吗 ?</string>
+    <string name="settings_delete_your_account_alert_delete">删除</string>
+    <string name="settings_delete_your_account_alert_cancel">取消</string>
+    <string name="settings_sign_out_alert_sign_out">登出</string>
+
+    <string name="create_scene_missing_information_toast">请填写缺少的信息</string>
+
+
 
 </resources>

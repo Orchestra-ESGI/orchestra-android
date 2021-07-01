@@ -182,7 +182,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun alertForCreations() {
-        val listOfAction: List<String> = listOf(getString(R.string.home_add_new_device), getString(R.string.home_add_new_scene), getString(R.string.home_add_new_room), "Ajouter une automatisation")
+        val listOfAction: List<String> = listOf(getString(R.string.home_add_new_device), getString(R.string.home_add_new_scene), getString(R.string.home_add_new_room), getString(R.string.home_add_new_automatisation))
         val listOfActionToCharSequence = listOfAction.toTypedArray<CharSequence>()
 
         val createSceneIntent = Intent(this, CreateSceneActivity::class.java)
@@ -206,7 +206,7 @@ class HomeActivity : AppCompatActivity() {
                         alertForCreateNewRoom()
                         dialog.dismiss()
                     }
-                    "Ajouter une automatisation" -> {
+                    getString(R.string.home_add_new_automatisation) -> {
                         createSceneIntent.putExtra("isAutomatisation", true)
                         startActivityForResult(createSceneIntent, 1)
                     }
@@ -232,15 +232,14 @@ class HomeActivity : AppCompatActivity() {
         }
         editText.filters = arrayOf(filter)
 
-        dialogBuilder.setPositiveButton("Créer") { _, _ ->
+        dialogBuilder.setPositiveButton(getString(R.string.home_automatisation_alert_create)) { _, _ ->
             if (editText.text.isNotEmpty()) {
                 homeViewModel.addRoom(editText.text.toString())
             } else {
-                Toast.makeText(this, "Veuillez remplir le champ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.home_automatisation_empty_field_toast), Toast.LENGTH_SHORT).show()
             }
-
         }
-        .setNegativeButton("Cancel") { dialog, _ ->
+        .setNegativeButton(getString(R.string.home_automatisation_alert_cancel)) { dialog, _ ->
             dialog.dismiss()
         }
         .show()
@@ -253,7 +252,7 @@ class HomeActivity : AppCompatActivity() {
             var chipSelected: Chip = chipAll
             val defaultColor = chipAll.chipBackgroundColor
 
-            chipAll.text = "Tous"
+            chipAll.text = getString(R.string.home_room_filter_all)
             roomFilterSelected(chipAll)
             roomChipGroup.addView(chipAll)
 
@@ -299,7 +298,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun filterRoom(room : String) {
-        if (room == "Tous") {
+        if (room == getString(R.string.home_room_filter_all)) {
             deviceAdapter.deviceList = deviceList
             sceneAdapter.sceneList = sceneList
         } else {

@@ -24,7 +24,7 @@ class SettingsActivity : AppCompatActivity() {
 
         val sharedPref = getSharedPreferences("com.example.orchestra.API_TOKEN", Context.MODE_PRIVATE)
 
-        title = "Settings"
+        title = getString(R.string.settings_title)
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         delegate.applyDayNight()
@@ -36,7 +36,7 @@ class SettingsActivity : AppCompatActivity() {
         settingsProfileTextView.text = sharedPref.getString("Email", "")
 
         settingsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        settingsAdapter = SettingsAdapter()
+        settingsAdapter = SettingsAdapter(this)
         settingsRecyclerView.adapter = settingsAdapter
     }
 }

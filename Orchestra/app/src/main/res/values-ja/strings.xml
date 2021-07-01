@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Orchestra</string>
 
+    <!-- Pager -->
     <string name="pager_slider1_title">シンプルさ</string>
     <string name="pager_slider2_title">効率</string>
     <string name="pager_slider3_title">明快さ</string>
@@ -12,7 +13,9 @@
     <string name="pager_slider3_text">スレッドが多すぎますか？ハブが多すぎますか？アプリケーションが多すぎますか？オーケストラでホームオートメーションを管理し、余分なものを取り除き、必要なものだけを保持するには多すぎます</string>
     <string name="pager_slider4_text">携帯電話やブランドを変更することにしましたか？心配ありません。新しいデバイスにOrchestraを再インストールしてください。すべてが同期されます。</string>
     <string name="pager_slider5_text">Orchestra、簡単で便利なホームオートメーション</string>
+    <string name="pager_content_next">次</string>
 
+    <!-- Login -->
     <string name="login_welcome">Orchestra へようこそ、戻ってきました!</string>
     <string name="login_email">メールアドレス</string>
     <string name="login_pwd">パスワード</string>
@@ -21,6 +24,7 @@
     <string name="login_forgot_pwd">パスワードをお忘れですか ?</string>
     <string name="login_no_account">アカウントを持っていませんか ?</string>
 
+    <!-- Create Account -->
     <string name="create_account_title">アカウントを作成してすべての情報を同期</string>
     <string name="create_account_email">メールアドレス</string>
     <string name="create_account_email_hint">ex: toto@gmail.com</string>
@@ -33,6 +37,7 @@
     <string name="create_account_title_page">アカウント作成e</string>
     <string name="create_account_continue">続ける</string>
 
+    <!-- Home -->
     <string name="home_title">私の家</string>
     <string name="home_device_title">私のオブジェクト</string>
     <string name="home_scene_title">私のシーン</string>
@@ -47,7 +52,16 @@
 
     <string name="home_add_new_device">デバイスを追加</string>
     <string name="home_add_new_scene">シーンを追加</string>
+    <string name="home_add_new_room">部屋を追加する</string>
+    <string name="home_add_new_automatisation">自動化を追加する</string>
 
+    <string name="home_automatisation_alert_create">作成する</string>
+    <string name="home_automatisation_empty_field_toast">フィールドに入力してください</string>
+    <string name="home_automatisation_alert_cancel">キャンセル</string>
+
+    <string name="home_room_filter_all">すべて</string>
+
+    <!-- Create Scene -->
     <string name="create_scene_new_scene">新しいシーン</string>
     <string name="create_scene_name">苗字</string>
     <string name="create_scene_name_hint">"夕暮れ時に明かりを灯す"</string>
@@ -55,10 +69,12 @@
     <string name="create_scene_description">説明</string>
     <string name="create_scene_description_hint">"暗くなったらランプを点ける"</string>
     <string name="create_scene_add_action">+ アクションを追加</string>
+    <string name="create_scene_add_trigger">トリガーを追加する</string>
 
     <string name="create_scene_list_action">アクション一覧</string>
     <string name="create_scene_list_action_description">アクションを選択</string>
 
+    <!-- Detail Device -->
     <string name="detail_device_ok">OK</string>
     <string name="detail_device_room_title">ルーム</string>
     <string name="detail_device_config_text">このデバイスを構成してください</string>
@@ -78,18 +94,21 @@
     <string name="reachable_ok">利用可能</string>
     <string name="reachable_nok">利用不可</string>
 
+    <!-- Detail Scene -->
     <string name="detail_scene_modify">編集</string>
     <string name="detail_scene_description_title">説明</string>
     <string name="detail_scene_action_title">行動</string>
     <string name="detail_scene_action_unknown_device">未知のディバイス</string>
     <string name="detail_scene_action_unknown_action">不明なアクション</string>
 
+    <!-- Supported Device -->
     <string name="supported_accessories_not_supported_for_this_brand">このブランドではサポートされているデバイスはありません</string>
 
     <string name="supported_device_reset_device_title">警告</string>
     <string name="supported_device_reset_device_message">デバイスをリセットする必要があります</string>
     <string name="supported_device_reset_device_button">リセット</string>
 
+    <!-- Create device -->
     <string name="create_device_new_device">デバイスを追加</string>
     <string name="create_device_name">デバイスの名前</string>
     <string name="create_device_name_hint">リビングランプ</string>
@@ -109,8 +128,58 @@
     <string name="search_device_error_title">おっとっと !</string>
     <string name="search_device_error_description">追加に問題がありました !</string>
     <string name="search_device_error_btn">再試行</string>
-    <string name="create_scene_delete_action">Supprimer</string>
-    <string name="create_scene_cancel">Cancel</string>
-    <string name="create_scene_add_action_text">Ajouter une action</string>
-    <string name="home_add_new_room">Ajouter une chambre</string>
+
+    <string name="create_scene_delete_action">削除</string>
+    <string name="create_scene_cancel">キャンセル</string>
+    <string name="create_scene_add_action_text">アクションを追加</string>
+
+    <!-- Create Scene Action Adapter -->
+    <string name="create_scene_actions_adapter_error">エラー</string>
+    <string name="create_scene_actions_adapter_choose_color">色を選ぶ</string>
+    <string name="create_scene_actions_adapter_choosen_color">色をに変更します</string>
+    <string name="create_scene_actions_adapter_ok">OK</string>
+    <string name="create_scene_actions_adapter_cancel">キャンセル</string>
+    <string name="create_scene_actions_adapter_delete_action">アクションを削除する</string>
+    <string name="create_scene_actions_adapter_delete_action_confirmation">このアクションを削除してもよろしいですか？</string>
+    <string name="create_scene_actions_adapter_delete_device">オブジェクトを削除する</string>
+    <string name="create_scene_actions_adapter_delete_device_confirmation">このオブジェクトを現在のシーンから削除してもよろしいですか ?</string>
+
+    <string name="create_scene_actions_adapter_device_state_on">デバイスの電源を入れます</string>
+    <string name="create_scene_actions_adapter_device_state_off">デバイスの電源を切ります</string>
+    <string name="create_scene_actions_adapter_device_state_toggle">トグル</string>
+    <string name="create_scene_actions_adapter_device_brightness_25">25％の明るさ</string>
+    <string name="create_scene_actions_adapter_device_brightness_50">50％の明るさ</string>
+    <string name="create_scene_actions_adapter_device_brightness_75">75％の明るさ</string>
+    <string name="create_scene_actions_adapter_device_brightness_100">100％の明るさ</string>
+    <string name="create_scene_actions_adapter_device_temperature_25">25％の温度</string>
+    <string name="create_scene_actions_adapter_device_temperature_50">50％の温度</string>
+    <string name="create_scene_actions_adapter_device_temperature_75">75％の温度</string>
+    <string name="create_scene_actions_adapter_device_temperature_100">100％の温度</string>
+
+    <!-- Settings -->
+    <string name="settings_title">設定</string>
+    <string name="settings_rate_us">私たちを評価してください</string>
+    <string name="settings_share_the_app">アプリを共有する</string>
+    <string name="settings_about_us">私たちに関しては</string>
+    <string name="settings_contact">連絡先</string>
+    <string name="settings_libraries_we_use">私たちが使用するライブラリ</string>
+    <string name="settings_privacy_policy">個人情報保護方針</string>
+    <string name="settings_terms_of_use">利用規約</string>
+    <string name="settings_sign_out">サインアウト</string>
+    <string name="settings_delete_your_account">アカウントを削除する</string>
+    <string name="settings_rate_app_impossible">市場でOrchestraを見つけることが不可能</string>
+    <string name="settings_share_app_text">Orchestraアプリをチェックしてください：</string>
+    <string name="settings_share_app_title">共有先：</string>
+    <string name="settings_sign_out_alert_title">サインアウト</string>
+    <string name="settings_sign_out_alert_message">サインアウトしてもよろしいですか ?</string>
+    <string name="settings_sign_out_alert_cancel">キャンセル</string>
+    <string name="settings_delete_your_account_alert_title">アカウントを削除する</string>
+    <string name="settings_delete_your_account_alert_message">アカウントを削除してもよろしいですか ?</string>
+    <string name="settings_delete_your_account_alert_delete">削除</string>
+    <string name="settings_delete_your_account_alert_cancel">キャンセル</string>
+    <string name="settings_sign_out_alert_sign_out">サインアウト</string>
+
+    <string name="create_scene_missing_information_toast">不足している情報を記入してください</string>
+
+
 </resources>

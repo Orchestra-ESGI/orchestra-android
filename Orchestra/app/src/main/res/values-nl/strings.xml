@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Orchestra</string>
 
+    <!-- Pager -->
     <string name="pager_slider1_title">Eenvoud</string>
     <string name="pager_slider2_title">Efficiëntie</string>
     <string name="pager_slider3_title">Duidelijkheid</string>
@@ -12,7 +13,9 @@
     <string name="pager_slider3_text">Te veel draden? Te veel hubs? Te veel aanvragen? Te veel dingen om uw domotica te beheren, met Orchestra, ontdoe u van het overtollige, en bewaar alleen het essentiële</string>
     <string name="pager_slider4_text">Je besluit om van telefoon of merk te veranderen? Geen zorgen, installeer Orchestra opnieuw op uw nieuwe toestel, wij zorgen ervoor dat alles gesynchroniseerd wordt</string>
     <string name="pager_slider5_text">Orchestra, eenvoudige en nuttige domotica</string>
+    <string name="pager_content_next">De volgende</string>
 
+    <!-- Login -->
     <string name="login_welcome">Welkom terug bij het Orchestra!</string>
     <string name="login_email">E-mail</string>
     <string name="login_pwd">Wachtwoord</string>
@@ -21,6 +24,7 @@
     <string name="login_forgot_pwd">Wachtwoord vergeten ?</string>
     <string name="login_no_account">Heb je geen account ?</string>
 
+    <!-- Create Account -->
     <string name="create_account_title">Maak een account aan om al uw informatie te synchroniseren</string>
     <string name="create_account_email">E-mail</string>
     <string name="create_account_email_hint">ex: toto@gmail.com</string>
@@ -33,6 +37,7 @@
     <string name="create_account_title_page">Maak een account aan</string>
     <string name="create_account_continue">Ga door</string>
 
+    <!-- Home -->
     <string name="home_title">Mijn huis</string>
     <string name="home_device_title">Mijn objecten</string>
     <string name="home_scene_title">Mijn scènes</string>
@@ -47,7 +52,16 @@
 
     <string name="home_add_new_device">Een apparaat toevoegen</string>
     <string name="home_add_new_scene">een scène toevoegen</string>
+    <string name="home_add_new_room">Voeg een kamer toe</string>
+    <string name="home_add_new_automatisation">Een automatisering toevoegen</string>
 
+    <string name="home_automatisation_alert_create">Aanmaken</string>
+    <string name="home_automatisation_empty_field_toast">Gelieve het veld in te vullen</string>
+    <string name="home_automatisation_alert_cancel">Annuleren</string>
+
+    <string name="home_room_filter_all">Alle</string>
+
+    <!-- Create Scene -->
     <string name="create_scene_new_scene">Nieuwe scène</string>
     <string name="create_scene_name">Naam</string>
     <string name="create_scene_name_hint">"Doe het licht aan bij zonsondergang"</string>
@@ -55,10 +69,12 @@
     <string name="create_scene_description">Beschrijving</string>
     <string name="create_scene_description_hint">"Doe de lichten aan als het donker is"</string>
     <string name="create_scene_add_action">+ Acties toevoegen</string>
+    <string name="create_scene_add_trigger">Een trigger toevoegen</string>
 
     <string name="create_scene_list_action">Lijst met acties</string>
     <string name="create_scene_list_action_description">Kies een actie</string>
 
+    <!-- Detail Device -->
     <string name="detail_device_ok">OK</string>
     <string name="detail_device_room_title">Kamer</string>
     <string name="detail_device_config_text">Configureer dit apparaat a.u.b.</string>
@@ -78,18 +94,21 @@
     <string name="reachable_ok">Beschikbaar</string>
     <string name="reachable_nok">Niet beschikbaar</string>
 
+    <!-- Detail Scene -->
     <string name="detail_scene_modify">Bewerken</string>
     <string name="detail_scene_description_title">Beschrijving</string>
     <string name="detail_scene_action_title">Acties</string>
     <string name="detail_scene_action_unknown_device">Onbekend apparaat</string>
     <string name="detail_scene_action_unknown_action">Onbekende actie</string>
 
+    <!-- Supported Device -->
     <string name="supported_accessories_not_supported_for_this_brand">Er wordt geen apparaat ondersteund voor dit merk</string>
 
     <string name="supported_device_reset_device_title">Aandacht</string>
     <string name="supported_device_reset_device_message">Je moet je apparaat resetten</string>
     <string name="supported_device_reset_device_button">Resetten</string>
 
+    <!-- Create Device -->
     <string name="create_device_new_device">Voeg toestel toe</string>
     <string name="create_device_name">Naam van het apparaat</string>
     <string name="create_device_name_hint">Woonkamer lamp</string>
@@ -109,9 +128,59 @@
     <string name="search_device_error_title">Oops !</string>
     <string name="search_device_error_description">Er is een probleem opgetreden bij het toevoegen !</string>
     <string name="search_device_error_btn">Probeer het opnieuw</string>
-    <string name="create_scene_delete_action">Supprimer</string>
-    <string name="create_scene_cancel">Cancel</string>
-    <string name="create_scene_add_action_text">Ajouter une action</string>
-    <string name="home_add_new_room">Ajouter une chambre</string>
+
+    <string name="create_scene_delete_action">Verwijderen</string>
+    <string name="create_scene_cancel">Annuleren</string>
+    <string name="create_scene_add_action_text">Actie toevoegen</string>
+
+    <!-- Create Scene Action Adapter -->
+    <string name="create_scene_actions_adapter_error">Fout</string>
+    <string name="create_scene_actions_adapter_choose_color">Kies een kleur</string>
+    <string name="create_scene_actions_adapter_choosen_color">Verander van kleur in</string>
+    <string name="create_scene_actions_adapter_ok">OK</string>
+    <string name="create_scene_actions_adapter_cancel">Annuleren</string>
+    <string name="create_scene_actions_adapter_delete_action">Actie verwijderen</string>
+    <string name="create_scene_actions_adapter_delete_action_confirmation">Weet je zeker dat je deze actie wilt verwijderen ?</string>
+    <string name="create_scene_actions_adapter_delete_device">Object verwijderen</string>
+    <string name="create_scene_actions_adapter_delete_device_confirmation">Weet u zeker dat u dit object uit de huidige scène wilt verwijderen ?</string>
+
+    <string name="create_scene_actions_adapter_device_state_on">Schakel het apparaat in</string>
+    <string name="create_scene_actions_adapter_device_state_off">Schakel het apparaat uit</string>
+    <string name="create_scene_actions_adapter_device_state_toggle">Wisselen</string>
+    <string name="create_scene_actions_adapter_device_brightness_25">Helderheid bij 25%</string>
+    <string name="create_scene_actions_adapter_device_brightness_50">Helderheid bij 50%</string>
+    <string name="create_scene_actions_adapter_device_brightness_75">Helderheid bij 75%</string>
+    <string name="create_scene_actions_adapter_device_brightness_100">Helderheid bij 100%</string>
+    <string name="create_scene_actions_adapter_device_temperature_25">Temperatuur bij 25%</string>
+    <string name="create_scene_actions_adapter_device_temperature_50">Temperatuur bij 50%</string>
+    <string name="create_scene_actions_adapter_device_temperature_75">Temperatuur bij 75%</string>
+    <string name="create_scene_actions_adapter_device_temperature_100">Temperatuur bij 100%</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Instellingen</string>
+    <string name="settings_rate_us">Beoordeel ons</string>
+    <string name="settings_share_the_app">Deel de app</string>
+    <string name="settings_about_us">Over ons</string>
+    <string name="settings_contact">Contact</string>
+    <string name="settings_libraries_we_use">Bibliotheken die we gebruiken</string>
+    <string name="settings_privacy_policy">Privacybeleid</string>
+    <string name="settings_terms_of_use">Gebruiksvoorwaarden</string>
+    <string name="settings_sign_out">Afmelden</string>
+    <string name="settings_delete_your_account">Verwijder je account</string>
+    <string name="settings_rate_app_impossible">Onmogelijk om Orchestra op de markt te vinden</string>
+    <string name="settings_share_app_text">Hey Bekijk de Orchestra-app:</string>
+    <string name="settings_share_app_title">Delen naar:</string>
+    <string name="settings_sign_out_alert_title">Afmelden</string>
+    <string name="settings_sign_out_alert_message">Weet u zeker dat u zich wilt afmelden ?</string>
+    <string name="settings_sign_out_alert_cancel">Annuleren</string>
+    <string name="settings_delete_your_account_alert_title">Verwijder je account</string>
+    <string name="settings_delete_your_account_alert_message">Weet je zeker dat je je account wilt verwijderen ?</string>
+    <string name="settings_delete_your_account_alert_delete">Verwijderen</string>
+    <string name="settings_delete_your_account_alert_cancel">Annuleren</string>
+    <string name="settings_sign_out_alert_sign_out">Afmelden</string>
+
+    <string name="create_scene_missing_information_toast">Vul de ontbrekende informatie in</string>
+
+
 
 </resources>

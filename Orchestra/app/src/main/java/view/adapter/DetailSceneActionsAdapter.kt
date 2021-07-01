@@ -1,5 +1,6 @@
 package view.adapter
 
+import android.content.Context
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -73,7 +74,7 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             val section = getSectionTypeViaElementPosition(position)
             if(section != null) {
                 val deviceParent = getDeviceParent(section.friendly_name!!)
-                val actionsName = getListSceneDeviceName(detailSceneActions!![position], deviceParent)
+                val actionsName = getListSceneDeviceName(detailSceneActions!![position], deviceParent, holder.itemView.context)
                 (holder as DetailActionViewHolder).bind(device = detailSceneActions!![position], actionsName = actionsName, position = position)
             }
         }
@@ -134,17 +135,17 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         }
     }
 
-    private fun getListSceneDeviceName(deviceAction: HubAccessoryConfiguration, deviceParent: HubAccessoryConfiguration?) : ArrayList<SceneActionsName> {
+    private fun getListSceneDeviceName(deviceAction: HubAccessoryConfiguration, deviceParent: HubAccessoryConfiguration?, context: Context) : ArrayList<SceneActionsName> {
         var actions: ArrayList<String>
         var values: ArrayList<String>
         var actionsName = ArrayList<SceneActionsName>()
 
         if (deviceAction.actions?.color != null) {
-            actionsName.add(SceneActionsName(key = "Changer la couleur à", value = "${deviceAction.actions?.color?.hex}", type = "color"))
+            actionsName.add(SceneActionsName(key = context.getString(R.string.create_scene_actions_adapter_choosen_color), value = "${deviceAction.actions?.color?.hex}", type = "color"))
         }
 
         if(deviceParent?.actions?.brightness != null) {
-            actions = arrayListOf("Allumer l'appareil", "Éteindre l'appareil", "Basculer")
+            actions = arrayListOf(context.getString(R.string.create_scene_actions_adapter_device_state_on), context.getString(R.string.create_scene_actions_adapter_device_state_off), context.getString(R.string.create_scene_actions_adapter_device_state_toggle))
             values = arrayListOf("on", "off", "toggle")
             for (index in actions.indices) {
                 val action = SceneActionsName(key = actions[index], value = values[index], type = "state")
@@ -154,7 +155,7 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
         if (deviceParent?.actions?.brightness != null) {
             val maxValBrightness = deviceParent?.actions?.brightness?.max_val!!
-            actions = arrayListOf("Luminosité à 25%", "Luminosité à 50%", "Luminosité à 75%", "Luminosité à 100%")
+            actions = arrayListOf(context.getString(R.string.create_scene_actions_adapter_device_brightness_25), context.getString(R.string.create_scene_actions_adapter_device_brightness_50), context.getString(R.string.create_scene_actions_adapter_device_brightness_75), context.getString(R.string.create_scene_actions_adapter_device_brightness_100))
             values = arrayListOf("${maxValBrightness.div(4)}", "${maxValBrightness.div(2)}" ,"${3*(maxValBrightness.div(4))}" ,"$maxValBrightness")
 
             for (index in actions.indices) {
@@ -165,7 +166,7 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
         if (deviceParent?.actions?.color_temp != null) {
             val maxValTemp = deviceParent?.actions?.color_temp?.max_val!!
-            actions = arrayListOf("Température à 25%", "Température à 50%", "Température à 75%", "Température à 100%")
+            actions = arrayListOf(context.getString(R.string.create_scene_actions_adapter_device_temperature_25), context.getString(R.string.create_scene_actions_adapter_device_temperature_50), context.getString(R.string.create_scene_actions_adapter_device_temperature_75), context.getString(R.string.create_scene_actions_adapter_device_temperature_100))
             values = arrayListOf("${maxValTemp.div(4)}", "${maxValTemp.div(2)}" , "${(3*(maxValTemp.div(4)))}" ,"$maxValTemp")
             for (index in actions.indices) {
                 val action = SceneActionsName(key = actions[index], value = values[index], type = "color_temp")
@@ -174,7 +175,7 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         }
 
         if(deviceParent?.actions?.color != null) {
-            actions = arrayListOf("Choisir une couleur")
+            actions = arrayListOf(context.getString(R.string.create_scene_actions_adapter_choose_color))
             values = arrayListOf("#FF0000")
             for (index in actions.indices) {
                 val action = SceneActionsName(key = actions[index], value = values[index], type = "color")

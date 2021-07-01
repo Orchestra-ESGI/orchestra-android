@@ -293,7 +293,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
                 setResult(RESULT_OK, intent)
                 finish()
             } else {
-                Toast.makeText(this, "Veuillez renseigner les informations manquantes", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.create_scene_missing_information_toast), Toast.LENGTH_SHORT).show()
             }
             true
         }
