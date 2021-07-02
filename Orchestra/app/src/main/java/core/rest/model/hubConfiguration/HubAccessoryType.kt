@@ -4,6 +4,7 @@ enum class HubAccessoryType {
     lightbulb,
     statelessProgrammableSwitch,
     switch,
+    occupancy,
     sensor,
     unknown
 }

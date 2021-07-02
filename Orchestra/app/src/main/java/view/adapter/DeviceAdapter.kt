@@ -53,6 +53,7 @@ class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
                 HubAccessoryType.lightbulb -> objectIcon.setImageResource(R.drawable.ic_lightbulb)
                 HubAccessoryType.switch -> objectIcon.setImageResource(R.drawable.ic_switch)
                 HubAccessoryType.sensor -> objectIcon.setImageResource(R.drawable.ic_sensor)
+                HubAccessoryType.occupancy -> objectIcon.setImageResource(R.drawable.ic_sensor)
                 else -> objectIcon.setImageResource(R.drawable.ic_unknown)
 
             }

@@ -180,6 +180,13 @@ class DetailDeviceActivity : AppCompatActivity() {
                 colorLayout.visibility = View.GONE
                 colorTemperatureLayout.visibility = View.GONE
             }
+            HubAccessoryType.occupancy -> {
+                configLinearLayout.visibility = View.GONE
+                stateLayout.visibility = View.GONE
+                brightnessLayout.visibility = View.GONE
+                colorLayout.visibility = View.GONE
+                colorTemperatureLayout.visibility = View.GONE
+            }
             HubAccessoryType.unknown -> {
                 stateLayout.visibility = View.GONE
                 brightnessLayout.visibility = View.GONE
@@ -187,7 +194,10 @@ class DetailDeviceActivity : AppCompatActivity() {
                 colorTemperatureLayout.visibility = View.GONE
             }
             else -> {
-
+                stateLayout.visibility = View.GONE
+                brightnessLayout.visibility = View.GONE
+                colorLayout.visibility = View.GONE
+                colorTemperatureLayout.visibility = View.GONE
             }
         }
     }
