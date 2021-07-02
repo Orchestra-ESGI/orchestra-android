@@ -58,6 +58,28 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     private var deviceList : ArrayList<HubAccessoryConfiguration> = ArrayList()
     private var availableDeviceList : ArrayList<HubAccessoryConfiguration> = ArrayList()
 
+    private val triggerableDeviceTypeList = listOf(
+            HubAccessoryType.occupancy,
+            HubAccessoryType.contact,
+            HubAccessoryType.programmableswitch
+    )
+
+    private val actionListForSensor = listOf(
+            DeviceState.on.name,
+            DeviceState.off.name
+
+    )
+
+    private val actionListForSwitch = listOf(
+            DeviceState.single.name,
+            DeviceState.double.name,
+            DeviceState.long.name
+
+    )
+
+    private lateinit var arrayAdapterAction : ArrayAdapter<String>
+    private lateinit var arrayAdapterDevice : ArrayAdapter<String>
+
     private var sceneDetail : Scene? = null
     private var automationDetail : Automation? = null
     private var isAutomatisation : Boolean? = null
@@ -120,25 +142,24 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     }
 
     private fun setUpRoomSpinner() {
-        triggerDeviceSpinner.onItemSelectedListener = this
-        triggerActionSpinner.onItemSelectedListener = this
-        val arrayAdapter = ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item)
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
-        val triggerDeviceList = deviceList.filter { device -> device.type == HubAccessoryType.occupancy || device.type == HubAccessoryType.contact}
-        triggerDeviceList.forEach {
-            arrayAdapter.add(it.name)
-        }
-        triggerDeviceSpinner.adapter = arrayAdapter
+        val triggerDeviceList = deviceList.filter { device -> triggerableDeviceTypeList.contains(device.type) }
 
-        /*
+        arrayAdapterAction = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item)
+        arrayAdapterDevice = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item)
+
+        arrayAdapterDevice.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+        triggerDeviceList.forEach {
+            arrayAdapterDevice.add(it.name)
+        }
+        triggerDeviceSpinner.adapter = arrayAdapterDevice
+
         val deviceSelectedIndex = triggerDeviceSpinner.selectedItemPosition
         val deviceSelected = triggerDeviceList[deviceSelectedIndex]
-        val deviceSelectedActions = deviceSelected.actions?.state
-         */
 
-        val arrayAdapterAction = ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item)
+        var triggerActionList = if (deviceSelected.type != HubAccessoryType.programmableswitch) actionListForSensor else actionListForSwitch
+
         arrayAdapterAction.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
-        val triggerActionList = listOf<String>(DeviceState.on.name, DeviceState.off.name)
+
         triggerActionList.forEach {
             arrayAdapterAction.add(it)
         }
@@ -146,6 +167,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
 
         if (automationDetail != null) {
             val deviceSelected = triggerDeviceList.firstOrNull { device -> device.friendly_name == automationDetail!!.trigger.friendly_name }
+            triggerActionList = if (deviceSelected?.type != HubAccessoryType.programmableswitch) actionListForSensor else actionListForSwitch
             val actionSelected = triggerActionList.firstOrNull { action -> action == automationDetail!!.trigger.actions.state}
             if (deviceSelected != null && actionSelected != null) {
                 val indexDevice = triggerDeviceList.indexOf(deviceSelected)
@@ -154,6 +176,9 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
                 triggerActionSpinner.setSelection(indexAction)
             }
         }
+
+        triggerDeviceSpinner.onItemSelectedListener = this
+        // triggerActionSpinner.onItemSelectedListener = this
     }
 
     private fun loadDataIfModeModify() {
@@ -187,7 +212,6 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     }
 
     private fun setUpRv() {
-
         sceneColorsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         sceneColorsAdapter = ShuffleColorAdapter(this)
         sceneColorsAdapter.colorListMap = sceneColorsHashMap
@@ -299,7 +323,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         val listActionToSet = retrieveActionListData()
 
         val deviceSelectedIndex = triggerDeviceSpinner.selectedItemPosition
-        val deviceSelected = deviceList.filter { device -> device.type == HubAccessoryType.occupancy || device.type == HubAccessoryType.contact }[deviceSelectedIndex]
+        val deviceSelected = deviceList.filter { device -> triggerableDeviceTypeList.contains(device.type) }[deviceSelectedIndex]
         val actionSelected = triggerActionSpinner.selectedItem as String
 
         val action = ActionsToSetIn(state = actionSelected, brightness = null, color_temp = null, color = null)
@@ -522,7 +546,18 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val triggerDeviceList = deviceList.filter { device -> triggerableDeviceTypeList.contains(device.type) }
+        val deviceSelected = triggerDeviceList[position]
+        val triggerActionList = if (deviceSelected.type != HubAccessoryType.programmableswitch) {
+            listOf(DeviceState.on.name, DeviceState.off.name)
+        } else {
+            listOf(DeviceState.single.name, DeviceState.double.name, DeviceState.long.name)
+        }
 
+        arrayAdapterAction.clear()
+        triggerActionList.forEach {
+            arrayAdapterAction.add(it)
+        }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
