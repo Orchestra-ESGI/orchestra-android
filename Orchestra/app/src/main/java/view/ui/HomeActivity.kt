@@ -246,6 +246,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setUpRoomFilter() {
+            roomChipGroup.removeAllViews()
+
             val listRoom = deviceList.map { device -> device.room }.distinct()
             val chipAll = Chip(roomChipGroup.context)
             var chipSelected: Chip = chipAll
