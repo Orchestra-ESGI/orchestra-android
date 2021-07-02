@@ -63,6 +63,7 @@ fun toSerialize(map: ArrayList<LinkedTreeMap<String, Any>>) : List<HubAccessoryC
                         "statelessProgrammableSwitch" -> type = HubAccessoryType.statelessProgrammableSwitch
                         "switch" -> type = HubAccessoryType.switch
                         "occupancy" -> type = HubAccessoryType.occupancy
+                        "contact" -> type = HubAccessoryType.contact
                         "sensor" -> type = HubAccessoryType.sensor
                         else -> type = HubAccessoryType.unknown
                 }

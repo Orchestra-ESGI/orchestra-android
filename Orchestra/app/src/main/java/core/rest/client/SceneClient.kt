@@ -3,11 +3,13 @@ package core.rest.client
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import core.rest.model.Automation
 import core.rest.model.ListScene
 import core.rest.model.ListSceneToDelete
 import core.rest.services.RootApiService
 import core.rest.services.SceneServices
 import core.rest.model.Scene
+import core.rest.model.hubConfiguration.Room
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -130,5 +132,29 @@ object SceneClient {
                 }
 
             })
+    }
+
+    fun saveAutomation(automation : Automation, context: Context?) {
+        getApi(context)?.addAutomation(automation)
+                ?.enqueue(object : Callback<HashMap<String,Any>>{
+                    override fun onResponse(
+                            call: Call<HashMap<String,Any>>,
+                            response: Response<HashMap<String,Any>>
+                    ) {
+                        if (response.isSuccessful) {
+                            val res = response.body()
+                            val erreur = res?.get("error") as? List<Room>
+                            Log.d("Test Automation Save", "OK")
+                        } else {
+                            Log.d("Test Automation Save", "NOK")
+                        }
+                        Log.d("TestSuccess", response.body().toString())
+                    }
+
+                    override fun onFailure(call: Call<HashMap<String,Any>>?, t: Throwable?) {
+                        Log.e("error", t?.message!!)
+                    }
+
+                })
     }
 }

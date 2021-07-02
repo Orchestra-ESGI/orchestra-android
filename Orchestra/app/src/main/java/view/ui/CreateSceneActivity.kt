@@ -12,12 +12,14 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.*
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.HubAccessoryType
 import utils.OnActionClicked
 import utils.OnActionLongClicked
 import utils.OnItemClicked
@@ -27,7 +29,7 @@ import viewModel.SceneViewModel
 import kotlin.random.Random
 
 
-class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked, OnActionLongClicked {
+class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked, OnActionLongClicked, AdapterView.OnItemSelectedListener {
 
     private lateinit var titleTextView: TextView
     private lateinit var nameTitleTextView: TextView
@@ -39,7 +41,8 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     private lateinit var descriptionEditText: EditText
     private lateinit var triggerLinearLayout: LinearLayout
     private lateinit var triggerTitleTextView: TextView
-    private lateinit var triggerEditText: EditText
+    private lateinit var triggerDeviceSpinner: Spinner
+    private lateinit var triggerActionSpinner: Spinner
     private lateinit var addActionTextView: TextView
     private lateinit var listActionRecyclerView: RecyclerView
 
@@ -59,12 +62,13 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     private var isAutomatisation : Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_scene)
 
         getIntentInfos()
         bind()
-        setupScreen()
+        setupAutomationView()
         loadDataIfModeModify()
         generateBackGroundColor()
         setUpRv()
@@ -97,7 +101,8 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         descriptionEditText = findViewById(R.id.create_scene_description_et)
         triggerLinearLayout = findViewById(R.id.create_scene_trigger_linear_layout)
         triggerTitleTextView = findViewById(R.id.create_scene_add_trigger_tv)
-        triggerEditText = findViewById(R.id.create_scene_add_trigger_et)
+        triggerDeviceSpinner = findViewById(R.id.create_scene_trigger_device)
+        triggerActionSpinner = findViewById(R.id.create_scene_trigger_action)
         addActionTextView = findViewById(R.id.create_scene_add_action_tv)
         listActionRecyclerView = findViewById(R.id.create_scene_list_action_rv)
 
@@ -105,10 +110,44 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         sceneViewModel.context = this
     }
 
-    private fun setupScreen() {
+    private fun setupAutomationView() {
         if (isAutomatisation == true) {
             triggerLinearLayout.visibility = View.VISIBLE
+            setUpRoomSpinner()
         }
+    }
+
+    private fun setUpRoomSpinner() {
+        triggerDeviceSpinner.onItemSelectedListener = this
+        triggerActionSpinner.onItemSelectedListener = this
+        val arrayAdapter = ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item)
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+        val triggerDeviceList = deviceList.filter { device -> device.type == HubAccessoryType.occupancy || device.type == HubAccessoryType.contact}
+        triggerDeviceList.forEach {
+            arrayAdapter.add(it.name)
+        }
+        triggerDeviceSpinner.adapter = arrayAdapter
+
+        /*
+        val deviceSelectedIndex = triggerDeviceSpinner.selectedItemPosition
+        val deviceSelected = triggerDeviceList[deviceSelectedIndex]
+        val deviceSelectedActions = deviceSelected.actions?.state
+         */
+
+        val arrayAdapterAction = ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item)
+        arrayAdapterAction.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+        val triggerActionList = listOf<String>(DeviceState.on.name, DeviceState.off.name)
+        triggerActionList.forEach {
+            arrayAdapterAction.add(it)
+        }
+
+        triggerActionSpinner.adapter = arrayAdapterAction
+
+        /*
+        val deviceRoom = triggerDeviceList.first { room -> room._id == device?.room?._id }
+        val index = roomList.indexOf(deviceRoom)
+        roomSpinner.setSelection(index)
+        */
     }
 
     private fun loadDataIfModeModify() {
@@ -222,7 +261,6 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
                     return@InputFilter ""
                 }
             }
-
 /*
             val speChat = "\\s+"
             val pattern: Pattern = Pattern.compile(speChat)
@@ -237,13 +275,41 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         descriptionEditText.filters = arrayOf(filter)
     }
 
-    private fun retrieveData() : Scene {
+    private fun retrieveDataAutomation() : Automation {
+        val name = nameEditText.text
+        val description = descriptionEditText.text
+        val backgroundColor = sceneColorsHashMap.filterValues { it }.keys.first()
+        val colorPicked = String.format("#%06X", 0xFFFFFF and backgroundColor)
+
+        val listActionToSet = retrieveActionListData()
+
+        val deviceSelectedIndex = triggerDeviceSpinner.selectedItemPosition
+        val deviceSelected = deviceList.filter { device -> device.type == HubAccessoryType.occupancy || device.type == HubAccessoryType.contact }[deviceSelectedIndex]
+        val actionSelected = triggerActionSpinner.selectedItem as String
+
+        if(deviceSelected.type != null && deviceSelected.friendly_name != null) {
+
+        }
+
+        val action = ActionsToSetIn(state = actionSelected, brightness = null, color_temp = null, color = null)
+        val trigger = Trigger(type = deviceSelected.type!!, friendly_name = deviceSelected.friendly_name!!, actions = action)
+
+        return Automation(name = name.toString(), color = colorPicked, description = description.toString(), trigger = trigger, targets = listActionToSet)
+    }
+
+    private fun retrieveDataScene() : Scene {
         val id = sceneDetail?._id
         val name = nameEditText.text
         val description = descriptionEditText.text
         val backgroundColor = sceneColorsHashMap.filterValues { it }.keys.first()
         val colorPicked = String.format("#%06X", 0xFFFFFF and backgroundColor)
 
+        val listActionToSet = retrieveActionListData()
+
+        return Scene(_id = id, name = name.toString(), description = description.toString(), color = colorPicked, devices = listActionToSet)
+    }
+
+    private fun retrieveActionListData() : ArrayList<ActionsToSet> {
         val listActionToSet : ArrayList<ActionsToSet> = ArrayList()
 
         val distinctListOfDevice = actionList.filter { action -> action.friendly_name != null }
@@ -270,7 +336,8 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
             val actionToSet = ActionsToSet(friendly_name = distinctListOfFriendlyName[i], actions = actionsToSetIn)
             listActionToSet.add(actionToSet)
         }
-        return Scene(_id = id, name = name.toString(), description = description.toString(), color = colorPicked, devices = listActionToSet)
+
+        return listActionToSet
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -282,18 +349,33 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.create_scene_add_btn -> {
             val intent = Intent()
-            val scene = retrieveData()
-            if (sceneNotEmpty(scene)) {
-                intent.putExtra("CreatedScene", scene)
-                if (scene._id == null) {
-                    sceneViewModel.saveScene(scene)
+            if(isAutomatisation == true) {
+                val automation = retrieveDataAutomation()
+                if (automationNotEmpty(automation)) {
+                    if(automation._id == null) {
+                        sceneViewModel.saveAutomation(automation)
+                    } else {
+                        // update automation
+                    }
+                    setResult(RESULT_OK, intent)
+                    finish()
                 } else {
-                    sceneViewModel.updateScene(scene)
+                    Toast.makeText(this, getString(R.string.create_scene_missing_information_toast), Toast.LENGTH_SHORT).show()
                 }
-                setResult(RESULT_OK, intent)
-                finish()
             } else {
-                Toast.makeText(this, getString(R.string.create_scene_missing_information_toast), Toast.LENGTH_SHORT).show()
+                val scene = retrieveDataScene()
+                if (sceneNotEmpty(scene)) {
+                    intent.putExtra("CreatedScene", scene)
+                    if (scene._id == null) {
+                        sceneViewModel.saveScene(scene)
+                    } else {
+                        sceneViewModel.updateScene(scene)
+                    }
+                    setResult(RESULT_OK, intent)
+                    finish()
+                } else {
+                    Toast.makeText(this, getString(R.string.create_scene_missing_information_toast), Toast.LENGTH_SHORT).show()
+                }
             }
             true
         }
@@ -396,7 +478,6 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     }
 
     private fun sceneNotEmpty(scene: Scene) : Boolean {
-
         if(scene.name == "") return false
         if(scene.color == null || scene.color == "") return false
         if(scene.description == "") return false
@@ -409,8 +490,33 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
                 return false
             }
         }
-
         return true
+    }
+
+    private fun automationNotEmpty(automation: Automation) : Boolean {
+        if(automation.name == "") return false
+        if(automation.color == "") return false
+        if(automation.description == "") return false
+        if(automation.targets.isEmpty()) return false
+        if(automation.trigger.friendly_name == "") return false
+        if(automation.trigger.actions.state == "") return false
+
+        automation.targets.forEach {
+            if (it.friendly_name == null || it.friendly_name == "" || it.actions == null) {
+                return false
+            } else if (it.actions?.state == null && it.actions?.brightness == null && it.actions?.color_temp == null && it.actions?.color == null) {
+                return false
+            }
+        }
+        return true
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+
     }
 
 }

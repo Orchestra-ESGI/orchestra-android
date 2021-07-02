@@ -187,6 +187,13 @@ class DetailDeviceActivity : AppCompatActivity() {
                 colorLayout.visibility = View.GONE
                 colorTemperatureLayout.visibility = View.GONE
             }
+            HubAccessoryType.contact -> {
+                configLinearLayout.visibility = View.GONE
+                stateLayout.visibility = View.GONE
+                brightnessLayout.visibility = View.GONE
+                colorLayout.visibility = View.GONE
+                colorTemperatureLayout.visibility = View.GONE
+            }
             HubAccessoryType.unknown -> {
                 stateLayout.visibility = View.GONE
                 brightnessLayout.visibility = View.GONE

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import core.rest.client.SceneClient
+import core.rest.model.Automation
 import core.rest.model.ListSceneToDelete
 import core.rest.model.Scene
 
@@ -34,5 +35,9 @@ class SceneViewModel : ViewModel() {
 
     fun updateScene(scene : Scene) {
         sceneService.updateScene(scene, context)
+    }
+
+    fun saveAutomation(automation: Automation) {
+        sceneService.saveAutomation(automation, context)
     }
 }

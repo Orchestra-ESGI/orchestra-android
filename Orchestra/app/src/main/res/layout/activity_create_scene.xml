@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
     tools:context="view.ui.CreateSceneActivity">
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +16,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/create_scene_new_scene_tv"
             android:text="@string/create_scene_new_scene"
-            android:textColor="@color/white"
             android:textSize="36sp"
             android:textStyle="bold"
             android:layout_marginTop="20dp"
@@ -29,7 +27,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/create_scene_name_tv"
             android:text="@string/create_scene_name"
-            android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginTop="20dp"
@@ -57,7 +54,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/create_scene_choose_color_tv"
                 android:text="@string/create_scene_choose_color"
-                android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:layout_marginTop="20dp"
@@ -85,7 +81,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/create_scene_description_tv"
             android:text="@string/create_scene_description"
-            android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="24sp"
             android:layout_marginTop="20dp"
@@ -117,25 +112,30 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/create_scene_add_trigger_tv"
                 android:text="@string/create_scene_add_trigger"
-                android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="24sp"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"/>
 
-            <EditText
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/create_scene_add_trigger_et"
-                android:background="@drawable/create_scene_edit_text_shape"
-                android:hint="@string/create_scene_description_hint"
-                android:textColorHint="@color/light_gray"
-                android:textColor="@color/white"
-                android:inputType="text"
-                android:maxLines="1"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
+
+                <Spinner
+                    android:id="@+id/create_scene_trigger_device"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <Spinner
+                    android:id="@+id/create_scene_trigger_action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+            </LinearLayout>
 
         </LinearLayout>
 

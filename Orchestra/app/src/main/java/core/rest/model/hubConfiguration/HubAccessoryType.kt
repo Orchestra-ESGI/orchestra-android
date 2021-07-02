@@ -5,6 +5,7 @@ enum class HubAccessoryType {
     statelessProgrammableSwitch,
     switch,
     occupancy,
+    contact,
     sensor,
     unknown
 }

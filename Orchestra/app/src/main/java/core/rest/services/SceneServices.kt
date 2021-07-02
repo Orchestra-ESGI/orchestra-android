@@ -1,5 +1,6 @@
 package core.rest.services
 
+import core.rest.model.Automation
 import core.rest.model.ListScene
 import core.rest.model.ListSceneToDelete
 import core.rest.model.Scene
@@ -22,4 +23,7 @@ interface SceneServices {
 
     @PATCH("scene")
     fun updateScene(@Body scene: Scene) : Call<Scene>
+
+    @POST("/automation")
+    fun addAutomation(@Body automation: Automation) : Call<HashMap<String, Any>>
 }
