@@ -53,12 +53,11 @@ class HomeActivity : AppCompatActivity() {
     private var deviceLoaded : Boolean = false
     private var sceneLoaded : Boolean = false
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
-        // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        // delegate.applyDayNight()
 
         bind()
         init()
@@ -247,7 +246,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setUpRoomFilter() {
-            val listRoom = deviceList.map { device -> device.room }
+            val listRoom = deviceList.map { device -> device.room }.distinct()
             val chipAll = Chip(roomChipGroup.context)
             var chipSelected: Chip = chipAll
             val defaultColor = chipAll.chipBackgroundColor
@@ -288,7 +287,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun roomFilterUnselected(chip: Chip, defaultColor: ColorStateList?) {
-        chip.setTextColor(ContextCompat.getColor(this, R.color.app_primary_blue))
+        chip.setTextColor(ContextCompat.getColor(this, R.color.white))
         chip.typeface = Typeface.DEFAULT_BOLD
         chip.chipBackgroundColor = defaultColor
         chip.isSelected = false
