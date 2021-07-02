@@ -15,11 +15,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.Automation
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
-import core.rest.model.hubConfiguration.HubAccessoryType
+import utils.OnLongPressToDelete
 import view.ui.DetailSceneActivity
 import java.io.Serializable
 
-class AutomationAdapter : RecyclerView.Adapter<AutomationAdapter.AutomationViewHolder>() {
+class AutomationAdapter(clickListener: OnLongPressToDelete) : RecyclerView.Adapter<AutomationAdapter.AutomationViewHolder>() {
 
     var automationList: List<Automation>? = null
         set(value) {
@@ -33,6 +33,7 @@ class AutomationAdapter : RecyclerView.Adapter<AutomationAdapter.AutomationViewH
             notifyDataSetChanged()
         }
 
+    private val itemListener: OnLongPressToDelete = clickListener
     private lateinit var layoutInflater: LayoutInflater
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AutomationViewHolder {
@@ -42,7 +43,7 @@ class AutomationAdapter : RecyclerView.Adapter<AutomationAdapter.AutomationViewH
     }
 
     override fun onBindViewHolder(holder: AutomationViewHolder, position: Int) {
-        holder.bind(automation = automationList!![position], deviceList = deviceList!!)
+        holder.bind(automation = automationList!![position], deviceList = deviceList!!, listener = itemListener)
     }
 
     override fun getItemCount(): Int {
@@ -56,7 +57,7 @@ class AutomationAdapter : RecyclerView.Adapter<AutomationAdapter.AutomationViewH
         private val automationIcon = itemView.findViewById<ImageView>(R.id.cell_scene_logo_iv)
         private val automationTitle = itemView.findViewById<TextView>(R.id.cell_scene_title_tv)
         private val automationInfo = itemView.findViewById<ImageView>(R.id.cell_scene_info_iv)
-        fun bind(automation: Automation, deviceList: List<HubAccessoryConfiguration>) {
+        fun bind(automation: Automation, deviceList: List<HubAccessoryConfiguration>, listener: OnLongPressToDelete) {
             automationTitle.text = automation.name
 
             val unwrappedDrawable = AppCompatResources.getDrawable(itemView.context, R.drawable.scene_list_item_shape)
@@ -87,11 +88,7 @@ class AutomationAdapter : RecyclerView.Adapter<AutomationAdapter.AutomationViewH
                 builder.setTitle(itemView.context.getString(R.string.home_scene_delete_title))
                 builder.setMessage(itemView.context.getString(R.string.home_scene_delete_message))
                 builder.setPositiveButton(itemView.context.getString(R.string.home_scene_delete_button)) { dialog, which ->
-                    /*
-                    if(homeVM != null) {
-                        homeVM!!.deleteScenes(ListSceneToDelete(listOf(scene._id!!)))
-                    }
-                     */
+                    listener.onLongPressToDelete(automation._id!!)
                 }
                 builder.show()
                 true

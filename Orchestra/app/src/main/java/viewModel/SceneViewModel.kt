@@ -53,4 +53,8 @@ class SceneViewModel : ViewModel() {
     fun updateAutomation(automation: Automation) {
         sceneService.updateAutomation(automation, context)
     }
+
+    fun deleteAutomations(idList : HashMap<String, List<String>>) {
+        sceneService.deleteAutomations(idList, context)
+    }
 }

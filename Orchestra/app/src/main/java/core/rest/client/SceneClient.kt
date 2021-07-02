@@ -201,4 +201,21 @@ object SceneClient {
 
                 })
     }
+
+    fun deleteAutomations(idList : HashMap<String, List<String>>, context: Context?) {
+        getApi(context)?.deleteScenes(idList)
+                ?.enqueue(object : Callback<HashMap<String, Any>>{
+                    override fun onResponse(
+                            call: Call<HashMap<String, Any>>,
+                            response: Response<HashMap<String, Any>>
+                    ) {
+                        val error = response.body()?.get("error") as? String
+                    }
+
+                    override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable?) {
+                        Log.e("error", t?.message!!)
+                    }
+
+                })
+    }
 }

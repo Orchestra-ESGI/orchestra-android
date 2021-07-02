@@ -29,4 +29,7 @@ interface SceneServices {
 
     @POST("/automation")
     fun addAutomation(@Body automation: Automation) : Call<HashMap<String, Any>>
+
+    @HTTP(method = "DELETE", path = "/automation", hasBody = true)
+    fun deleteScenes(@Body idList: HashMap<String, List<String>>) : Call<HashMap<String, Any>>
 }

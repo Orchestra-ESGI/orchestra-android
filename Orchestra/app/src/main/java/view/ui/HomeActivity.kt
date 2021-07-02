@@ -27,6 +27,7 @@ import com.kaopiz.kprogresshud.KProgressHUD
 import core.rest.model.Automation
 import core.rest.model.Scene
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import utils.OnLongPressToDelete
 import view.adapter.DeviceAdapter
 import view.adapter.AutomationAdapter
 import view.adapter.SceneAdapter
@@ -34,7 +35,7 @@ import viewModel.HomeViewModel
 import java.io.Serializable
 
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), OnLongPressToDelete {
 
     private lateinit var sceneTitle : TextView
     private lateinit var noDataTitle : TextView
@@ -113,7 +114,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setupAutomationRecyclerView() {
         automationRecyclerView.layoutManager = GridLayoutManager(this, 2)
-        automationAdapter = AutomationAdapter()
+        automationAdapter = AutomationAdapter(this)
         automationRecyclerView.adapter = automationAdapter
     }
 
@@ -363,6 +364,12 @@ class HomeActivity : AppCompatActivity() {
         intent.action = Intent.ACTION_MAIN
         intent.addCategory(Intent.CATEGORY_HOME)
         startActivity(intent)
+    }
+
+    override fun onLongPressToDelete(id: String) {
+        val idList : HashMap<String, List<String>> = HashMap()
+        idList["ids"] = listOf(id)
+        homeViewModel.deleteAutomations(idList)
     }
 }
 

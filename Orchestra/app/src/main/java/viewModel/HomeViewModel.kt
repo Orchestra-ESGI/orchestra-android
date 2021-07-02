@@ -64,6 +64,11 @@ class HomeViewModel: ViewModel() {
         sceneViewModel!!.deleteScenes(scenes)
     }
 
+    fun deleteAutomations(idList : HashMap<String, List<String>>) {
+        sceneViewModel!!.context = context
+        sceneViewModel!!.deleteAutomations(idList)
+    }
+
     fun getAllRooms() {
         deviceViewModel!!.context = context
         deviceViewModel!!.roomList.observe(context, Observer {
