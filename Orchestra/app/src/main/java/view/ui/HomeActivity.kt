@@ -183,6 +183,7 @@ class HomeActivity : AppCompatActivity() {
         R.id.scene_list_refresh -> {
             homeViewModel.getAllDevice()
             homeViewModel.getAllScene()
+            homeViewModel.getAllAutomation()
             loader.setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setCancellable(true)
                     .setAnimationSpeed(2)
@@ -325,9 +326,11 @@ class HomeActivity : AppCompatActivity() {
         if (room == getString(R.string.home_room_filter_all)) {
             deviceAdapter.deviceList = deviceList
             sceneAdapter.sceneList = sceneList
+            automationAdapter.automationList = automationList
         } else {
             val filterDeviceList = deviceList.filter { device -> device.room?.name == room }
             var filterSceneList = ArrayList<Scene>()
+            var filterAutomation = ArrayList<Automation>()
 
             deviceAdapter.deviceList = filterDeviceList
 
@@ -336,8 +339,13 @@ class HomeActivity : AppCompatActivity() {
                 val deviceExistInScene = scene.devices.firstOrNull { device -> mapFilteredDeviceFriendlyName.contains(device.friendly_name) }
                 if(deviceExistInScene != null) filterSceneList.add(scene)
             }
-
             sceneAdapter.sceneList = filterSceneList
+
+            automationList.forEach { automation ->
+                val deviceExistInAutomation = automation.targets.firstOrNull { device -> mapFilteredDeviceFriendlyName.contains(device.friendly_name) }
+                if(deviceExistInAutomation != null) filterAutomation.add(automation)
+            }
+            automationAdapter.automationList = filterAutomation
         }
     }
 
