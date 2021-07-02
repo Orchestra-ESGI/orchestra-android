@@ -48,7 +48,7 @@ fun toSerialize(map: ArrayList<LinkedTreeMap<String, Any>>) : List<HubAccessoryC
                 var type : HubAccessoryType
                 when(typeMap) {
                         "lightbulb" -> type = HubAccessoryType.lightbulb
-                        "statelessProgrammableSwitch" -> type = HubAccessoryType.statelessProgrammableSwitch
+                        "programmableswitch" -> type = HubAccessoryType.programmableswitch
                         "switch" -> type = HubAccessoryType.switch
                         "occupancy" -> type = HubAccessoryType.occupancy
                         "contact" -> type = HubAccessoryType.contact

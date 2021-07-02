@@ -40,5 +40,8 @@ data class Actions (
 enum class DeviceState {
         toggle,
         on,
-        off
+        off,
+        single,
+        double,
+        long
 }
