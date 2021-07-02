@@ -100,6 +100,7 @@
     <string name="detail_scene_action_title">Actions</string>
     <string name="detail_scene_action_unknown_device">Unknown Device</string>
     <string name="detail_scene_action_unknown_action">Unknown Action</string>
+    <string name="detail_scene_automation_trigger">Triggered by %1$s when state is %2$s</string>
 
     <!-- Supported Device -->
     <string name="supported_accessories_not_supported_for_this_brand">No device is supported for this brand</string>

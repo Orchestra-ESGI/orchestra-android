@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.Actions
+import core.rest.model.Room
 import core.rest.model.SupportedDeviceInformations
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import core.rest.model.hubConfiguration.HubAccessoryType
-import core.rest.model.hubConfiguration.Room
 import utils.OnItemClicked
 import view.adapter.ShuffleColorAdapter
 import viewModel.DeviceViewModel

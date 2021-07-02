@@ -182,6 +182,6 @@
     <string name="create_scene_missing_information_toast">Vul de ontbrekende informatie in</string>
     <string name="home_automation_title">my Automations</string>
     <string name="home_no_data">Aucune Donnée</string>
-
+    <string name="detail_scene_automation_trigger">Triggered by %1$s when state is %2$s</string>
 
 </resources>

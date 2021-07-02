@@ -9,7 +9,6 @@ import core.rest.client.DeviceClient
 import core.rest.model.*
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import core.rest.model.hubConfiguration.ListHubAccessoryConfigurationToDelete
-import core.rest.model.hubConfiguration.Room
 
 class DeviceViewModel : ViewModel() {
     lateinit var context : AppCompatActivity

@@ -125,6 +125,7 @@ class HomeActivity : AppCompatActivity() {
             deviceLoaded = true
             checkLoaded()
             sceneAdapter.deviceList = deviceList
+            automationAdapter.deviceList = deviceList
             loader.dismiss()
         })
         homeViewModel.sceneList.observe(this, Observer {

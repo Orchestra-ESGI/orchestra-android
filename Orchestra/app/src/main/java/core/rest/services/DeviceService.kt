@@ -1,6 +1,7 @@
 package core.rest.services
 
 import core.rest.model.ActionsToSet
+import core.rest.model.ListRoom
 import core.rest.model.SupportedAccessories
 import core.rest.model.hubConfiguration.*
 import retrofit2.Call
