@@ -180,8 +180,8 @@
     <string name="settings_sign_out_alert_sign_out">Desconectar</string>
 
     <string name="create_scene_missing_information_toast">Por favor complete la información que falta</string>
-
-
+    <string name="home_automation_title">my Automations</string>
+    <string name="home_no_data">Aucune Donnée</string>
 
 
 </resources>

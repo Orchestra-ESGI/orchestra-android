@@ -2,11 +2,9 @@ package view.ui
 
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.InputFilter
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -26,10 +24,11 @@ import com.example.orchestra.R
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.kaopiz.kprogresshud.KProgressHUD
+import core.rest.model.Automation
 import core.rest.model.Scene
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
-import core.rest.model.hubConfiguration.Room
 import view.adapter.DeviceAdapter
+import view.adapter.AutomationAdapter
 import view.adapter.SceneAdapter
 import viewModel.HomeViewModel
 import java.io.Serializable
@@ -44,11 +43,15 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var roomChipGroup: ChipGroup
     private lateinit var sceneAdapter : SceneAdapter
     private lateinit var deviceAdapter : DeviceAdapter
+    private lateinit var automationAdapter : AutomationAdapter
+    private lateinit var automationTitle : TextView
+    private lateinit var automationRecyclerView: RecyclerView
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var loader: KProgressHUD
 
     private lateinit var deviceList : List<HubAccessoryConfiguration>
     private lateinit var sceneList : List<Scene>
+    private lateinit var automationList : List<Automation>
 
     private var deviceLoaded : Boolean = false
     private var sceneLoaded : Boolean = false
@@ -61,12 +64,14 @@ class HomeActivity : AppCompatActivity() {
 
         bind()
         init()
-        setUpDeviceRv()
-        setUpSceneRv()
+        setupDeviceRecyclerView()
+        setupSceneRecyclerView()
+        setupAutomationRecyclerView()
         setUpObserver()
         setUpProfilBtn()
         homeViewModel.getAllDevice()
         homeViewModel.getAllScene()
+        homeViewModel.getAllAutomation()
     }
 
     private fun bind() {
@@ -75,6 +80,8 @@ class HomeActivity : AppCompatActivity() {
         devicesRecyclerView = findViewById(R.id.list_device_rv)
         scenesRecyclerView = findViewById(R.id.list_scene_rv)
         roomChipGroup = findViewById(R.id.home_room_filter_chip_group)
+        automationTitle = findViewById(R.id.home_automation_tv)
+        automationRecyclerView = findViewById(R.id.home_automation_rv)
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         homeViewModel.context = this
     }
@@ -90,18 +97,24 @@ class HomeActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun setUpDeviceRv() {
+    private fun setupDeviceRecyclerView() {
         devicesRecyclerView.layoutManager = GridLayoutManager(this, 3)
         deviceAdapter = DeviceAdapter()
         deviceAdapter.homeVM = homeViewModel
         devicesRecyclerView.adapter = deviceAdapter
     }
 
-    private fun setUpSceneRv() {
+    private fun setupSceneRecyclerView() {
         scenesRecyclerView.layoutManager = GridLayoutManager(this, 2)
         sceneAdapter = SceneAdapter()
         sceneAdapter.homeVM = homeViewModel
         scenesRecyclerView.adapter = sceneAdapter
+    }
+
+    private fun setupAutomationRecyclerView() {
+        automationRecyclerView.layoutManager = GridLayoutManager(this, 2)
+        automationAdapter = AutomationAdapter()
+        automationRecyclerView.adapter = automationAdapter
     }
 
     private fun setUpObserver() {
@@ -120,6 +133,11 @@ class HomeActivity : AppCompatActivity() {
             sceneLoaded = true
             checkLoaded()
         })
+
+        homeViewModel.automationList.observe(this, Observer {
+            automationList = it
+            automationAdapter.automationList = automationList
+        })
     }
 
     private fun setUpProfilBtn() {
@@ -133,12 +151,16 @@ class HomeActivity : AppCompatActivity() {
                 sceneTitle.visibility = View.GONE
                 devicesRecyclerView.visibility = View.GONE
                 scenesRecyclerView.visibility = View.GONE
+                automationTitle.visibility = View.GONE
+                automationRecyclerView.visibility = View.GONE
                 noDataTitle.visibility = View.VISIBLE
             } else {
                 noDataTitle.visibility = View.GONE
                 sceneTitle.visibility = View.VISIBLE
                 devicesRecyclerView.visibility = View.VISIBLE
                 scenesRecyclerView.visibility = View.VISIBLE
+                automationTitle.visibility = View.VISIBLE
+                automationRecyclerView.visibility = View.VISIBLE
             }
         }
     }

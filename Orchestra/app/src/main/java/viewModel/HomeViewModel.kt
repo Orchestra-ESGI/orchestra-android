@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import core.rest.model.ApiError
+import core.rest.model.Automation
 import core.rest.model.ListSceneToDelete
 import core.rest.model.Scene
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
@@ -18,6 +19,7 @@ class HomeViewModel: ViewModel() {
     var sceneViewModel : SceneViewModel? = null
     var deviceList : MutableLiveData<List<HubAccessoryConfiguration>> = MutableLiveData()
     var sceneList : MutableLiveData<List<Scene>> = MutableLiveData()
+    var automationList : MutableLiveData<List<Automation>> = MutableLiveData()
     var roomList : MutableLiveData<List<Room>> = MutableLiveData()
     var apiError : MutableLiveData<ApiError> = MutableLiveData()
 
@@ -43,6 +45,14 @@ class HomeViewModel: ViewModel() {
             sceneList.value = it
         })
         sceneViewModel!!.getScenes()
+    }
+
+    fun getAllAutomation() {
+        sceneViewModel!!.context = context
+        sceneViewModel!!.automationList.observe(context, Observer {
+            automationList.value = it
+        })
+        sceneViewModel!!.getAllAutomation()
     }
 
     fun launchDevice(sceneId : String) {

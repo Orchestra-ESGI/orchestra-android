@@ -1,9 +1,6 @@
 package core.rest.services
 
-import core.rest.model.Automation
-import core.rest.model.ListScene
-import core.rest.model.ListSceneToDelete
-import core.rest.model.Scene
+import core.rest.model.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -11,6 +8,9 @@ import retrofit2.http.*
 interface SceneServices {
     @GET("/scene/all")
     fun getAllScenes() : Call<ListScene>
+
+    @GET("/automation/all")
+    fun getAllAutomation() : Call<ListAutomation>
 
     @POST("/scene")
     fun addScene(@Body scene: Scene) : Call<Scene>

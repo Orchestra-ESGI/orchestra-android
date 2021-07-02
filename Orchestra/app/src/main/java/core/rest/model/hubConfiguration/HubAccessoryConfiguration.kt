@@ -3,10 +3,7 @@ package core.rest.model.hubConfiguration
 import android.transition.Slide
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
-import core.rest.model.Actions
-import core.rest.model.ColorAction
-import core.rest.model.DeviceState
-import core.rest.model.SliderAction
+import core.rest.model.*
 import java.io.Serializable
 
 data class HubAccessoryConfiguration(
@@ -25,15 +22,6 @@ data class HubAccessoryConfiguration(
 
 data class ListHubAccessoryConfigurationToDelete(
         var friendly_names: List<String>
-) : Serializable
-
-data class Room(
-        var _id: String? = null,
-        var name: String? = null
-) : Serializable
-
-data class ListRoom(
-        val rooms: List<Room>
 ) : Serializable
 
 fun toSerialize(map: ArrayList<LinkedTreeMap<String, Any>>) : List<HubAccessoryConfiguration> {

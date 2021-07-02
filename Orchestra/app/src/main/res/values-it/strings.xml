@@ -180,7 +180,8 @@
     <string name="settings_sign_out_alert_sign_out">Disconnessione</string>
 
     <string name="create_scene_missing_information_toast">Si prega di compilare le informazioni mancanti</string>
-
+    <string name="home_automation_title">my Automations</string>
+    <string name="home_no_data">Aucune Donnée</string>
 
 
 </resources>

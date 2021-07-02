@@ -3,12 +3,9 @@ package core.rest.client
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import core.rest.model.Automation
-import core.rest.model.ListScene
-import core.rest.model.ListSceneToDelete
+import core.rest.model.*
 import core.rest.services.RootApiService
 import core.rest.services.SceneServices
-import core.rest.model.Scene
 import core.rest.model.hubConfiguration.Room
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -21,6 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object SceneClient {
     private var sceneServices: SceneServices? = getApi()
     var sceneList: MutableLiveData<List<Scene>> = MutableLiveData()
+    var automationList: MutableLiveData<List<Automation>> = MutableLiveData()
 
     private fun getApi(context: Context? = null): SceneServices? {
         if(context != null) {
@@ -64,6 +62,29 @@ object SceneClient {
                 }
 
             })
+    }
+
+    fun getAllAutomation(context: Context?) {
+        getApi(context)?.getAllAutomation()
+                ?.enqueue(object : Callback<ListAutomation>{
+                    override fun onResponse(
+                            call: Call<ListAutomation>,
+                            response: Response<ListAutomation>
+                    ) {
+                        if (response.isSuccessful) {
+                            automationList.value = response.body()?.automations
+                            Log.d("TestSuccess", response.body().toString())
+                        } else {
+                            Log.d("TestSuccess", response.body().toString())
+                        }
+
+                    }
+
+                    override fun onFailure(call: Call<ListAutomation>?, t: Throwable?) {
+                        Log.e("error", t?.message!!)
+                    }
+
+                })
     }
 
     fun addScene(scene : Scene, context: Context?) {

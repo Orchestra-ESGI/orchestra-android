@@ -180,7 +180,8 @@
     <string name="settings_sign_out_alert_sign_out">Afmelden</string>
 
     <string name="create_scene_missing_information_toast">Vul de ontbrekende informatie in</string>
-
+    <string name="home_automation_title">my Automations</string>
+    <string name="home_no_data">Aucune Donnée</string>
 
 
 </resources>

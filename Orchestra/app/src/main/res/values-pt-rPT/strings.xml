@@ -180,6 +180,8 @@
     <string name="settings_sign_out_alert_sign_out">Sair</string>
 
     <string name="create_scene_missing_information_toast">Por favor, preencha as informações que faltam</string>
+    <string name="home_automation_title">my Automations</string>
+    <string name="home_no_data">Aucune Donnée</string>
 
 
 </resources>

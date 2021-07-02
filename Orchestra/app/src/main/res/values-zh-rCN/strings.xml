@@ -180,7 +180,8 @@
     <string name="settings_sign_out_alert_sign_out">登出</string>
 
     <string name="create_scene_missing_information_toast">请填写缺少的信息</string>
-
+    <string name="home_automation_title">my Automations</string>
+    <string name="home_no_data">Aucune Donnée</string>
 
 
 </resources>

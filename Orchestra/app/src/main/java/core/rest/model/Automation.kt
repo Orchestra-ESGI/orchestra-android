@@ -17,3 +17,7 @@ data class Trigger(
         var friendly_name : String,
         var actions : ActionsToSetIn
 ) : Serializable
+
+data class ListAutomation(
+        var automations : List<Automation>
+) : Serializable

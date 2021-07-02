@@ -1,5 +1,6 @@
 package viewModel
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -12,6 +13,7 @@ import core.rest.model.Scene
 class SceneViewModel : ViewModel() {
     lateinit var context : AppCompatActivity
     var sceneList : MutableLiveData<List<Scene>> = MutableLiveData()
+    var automationList : MutableLiveData<List<Automation>> = MutableLiveData()
     var sceneService : SceneClient = SceneClient
 
     fun getScenes() {
@@ -19,6 +21,13 @@ class SceneViewModel : ViewModel() {
             sceneList.value = it
         })
         sceneService.getAllScene(context)
+    }
+
+    fun getAllAutomation() {
+        sceneService.automationList.observe(context, Observer {
+            automationList.value = it
+        })
+        sceneService.getAllAutomation(context)
     }
 
     fun saveScene(scene : Scene) {
