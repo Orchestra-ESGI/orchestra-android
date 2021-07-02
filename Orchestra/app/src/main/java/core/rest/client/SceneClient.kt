@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import core.rest.model.*
 import core.rest.services.RootApiService
 import core.rest.services.SceneServices
-import core.rest.model.hubConfiguration.Room
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call

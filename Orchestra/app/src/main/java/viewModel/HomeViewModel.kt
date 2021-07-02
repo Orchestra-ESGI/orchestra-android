@@ -4,14 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import core.rest.model.ApiError
-import core.rest.model.Automation
-import core.rest.model.ListSceneToDelete
-import core.rest.model.Scene
+import core.rest.model.*
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import core.rest.model.hubConfiguration.ListHubAccessoryConfigurationToDelete
-import core.rest.model.hubConfiguration.ListRoom
-import core.rest.model.hubConfiguration.Room
 
 class HomeViewModel: ViewModel() {
     lateinit var context : AppCompatActivity
