@@ -177,4 +177,28 @@ object SceneClient {
 
                 })
     }
+
+    fun updateAutomation(automation: Automation, context: Context?) {
+        getApi(context)?.updateAutomation(automation)
+                ?.enqueue(object : Callback<HashMap<String, Any>>{
+                    override fun onResponse(
+                            call: Call<HashMap<String, Any>>,
+                            response: Response<HashMap<String, Any>>
+                    ) {
+                        if(response.isSuccessful) {
+                            val result = response.body()
+                            val erreur = result?.get("error") as? String
+                        } else {
+                            val result = response.body()
+                            val erreur = result?.get("error") as? String
+                        }
+                        Log.d("TestSuccess", response!!.body().toString())
+                    }
+
+                    override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable?) {
+                        Log.e("error", t?.message!!)
+                    }
+
+                })
+    }
 }

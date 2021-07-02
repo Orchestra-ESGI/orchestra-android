@@ -59,6 +59,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     private var availableDeviceList : ArrayList<HubAccessoryConfiguration> = ArrayList()
 
     private var sceneDetail : Scene? = null
+    private var automationDetail : Automation? = null
     private var isAutomatisation : Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,8 +81,9 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     private fun getIntentInfos() {
         val intent = intent
         sceneDetail = intent.getSerializableExtra("scene") as? Scene
+        automationDetail = intent.getSerializableExtra("automation") as? Automation
         isAutomatisation = intent.getSerializableExtra("isAutomatisation") as? Boolean
-        deviceList = if(sceneDetail != null) {
+        deviceList = if(sceneDetail != null || automationDetail != null) {
             intent.getSerializableExtra("deviceList") as ArrayList<HubAccessoryConfiguration>
         } else {
             val args = intent.getBundleExtra("BUNDLE")
@@ -140,21 +142,33 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         triggerActionList.forEach {
             arrayAdapterAction.add(it)
         }
-
         triggerActionSpinner.adapter = arrayAdapterAction
 
-        /*
-        val deviceRoom = triggerDeviceList.first { room -> room._id == device?.room?._id }
-        val index = roomList.indexOf(deviceRoom)
-        roomSpinner.setSelection(index)
-        */
+        if (automationDetail != null) {
+            val deviceSelected = triggerDeviceList.firstOrNull { device -> device.friendly_name == automationDetail!!.trigger.friendly_name }
+            val actionSelected = triggerActionList.firstOrNull { action -> action == automationDetail!!.trigger.actions.state}
+            if (deviceSelected != null && actionSelected != null) {
+                val indexDevice = triggerDeviceList.indexOf(deviceSelected)
+                val indexAction = triggerActionList.indexOf(actionSelected)
+                triggerDeviceSpinner.setSelection(indexDevice)
+                triggerActionSpinner.setSelection(indexAction)
+            }
+        }
     }
 
     private fun loadDataIfModeModify() {
         if(sceneDetail != null) {
             nameEditText.setText(sceneDetail!!.name)
             descriptionEditText.setText(sceneDetail!!.description)
-            actionList = formatSceneToHubAccessoryConfiguration()
+            actionList = formatActionsToHubAccessoryConfiguration(sceneDetail!!.devices)
+        }
+
+        if(automationDetail != null) {
+            isAutomatisation = true
+            setupAutomationView()
+            nameEditText.setText(automationDetail!!.name)
+            descriptionEditText.setText(automationDetail!!.description)
+            actionList = formatActionsToHubAccessoryConfiguration(automationDetail!!.targets)
         }
     }
 
@@ -276,6 +290,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     }
 
     private fun retrieveDataAutomation() : Automation {
+        val id = automationDetail?._id
         val name = nameEditText.text
         val description = descriptionEditText.text
         val backgroundColor = sceneColorsHashMap.filterValues { it }.keys.first()
@@ -287,14 +302,10 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         val deviceSelected = deviceList.filter { device -> device.type == HubAccessoryType.occupancy || device.type == HubAccessoryType.contact }[deviceSelectedIndex]
         val actionSelected = triggerActionSpinner.selectedItem as String
 
-        if(deviceSelected.type != null && deviceSelected.friendly_name != null) {
-
-        }
-
         val action = ActionsToSetIn(state = actionSelected, brightness = null, color_temp = null, color = null)
         val trigger = Trigger(type = deviceSelected.type!!, friendly_name = deviceSelected.friendly_name!!, actions = action)
 
-        return Automation(name = name.toString(), color = colorPicked, description = description.toString(), trigger = trigger, targets = listActionToSet)
+        return Automation(_id = id, name = name.toString(), color = colorPicked, description = description.toString(), trigger = trigger, targets = listActionToSet)
     }
 
     private fun retrieveDataScene() : Scene {
@@ -355,7 +366,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
                     if(automation._id == null) {
                         sceneViewModel.saveAutomation(automation)
                     } else {
-                        // update automation
+                        sceneViewModel.updateAutomation(automation)
                     }
                     setResult(RESULT_OK, intent)
                     finish()
@@ -417,8 +428,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         addAction(device, position)
     }
 
-    private fun formatSceneToHubAccessoryConfiguration() : ArrayList<HubAccessoryConfiguration>{
-        val listOfSceneDevices = sceneDetail?.devices
+    private fun formatActionsToHubAccessoryConfiguration(listOfSceneDevices : List<ActionsToSet>?) : ArrayList<HubAccessoryConfiguration>{
         val listOfDeviceFormatted : ArrayList<HubAccessoryConfiguration> = ArrayList()
 
         listOfSceneDevices?.forEach {

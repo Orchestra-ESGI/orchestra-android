@@ -49,4 +49,8 @@ class SceneViewModel : ViewModel() {
     fun saveAutomation(automation: Automation) {
         sceneService.saveAutomation(automation, context)
     }
+
+    fun updateAutomation(automation: Automation) {
+        sceneService.updateAutomation(automation, context)
+    }
 }

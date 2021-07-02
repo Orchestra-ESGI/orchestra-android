@@ -24,6 +24,9 @@ interface SceneServices {
     @PATCH("scene")
     fun updateScene(@Body scene: Scene) : Call<Scene>
 
+    @PATCH("automation")
+    fun updateAutomation(@Body automation: Automation) : Call<HashMap<String, Any>>
+
     @POST("/automation")
     fun addAutomation(@Body automation: Automation) : Call<HashMap<String, Any>>
 }

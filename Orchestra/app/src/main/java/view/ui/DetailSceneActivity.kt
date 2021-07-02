@@ -131,7 +131,7 @@ class DetailSceneActivity : AppCompatActivity() {
             val sceneModificationIntent = Intent(this, CreateSceneActivity::class.java)
             if(sceneDetail != null) sceneModificationIntent.putExtra("scene", sceneDetail)
             if(automationDetail != null) sceneModificationIntent.putExtra("automation", automationDetail)
-            
+
             sceneModificationIntent.putExtra("deviceList", listDevice!!)
             startActivity(sceneModificationIntent)
             true
