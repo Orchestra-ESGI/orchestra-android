@@ -18,6 +18,9 @@ interface SceneServices {
     @POST("/scene/{id}")
     fun launchScene(@Path("id") sceneId : String) : Call<Scene>
 
+    @POST("/automation/{id}")
+    fun launchAutomation(@Path("id") animationId : String) : Call<HashMap<String, Any>>
+
     @HTTP(method = "DELETE", path = "/scene", hasBody = true)
     fun deleteScenes(@Body scene: ListSceneToDelete) : Call<ListSceneToDelete>
 

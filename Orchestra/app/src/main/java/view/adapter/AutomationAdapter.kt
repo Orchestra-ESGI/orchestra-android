@@ -15,11 +15,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.Automation
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
-import utils.OnLongPressToDelete
+import utils.OnActionListener
 import view.ui.DetailSceneActivity
 import java.io.Serializable
 
-class AutomationAdapter(clickListener: OnLongPressToDelete) : RecyclerView.Adapter<AutomationAdapter.AutomationViewHolder>() {
+class AutomationAdapter(clickListener: OnActionListener) : RecyclerView.Adapter<AutomationAdapter.AutomationViewHolder>() {
 
     var automationList: List<Automation>? = null
         set(value) {
@@ -33,7 +33,7 @@ class AutomationAdapter(clickListener: OnLongPressToDelete) : RecyclerView.Adapt
             notifyDataSetChanged()
         }
 
-    private val itemListener: OnLongPressToDelete = clickListener
+    private val itemListener: OnActionListener = clickListener
     private lateinit var layoutInflater: LayoutInflater
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AutomationViewHolder {
@@ -57,22 +57,19 @@ class AutomationAdapter(clickListener: OnLongPressToDelete) : RecyclerView.Adapt
         private val automationIcon = itemView.findViewById<ImageView>(R.id.cell_scene_logo_iv)
         private val automationTitle = itemView.findViewById<TextView>(R.id.cell_scene_title_tv)
         private val automationInfo = itemView.findViewById<ImageView>(R.id.cell_scene_info_iv)
-        fun bind(automation: Automation, deviceList: List<HubAccessoryConfiguration>, listener: OnLongPressToDelete) {
+        fun bind(automation: Automation, deviceList: List<HubAccessoryConfiguration>, listener: OnActionListener) {
             automationTitle.text = automation.name
 
             val unwrappedDrawable = AppCompatResources.getDrawable(itemView.context, R.drawable.scene_list_item_shape)
             val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
-
-            automation.color.let {
-                val sceneBackgroundColor = if(it.first() == '#') {
-                    Color.parseColor(it)
-                } else {
-                    it.toInt()
-                }
-                DrawableCompat.setTint(wrappedDrawable, sceneBackgroundColor)
-            }
+            val sceneBackgroundColor = Color.parseColor(automation.color)
+            DrawableCompat.setTint(wrappedDrawable, sceneBackgroundColor)
 
             itemView.background = unwrappedDrawable
+
+            itemView.setOnClickListener {
+                listener.onClickToLaunch(automation._id!!)
+            }
 
             automationInfo.setOnClickListener {
                 val detailAutomationIntent = Intent(itemView.context, DetailSceneActivity::class.java)

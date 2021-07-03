@@ -27,7 +27,7 @@ import com.kaopiz.kprogresshud.KProgressHUD
 import core.rest.model.Automation
 import core.rest.model.Scene
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
-import utils.OnLongPressToDelete
+import utils.OnActionListener
 import view.adapter.DeviceAdapter
 import view.adapter.AutomationAdapter
 import view.adapter.SceneAdapter
@@ -35,7 +35,7 @@ import viewModel.HomeViewModel
 import java.io.Serializable
 
 
-class HomeActivity : AppCompatActivity(), OnLongPressToDelete {
+class HomeActivity : AppCompatActivity(), OnActionListener {
 
     private lateinit var sceneTitle : TextView
     private lateinit var noDataTitle : TextView
@@ -370,6 +370,10 @@ class HomeActivity : AppCompatActivity(), OnLongPressToDelete {
         val idList : HashMap<String, List<String>> = HashMap()
         idList["ids"] = listOf(id)
         homeViewModel.deleteAutomations(idList)
+    }
+
+    override fun onClickToLaunch(id: String) {
+        homeViewModel.launchAutomation(id)
     }
 }
 

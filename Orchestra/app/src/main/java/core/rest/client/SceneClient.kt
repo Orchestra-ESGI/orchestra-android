@@ -137,6 +137,23 @@ object SceneClient {
                 })
     }
 
+    fun launchAutomation(automationId : String, context: Context?) {
+        getApi(context)?.launchAutomation(automationId)
+                ?.enqueue(object : Callback<HashMap<String, Any>> {
+                    override fun onResponse(
+                            call: Call<HashMap<String, Any>>,
+                            response: Response<HashMap<String, Any>>
+                    ) {
+                        Log.d("TestSuccess", response.body().toString())
+                    }
+
+                    override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable?) {
+                        Log.e("error", t?.message!!)
+                    }
+
+                })
+    }
+
     fun updateScene(scene : Scene, context: Context?) {
         getApi(context)?.updateScene(scene)
             ?.enqueue(object : Callback<Scene>{

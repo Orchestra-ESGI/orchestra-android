@@ -54,6 +54,10 @@ class HomeViewModel: ViewModel() {
         sceneViewModel!!.launchScene(sceneId)
     }
 
+    fun launchAutomation(automationId : String) {
+        sceneViewModel!!.launchAutomation(automationId)
+    }
+
     fun deleteDevices(friendlyName : ListHubAccessoryConfigurationToDelete) {
         deviceViewModel!!.context = context
         deviceViewModel!!.deleteDevices(friendlyName)
