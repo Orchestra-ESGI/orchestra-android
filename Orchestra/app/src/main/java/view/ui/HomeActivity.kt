@@ -4,7 +4,9 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.os.Bundle
+import android.os.Handler
 import android.text.InputFilter
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -20,6 +22,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.orchestra.R
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -33,6 +36,7 @@ import view.adapter.AutomationAdapter
 import view.adapter.SceneAdapter
 import viewModel.HomeViewModel
 import java.io.Serializable
+import kotlin.concurrent.timer
 
 
 class HomeActivity : AppCompatActivity(), OnActionListener {
@@ -48,6 +52,7 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
     private lateinit var automationTitle : TextView
     private lateinit var automationRecyclerView: RecyclerView
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var swipeRefreshLayout : SwipeRefreshLayout
     private lateinit var loader: KProgressHUD
 
     private lateinit var deviceList : List<HubAccessoryConfiguration>
@@ -83,6 +88,7 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
         roomChipGroup = findViewById(R.id.home_room_filter_chip_group)
         automationTitle = findViewById(R.id.home_automation_tv)
         automationRecyclerView = findViewById(R.id.home_automation_rv)
+        swipeRefreshLayout = findViewById(R.id.home_swipe_refresh_layout)
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         homeViewModel.context = this
     }
@@ -127,6 +133,7 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
             checkLoaded()
             sceneAdapter.deviceList = deviceList
             automationAdapter.deviceList = deviceList
+            swipeRefreshLayout.isRefreshing = false
             loader.dismiss()
         })
         homeViewModel.sceneList.observe(this, Observer {
@@ -140,6 +147,12 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
             automationList = it
             automationAdapter.automationList = automationList
         })
+
+        swipeRefreshLayout.setOnRefreshListener {
+            homeViewModel.getAllDevice()
+            homeViewModel.getAllScene()
+            homeViewModel.getAllAutomation()
+        }
     }
 
     private fun setUpProfilBtn() {
@@ -178,20 +191,6 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
         android.R.id.home -> {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
-            true
-        }
-
-        R.id.scene_list_refresh -> {
-            homeViewModel.getAllDevice()
-            homeViewModel.getAllScene()
-            homeViewModel.getAllAutomation()
-            loader.setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                    .setCancellable(true)
-                    .setAnimationSpeed(2)
-                    .setDimAmount(0.5f)
-                    .show()
-            deviceAdapter.notifyDataSetChanged()
-            sceneAdapter.notifyDataSetChanged()
             true
         }
 
