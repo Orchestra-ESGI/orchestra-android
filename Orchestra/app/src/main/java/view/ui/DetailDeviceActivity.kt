@@ -201,6 +201,13 @@ class DetailDeviceActivity : AppCompatActivity() {
                 colorLayout.visibility = View.GONE
                 colorTemperatureLayout.visibility = View.GONE
             }
+            HubAccessoryType.temperatureandhumidity -> {
+                configLinearLayout.visibility = View.GONE
+                stateLayout.visibility = View.GONE
+                brightnessLayout.visibility = View.GONE
+                colorLayout.visibility = View.GONE
+                colorTemperatureLayout.visibility = View.GONE
+            }
             HubAccessoryType.unknown -> {
                 stateLayout.visibility = View.GONE
                 brightnessLayout.visibility = View.GONE
@@ -287,9 +294,6 @@ class DetailDeviceActivity : AppCompatActivity() {
             startActivity(deviceModificationIntent)
             true
         }
-
-
-
         else -> {
             super.onOptionsItemSelected(item)
         }

@@ -183,5 +183,8 @@
     <string name="home_automation_title">my Automations</string>
     <string name="home_no_data">Aucune Donnée</string>
     <string name="detail_scene_automation_trigger">Triggered by %1$s when state is %2$s</string>
+    <string name="create_scene_trigger_by">Trigger by</string>
+    <string name="create_scene_when">When</string>
+    <string name="create_scene_is">Is</string>
 
 </resources>

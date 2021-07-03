@@ -169,15 +169,16 @@ class CreateDeviceActivity : AppCompatActivity(), OnItemClicked, AdapterView.OnI
 
         val room = if (selectedPosition == -1) device!!.room else roomList[selectedPosition]
 
-        when (supportedDevice?.type) {
-            "lightbulb" -> type = HubAccessoryType.lightbulb
-            "switch" -> type = HubAccessoryType.switch
-            "sensor" -> type = HubAccessoryType.sensor
-            "contact" -> type = HubAccessoryType.contact
-            "programmableswitch" -> type = HubAccessoryType.programmableswitch
-            "occupancy" -> type = HubAccessoryType.occupancy
+        type = when (supportedDevice?.type) {
+            "lightbulb" -> HubAccessoryType.lightbulb
+            "switch" -> HubAccessoryType.switch
+            "sensor" -> HubAccessoryType.sensor
+            "contact" -> HubAccessoryType.contact
+            "programmableswitch" -> HubAccessoryType.programmableswitch
+            "temperatureandhumidity" -> HubAccessoryType.temperatureandhumidity
+            "occupancy" -> HubAccessoryType.occupancy
             else -> { // Note the block
-                type = device?.type
+                device?.type
             }
         }
 

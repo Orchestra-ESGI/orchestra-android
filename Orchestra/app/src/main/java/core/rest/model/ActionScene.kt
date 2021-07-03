@@ -25,7 +25,8 @@ data class ActionsToSetIn(
         var state : String?,
         var brightness: Int?,
         var color: ColorAction?,
-        var color_temp: Int?
+        var color_temp: Int?,
+        var operator: String? = null
 ) : Serializable
 
 data class Actions (

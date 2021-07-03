@@ -43,6 +43,9 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     private lateinit var triggerTitleTextView: TextView
     private lateinit var triggerDeviceSpinner: Spinner
     private lateinit var triggerActionSpinner: Spinner
+    private lateinit var triggerActionTypeSpinner: Spinner
+    private lateinit var triggerOperatorSpinner: Spinner
+    private lateinit var triggerValueEditText: EditText
     private lateinit var addActionTextView: TextView
     private lateinit var listActionRecyclerView: RecyclerView
 
@@ -61,7 +64,8 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     private val triggerableDeviceTypeList = listOf(
             HubAccessoryType.occupancy,
             HubAccessoryType.contact,
-            HubAccessoryType.programmableswitch
+            HubAccessoryType.programmableswitch,
+            HubAccessoryType.temperatureandhumidity
     )
 
     private val actionListForSensor = listOf(
@@ -77,12 +81,25 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
 
     )
 
+    private val actionTypeTemperatureAndHumidityList = listOf(
+        "temperature",
+        "humidity"
+    )
+
+    private val operatorListForTemperatureAndHumidity = listOf(
+        ">",
+        "<"
+    )
+
     private lateinit var arrayAdapterAction : ArrayAdapter<String>
+    private lateinit var arrayAdapterTypeAction : ArrayAdapter<String>
     private lateinit var arrayAdapterDevice : ArrayAdapter<String>
+    private lateinit var arrayAdapterOperator : ArrayAdapter<String>
 
     private var sceneDetail : Scene? = null
     private var automationDetail : Automation? = null
     private var isAutomatisation : Boolean? = null
+    private var initModificationAutomation : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -127,6 +144,9 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         triggerTitleTextView = findViewById(R.id.create_scene_add_trigger_tv)
         triggerDeviceSpinner = findViewById(R.id.create_scene_trigger_device)
         triggerActionSpinner = findViewById(R.id.create_scene_trigger_action)
+        triggerActionTypeSpinner = findViewById(R.id.create_scene_trigger_action_type)
+        triggerOperatorSpinner = findViewById(R.id.create_scene_trigger_operator)
+        triggerValueEditText = findViewById(R.id.create_scene_trigger_value)
         addActionTextView = findViewById(R.id.create_scene_add_action_tv)
         listActionRecyclerView = findViewById(R.id.create_scene_list_action_rv)
 
@@ -137,6 +157,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     private fun setupAutomationView() {
         if (isAutomatisation == true) {
             triggerLinearLayout.visibility = View.VISIBLE
+            initModificationAutomation = true
             setUpRoomSpinner()
         }
     }
@@ -145,20 +166,58 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         val triggerDeviceList = deviceList.filter { device -> triggerableDeviceTypeList.contains(device.type) }
 
         arrayAdapterAction = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item)
+        arrayAdapterTypeAction = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item)
         arrayAdapterDevice = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item)
+        arrayAdapterOperator = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item)
 
         arrayAdapterDevice.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+        arrayAdapterAction.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+        arrayAdapterOperator.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+        arrayAdapterTypeAction.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+
+
         triggerDeviceList.forEach {
             arrayAdapterDevice.add(it.name)
         }
         triggerDeviceSpinner.adapter = arrayAdapterDevice
 
-        val deviceSelectedIndex = triggerDeviceSpinner.selectedItemPosition
-        val deviceSelected = triggerDeviceList[deviceSelectedIndex]
+        operatorListForTemperatureAndHumidity.forEach {
+            arrayAdapterOperator.add(it.toString())
+        }
+        triggerOperatorSpinner.adapter = arrayAdapterOperator
 
-        var triggerActionList = if (deviceSelected.type != HubAccessoryType.programmableswitch) actionListForSensor else actionListForSwitch
 
-        arrayAdapterAction.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+        val deviceSelected : HubAccessoryConfiguration? = if (automationDetail != null) {
+            triggerDeviceList.firstOrNull { device -> device.friendly_name == automationDetail!!.trigger.friendly_name }
+        } else {
+            val deviceSelectedIndex = triggerDeviceSpinner.selectedItemPosition
+            triggerDeviceList[deviceSelectedIndex]
+        }
+
+        if (deviceSelected?.type == HubAccessoryType.temperatureandhumidity) {
+            triggerActionSpinner.visibility = View.GONE
+            triggerOperatorSpinner.visibility = View.VISIBLE
+            triggerValueEditText.visibility = View.VISIBLE
+        } else {
+            triggerActionSpinner.visibility = View.VISIBLE
+            triggerOperatorSpinner.visibility = View.GONE
+            triggerValueEditText.visibility = View.GONE
+        }
+
+        val triggerActionList = when (deviceSelected?.type) {
+            HubAccessoryType.programmableswitch -> actionListForSwitch
+            else -> actionListForSensor
+        }
+
+        val triggerActionTypeList = when (deviceSelected?.type) {
+            HubAccessoryType.temperatureandhumidity -> actionTypeTemperatureAndHumidityList
+            else -> listOf("state")
+        }
+
+        triggerActionTypeList.forEach {
+            arrayAdapterTypeAction.add(it)
+        }
+        triggerActionTypeSpinner.adapter = arrayAdapterTypeAction
 
         triggerActionList.forEach {
             arrayAdapterAction.add(it)
@@ -166,16 +225,22 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         triggerActionSpinner.adapter = arrayAdapterAction
 
         if (automationDetail != null) {
-            val deviceSelected = triggerDeviceList.firstOrNull { device -> device.friendly_name == automationDetail!!.trigger.friendly_name }
-            triggerActionList = if (deviceSelected?.type != HubAccessoryType.programmableswitch) actionListForSensor else actionListForSwitch
+            val actionTypeSelected = triggerActionTypeList.firstOrNull() { action -> action == automationDetail!!.trigger.type.name}
             val actionSelected = triggerActionList.firstOrNull { action -> action == automationDetail!!.trigger.actions.state}
-            if (deviceSelected != null && actionSelected != null) {
-                val indexDevice = triggerDeviceList.indexOf(deviceSelected)
+            val indexDevice = triggerDeviceList.indexOf(deviceSelected)
+            triggerDeviceSpinner.setSelection(indexDevice)
+            if (actionTypeSelected != null) {
+                if(actionTypeSelected == "temperature" || actionTypeSelected == "humidity") {
+                    val indexOperator = operatorListForTemperatureAndHumidity.indexOf(automationDetail!!.trigger.actions.operator)
+                    triggerOperatorSpinner.setSelection(indexOperator)
+                    triggerValueEditText.setText(automationDetail!!.trigger.actions.state)
+                }
+            } else {
                 val indexAction = triggerActionList.indexOf(actionSelected)
-                triggerDeviceSpinner.setSelection(indexDevice)
                 triggerActionSpinner.setSelection(indexAction)
             }
         }
+
 
         triggerDeviceSpinner.onItemSelectedListener = this
         // triggerActionSpinner.onItemSelectedListener = this
@@ -319,15 +384,18 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         val description = descriptionEditText.text
         val backgroundColor = sceneColorsHashMap.filterValues { it }.keys.first()
         val colorPicked = String.format("#%06X", 0xFFFFFF and backgroundColor)
+        val operator = if (triggerOperatorSpinner.visibility == View.VISIBLE) triggerOperatorSpinner.selectedItem as String else null
 
         val listActionToSet = retrieveActionListData()
 
         val deviceSelectedIndex = triggerDeviceSpinner.selectedItemPosition
         val deviceSelected = deviceList.filter { device -> triggerableDeviceTypeList.contains(device.type) }[deviceSelectedIndex]
-        val actionSelected = triggerActionSpinner.selectedItem as String
+        val actionSelected = if (triggerValueEditText.visibility == View.VISIBLE) triggerValueEditText.text.toString() else triggerActionSpinner.selectedItem as String
+        val typeTemperatureOrHumidity = if (deviceSelected.type == HubAccessoryType.temperatureandhumidity) HubAccessoryType.valueOf(triggerActionTypeSpinner.selectedItem as String) else null
+        val type = typeTemperatureOrHumidity ?: deviceSelected.type!!
 
-        val action = ActionsToSetIn(state = actionSelected, brightness = null, color_temp = null, color = null)
-        val trigger = Trigger(type = deviceSelected.type!!, friendly_name = deviceSelected.friendly_name!!, actions = action)
+        val action = ActionsToSetIn(state = actionSelected, brightness = null, color_temp = null, color = null, operator = operator)
+        val trigger = Trigger(type = type, friendly_name = deviceSelected.friendly_name!!, actions = action)
 
         return Automation(_id = id, name = name.toString(), color = colorPicked, description = description.toString(), trigger = trigger, targets = listActionToSet)
     }
@@ -546,18 +614,39 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val triggerDeviceList = deviceList.filter { device -> triggerableDeviceTypeList.contains(device.type) }
-        val deviceSelected = triggerDeviceList[position]
-        val triggerActionList = if (deviceSelected.type != HubAccessoryType.programmableswitch) {
-            listOf(DeviceState.on.name, DeviceState.off.name)
-        } else {
-            listOf(DeviceState.single.name, DeviceState.double.name, DeviceState.long.name)
-        }
+        if(!initModificationAutomation) {
+            val triggerDeviceList = deviceList.filter { device -> triggerableDeviceTypeList.contains(device.type) }
+            val deviceSelected = triggerDeviceList[position]
 
-        arrayAdapterAction.clear()
-        triggerActionList.forEach {
-            arrayAdapterAction.add(it)
+            if (deviceSelected.type == HubAccessoryType.temperatureandhumidity) {
+                triggerActionSpinner.visibility = View.GONE
+                triggerOperatorSpinner.visibility = View.VISIBLE
+                triggerValueEditText.visibility = View.VISIBLE
+            } else {
+                triggerActionSpinner.visibility = View.VISIBLE
+                triggerOperatorSpinner.visibility = View.GONE
+                triggerValueEditText.visibility = View.GONE
+            }
+
+            val triggerActionList = when (deviceSelected.type) {
+                HubAccessoryType.programmableswitch -> actionListForSwitch
+                else -> actionListForSensor
+            }
+
+            val triggerActionTypeList = when (deviceSelected.type) {
+                HubAccessoryType.temperatureandhumidity -> actionTypeTemperatureAndHumidityList
+                else -> listOf("state")
+            }
+
+            arrayAdapterTypeAction.clear()
+            triggerActionTypeList.forEach { arrayAdapterTypeAction.add(it) }
+            triggerActionTypeSpinner.adapter = arrayAdapterTypeAction
+
+            arrayAdapterAction.clear()
+            triggerActionList.forEach { arrayAdapterAction.add(it) }
+            triggerActionSpinner.adapter = arrayAdapterAction
         }
+        initModificationAutomation = false
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {

@@ -7,5 +7,8 @@ enum class HubAccessoryType {
     occupancy,
     contact,
     sensor,
+    temperatureandhumidity,
+    temperature,
+    humidity,
     unknown
 }
