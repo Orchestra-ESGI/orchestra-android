@@ -12,8 +12,8 @@ interface DeviceService {
     fun getSupportedAccessories() : Call<List<SupportedAccessories>>
 
     @GET("device/all")
-    fun getAllDevices() : Call<HashMap<String, Any>>
-    //fun getAllDevices() : Call<ListHubAccessoryConfiguration>
+    // fun getAllDevices() : Call<HashMap<String, Any>>
+    fun getAllDevices() : Call<ListHubAccessoryConfiguration>
 
     @POST("device/action")
     fun sendDeviceAction(@Body actionsToSet: ActionsToSet) : Call<ListHubAccessoryConfiguration>

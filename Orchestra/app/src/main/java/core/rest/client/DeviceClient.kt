@@ -53,16 +53,16 @@ object DeviceClient {
 
     fun getAllDevices(context: Context) {
         getApi(context)?.getAllDevices()
-            ?.enqueue(object : Callback<HashMap<String, Any>> {
+            ?.enqueue(object : Callback<ListHubAccessoryConfiguration> {
                 override fun onResponse(
-                    call: Call<HashMap<String, Any>>,
-                    response: Response<HashMap<String, Any>>
+                    call: Call<ListHubAccessoryConfiguration>,
+                    response: Response<ListHubAccessoryConfiguration>
                 ) {
                     if (response.isSuccessful) {
-                        val res = response.body()
-                        val devices = res?.get("devices") as ArrayList<LinkedTreeMap<String, Any>>
-                        val listHub = toSerialize(devices)
-                        deviceList.value = listHub
+                        // val res = response.body()
+                        // val devices = res?.get("devices") as ArrayList<LinkedTreeMap<String, Any>>
+                        // val listHub = toSerialize(devices)
+                        deviceList.value = response.body()?.devices
                         Log.d("TestSuccess", response.body().toString())
                     } else {
                         val jObjError = JSONObject(response.errorBody()!!.string())
@@ -71,7 +71,7 @@ object DeviceClient {
 
                 }
 
-                override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable?) {
+                override fun onFailure(call: Call<ListHubAccessoryConfiguration>, t: Throwable?) {
                     apiError.value = ApiError(error = t?.message!!)
                     Log.e("error", t?.message!!)
                 }
