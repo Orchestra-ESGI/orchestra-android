@@ -9,9 +9,12 @@
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/home_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/app_primary_blue"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
         tools:context="view.ui.HomeActivity">
 
         <LinearLayout
@@ -74,6 +77,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/list_device_rv"
+                android:isScrollContainer="false"
+                android:focusable="false"
                 android:visibility="gone"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
@@ -95,6 +100,8 @@
                 android:id="@+id/list_scene_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:isScrollContainer="false"
+                android:focusable="false"
                 android:visibility="gone"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
@@ -117,6 +124,8 @@
                 android:id="@+id/home_automation_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:isScrollContainer="false"
+                android:focusable="false"
                 android:visibility="gone"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"

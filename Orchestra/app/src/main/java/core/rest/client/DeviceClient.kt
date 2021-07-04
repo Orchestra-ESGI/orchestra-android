@@ -66,13 +66,13 @@ object DeviceClient {
                         Log.d("TestSuccess", response.body().toString())
                     } else {
                         val jObjError = JSONObject(response.errorBody()!!.string())
-                        apiError.value = ApiError(error = jObjError["error"].toString())
+                        // apiError.value = ApiError(error = jObjError["error"].toString())
                     }
 
                 }
 
                 override fun onFailure(call: Call<ListHubAccessoryConfiguration>, t: Throwable?) {
-                    apiError.value = ApiError(error = t?.message!!)
+                    // apiError.value = ApiError(error = t?.message!!)
                     Log.e("error", t?.message!!)
                 }
 
