@@ -82,7 +82,8 @@
         <activity
             android:name="view.ui.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginPage">
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -73,8 +73,6 @@ class SettingsAdapter(context: Context) : RecyclerView.Adapter<SettingsAdapter.S
         private var settingsTextView = itemView.findViewById<TextView>(R.id.cell_settings_text_tv)
         private var settingsNextImageView = itemView.findViewById<ImageView>(R.id.cell_settings_next_iv)
 
-
-
         fun bind(title: String, icon: Int) {
             settingsTextView.text = title
             settingsIconImageView.setImageResource(icon)
@@ -125,6 +123,7 @@ class SettingsAdapter(context: Context) : RecyclerView.Adapter<SettingsAdapter.S
             AlertDialog.Builder(itemView.context).setTitle(itemView.context.getString(R.string.settings_sign_out_alert_title))
                 .setMessage(itemView.context.getString(R.string.settings_sign_out_alert_message))
                 .setPositiveButton(itemView.context.getString(R.string.settings_sign_out_alert_sign_out)) { dialog, _ ->
+
                     val sharedPref = itemView.context.getSharedPreferences("com.example.orchestra.API_TOKEN", Context.MODE_PRIVATE)
                     with (sharedPref.edit()) {
                         putString("Token", null)

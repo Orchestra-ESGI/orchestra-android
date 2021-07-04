@@ -4,9 +4,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.os.Bundle
-import android.os.Handler
 import android.text.InputFilter
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -36,7 +34,6 @@ import view.adapter.AutomationAdapter
 import view.adapter.SceneAdapter
 import viewModel.HomeViewModel
 import java.io.Serializable
-import kotlin.concurrent.timer
 
 
 class HomeActivity : AppCompatActivity(), OnActionListener {
@@ -95,6 +92,9 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
 
     private fun init() {
         title = ""
+        deviceList = emptyList()
+        sceneList = emptyList()
+        automationList = emptyList()
 
        loader = KProgressHUD.create(this)
        loader.setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -297,7 +297,6 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
                         roomFilterSelected(chip)
                         chipSelected = chip
                     }
-
                 }
             }
     }

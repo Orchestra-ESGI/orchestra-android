@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
     tools:context="view.ui.LoginActivity">
 
     <LinearLayout
@@ -16,11 +15,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/login_title_tv"
             android:layout_marginTop="50dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="15dp"
             android:text="@string/login_welcome"
             android:textSize="36sp"
             android:textColor="@color/white"
-            android:textStyle="bold"
+            android:fontFamily="@font/gilroy_light"
             android:layout_gravity="center">
 
         </TextView>
@@ -30,20 +29,21 @@
             android:layout_height="wrap_content"
             android:id="@+id/login_id_tv"
             android:layout_marginTop="50dp"
-            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
             android:layout_marginBottom="10dp"
             android:text="@string/login_email"
+            android:fontFamily="@font/gilroy_extra_bold"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="24sp"/>
+            android:textSize="18sp"/>
 
         <EditText
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:id="@+id/login_id_et"
-            android:drawableStart="@drawable/ic_user"
-            android:background="@drawable/login_edit_background"
+            android:drawableEnd="@drawable/ic_mail_24"
             android:inputType="text"
+            android:backgroundTint="@color/light_gray"
+            android:fontFamily="@font/gilroy_light"
             android:maxLines="1"
             android:layout_gravity="center"/>
 
@@ -52,19 +52,20 @@
             android:layout_height="wrap_content"
             android:id="@+id/login_pwd_tv"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
             android:layout_marginBottom="10dp"
             android:text="@string/login_pwd"
+            android:fontFamily="@font/gilroy_extra_bold"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="24sp"/>
+            android:textSize="18sp"/>
 
         <EditText
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:id="@+id/login_pwd_et"
-            android:drawableStart="@drawable/ic_password"
-            android:background="@drawable/login_edit_background"
+            android:drawableEnd="@drawable/ic_eyes_24"
+            android:backgroundTint="@color/light_gray"
+            android:fontFamily="@font/gilroy_light"
             android:inputType="textPassword"
             android:maxLines="1"
             android:layout_gravity="center"/>
@@ -74,19 +75,23 @@
             android:layout_height="wrap_content"
             android:id="@+id/login_forgot_pwd_tv"
             android:layout_gravity="center"
-            android:layout_marginLeft="100dp"
+            android:layout_marginStart="100dp"
             android:layout_marginTop="10dp"
             android:text="@string/login_forgot_pwd"
-            android:textColor="@color/blue_pwd"
-            android:textSize="10sp"/>
+            android:textColor="@color/app_primary_red"
+            android:fontFamily="@font/gilroy_light"
+            android:textSize="12sp"/>
 
-        <Button
+        <android.widget.Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/login_connect_btn"
             android:text="@string/login_connect"
             android:layout_marginTop="25dp"
-            android:backgroundTint="@color/btn_connexion"
+            android:background="@drawable/button_shape"
+            android:backgroundTint="@color/app_primary_red"
+            android:textColor="@color/white"
+            android:fontFamily="@font/gilroy_extra_bold"
             android:paddingLeft="70dp"
             android:paddingRight="70dp"
             android:layout_gravity="center"/>
@@ -96,7 +101,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/login_no_account_tv"
             android:text="@string/login_no_account"
-            android:textColor="@color/light_gray"
+            android:textColor="@color/white"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:textSize="12sp"
@@ -108,8 +113,8 @@
             android:id="@+id/login_create_account_tv"
             android:text="@string/login_create_account"
             android:layout_gravity="center"
-            android:textColor="@color/blue_pwd"
-            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:fontFamily="@font/gilroy_extra_bold"
             android:textSize="14sp"/>
 
     </LinearLayout>

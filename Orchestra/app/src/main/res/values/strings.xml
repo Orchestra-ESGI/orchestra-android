@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Orchestra</string>
 
     <!-- Pager -->
@@ -16,7 +16,8 @@
     <string name="pager_content_next">Next</string>
 
     <!-- Login -->
-    <string name="login_welcome">Welcome back to Orchestra!</string>
+    <string name="title" tools:ignore="DuplicateDefinition" translatable="false">Welcome back to <annotation font="title_login_welcome">Orchestra !</annotation></string>
+    <string name="login_welcome">Welcome back to Orchestra !</string>
     <string name="login_email">Email</string>
     <string name="login_pwd">Password</string>
     <string name="login_connect">Connect</string>
@@ -187,6 +188,8 @@
     <string name="create_scene_trigger_by">Trigger by</string>
     <string name="create_scene_when">When</string>
     <string name="create_scene_is">Is</string>
+    <string name="error_404">Une erreur est survenue\nVérifier si votre connexion internet est activé\nSi le problème persiste\nContactez l\'organisation</string>
+    <string name="error_user">\"L\'identifiant ou le mot de passe est erronée\nVeuillez réessayer\"</string>
 
 
 </resources>
