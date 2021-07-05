@@ -2,7 +2,6 @@ package view.ui
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.Spannable
@@ -42,6 +41,7 @@ class LoginActivity : AppCompatActivity() {
         setFilterEditText()
 
         val sharedPref = getSharedPreferences("com.example.orchestra.API_TOKEN", Context.MODE_PRIVATE)
+        sharedPref.edit().clear().apply()
 
         createAccountTv.setOnClickListener {
             val createAccountIntent =  Intent(this, SignInActivity::class.java)
@@ -51,23 +51,13 @@ class LoginActivity : AppCompatActivity() {
         connexionBtn.setOnClickListener {
             if(checkFields()) {
                 val user = retrieveData()
-                userVM.apiError.observe(this, Observer {
-                    if( it != null) {
-                        if (it.code == 404) {
-                            Toast.makeText(this, getString(R.string.error_404), Toast.LENGTH_LONG).show()
-                        } else {
-                            Toast.makeText(this, getString(R.string.error_user), Toast.LENGTH_LONG).show()
-                        }
-                    }
-                })
                 userVM.userValid.observe(this, Observer {
                     if (it != null) {
                         if (it.token != "") {
-                            with (sharedPref.edit()) {
-                                putString("Token", it.token)
-                                putString("Email", emailEditText.text.toString())
-                                apply()
-                            }
+                            sharedPref.edit()
+                                    .putString("Token", it.token)
+                                    .putString("Email", emailEditText.text.toString())
+                                    .apply()
                             val sceneListIntent = Intent(this, HomeActivity::class.java)
                             startActivity(sceneListIntent)
                         } else {

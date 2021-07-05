@@ -16,7 +16,6 @@ class HomeViewModel: ViewModel() {
     var sceneList : MutableLiveData<List<Scene>> = MutableLiveData()
     var automationList : MutableLiveData<List<Automation>> = MutableLiveData()
     var roomList : MutableLiveData<List<Room>> = MutableLiveData()
-    var apiError : MutableLiveData<ApiError> = MutableLiveData()
 
     init {
         deviceViewModel = DeviceViewModel()
@@ -27,9 +26,6 @@ class HomeViewModel: ViewModel() {
         deviceViewModel!!.context = context
         deviceViewModel!!.deviceList.observe(context, Observer {
             deviceList.value = it
-        })
-        deviceViewModel!!.apiError.observe(context, Observer {
-            apiError.value = it
         })
         deviceViewModel!!.getDevices()
     }
@@ -88,5 +84,7 @@ class HomeViewModel: ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
+        sceneViewModel?.sceneList?.value = null
+        deviceViewModel?.deviceList?.value = null
     }
 }

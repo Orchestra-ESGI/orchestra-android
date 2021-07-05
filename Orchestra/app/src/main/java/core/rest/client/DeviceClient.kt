@@ -1,16 +1,14 @@
 package core.rest.client
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.internal.LinkedTreeMap
 import core.rest.model.*
 import core.rest.model.hubConfiguration.*
 import core.rest.services.DeviceService
 import core.rest.services.RootApiService
+import core.utils.ApiUtils
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,16 +20,15 @@ object DeviceClient {
     var supportedDevices: MutableLiveData<List<SupportedAccessories>> = MutableLiveData()
     var deviceList: MutableLiveData<List<HubAccessoryConfiguration>> = MutableLiveData()
     var roomList: MutableLiveData<List<Room>> = MutableLiveData()
-    var apiError : MutableLiveData<ApiError> = MutableLiveData()
 
     private fun getApi(context: Context? = null): DeviceService? {
         if(context != null) {
-            val sharedPref = context.getSharedPreferences("com.example.orchestra.API_TOKEN", Context.MODE_PRIVATE)
-            val token = sharedPref.getString("Token", "")
             val okHttpClient = OkHttpClient.Builder().apply {
                 addInterceptor(
                         Interceptor { chain ->
                             val builder = chain.request().newBuilder()
+                            val sharedPref = context.getSharedPreferences("com.example.orchestra.API_TOKEN", Context.MODE_PRIVATE)
+                            val token = sharedPref.getString("Token", "")
                             builder.header("Authorization", "Bearer $token")
                             builder.header("App-Key", "orchestra")
                             return@Interceptor chain.proceed(builder.build())
@@ -59,21 +56,15 @@ object DeviceClient {
                     response: Response<ListHubAccessoryConfiguration>
                 ) {
                     if (response.isSuccessful) {
-                        // val res = response.body()
-                        // val devices = res?.get("devices") as ArrayList<LinkedTreeMap<String, Any>>
-                        // val listHub = toSerialize(devices)
                         deviceList.value = response.body()?.devices
-                        Log.d("TestSuccess", response.body().toString())
                     } else {
-                        val jObjError = JSONObject(response.errorBody()!!.string())
-                        // apiError.value = ApiError(error = jObjError["error"].toString())
+                        ApiUtils.handleError(context, response.code())
                     }
 
                 }
 
                 override fun onFailure(call: Call<ListHubAccessoryConfiguration>, t: Throwable?) {
-                    // apiError.value = ApiError(error = t?.message!!)
-                    Log.e("error", t?.message!!)
+                    ApiUtils.handleError(context, 500)
                 }
 
             })
@@ -85,11 +76,13 @@ object DeviceClient {
                 call: Call<ListHubAccessoryConfiguration>,
                 response: Response<ListHubAccessoryConfiguration>
             ) {
-                Log.d("Test Send Device", "OK")
+                if (!response.isSuccessful) {
+                    ApiUtils.handleError(context, response.code())
+                }
             }
 
             override fun onFailure(call: Call<ListHubAccessoryConfiguration>, t: Throwable) {
-                Log.d("Test Send Device", "NOK")
+                ApiUtils.handleError(context, 500)
             }
         })
     }
@@ -98,15 +91,18 @@ object DeviceClient {
         getApi(context)?.getSupportedAccessories()
                 ?.enqueue(object : Callback<List<SupportedAccessories>> {
                     override fun onResponse(
-                            call: Call<List<SupportedAccessories>>?,
-                            response: Response<List<SupportedAccessories>>?
+                            call: Call<List<SupportedAccessories>>,
+                            response: Response<List<SupportedAccessories>>
                     ) {
-                        supportedDevices.value = response!!.body()
-                        Log.d("TestSuccess", response.body().toString())
+                        if (response.isSuccessful) {
+                            supportedDevices.value = response.body()
+                        } else {
+                            ApiUtils.handleError(context, response.code())
+                        }
                     }
 
                     override fun onFailure(call: Call<List<SupportedAccessories>>?, t: Throwable?) {
-                        Log.e("error", t?.message!!)
+                        ApiUtils.handleError(context, 500)
                     }
 
                 })
@@ -118,11 +114,13 @@ object DeviceClient {
                 call: Call<HubAccessoryConfiguration>,
                 response: Response<HubAccessoryConfiguration>
             ) {
-                Log.d("Test Reset Device", "OK")
+                if (!response.isSuccessful) {
+                    ApiUtils.handleError(context, response.code())
+                }
             }
 
             override fun onFailure(call: Call<HubAccessoryConfiguration>, t: Throwable) {
-                Log.d("Test Reset Device", "NOK")
+                ApiUtils.handleError(context, 500)
             }
         })
     }
@@ -133,11 +131,11 @@ object DeviceClient {
                     call: Call<HubAccessoryConfiguration>,
                     response: Response<HubAccessoryConfiguration>
             ) {
-                Log.d("Test Send Device", "OK")
+                ApiUtils.handleError(context, response.code())
             }
 
             override fun onFailure(call: Call<HubAccessoryConfiguration>, t: Throwable) {
-                Log.d("Test Send Device", "NOK")
+                ApiUtils.handleError(context, 500)
             }
         })
     }
@@ -148,11 +146,11 @@ object DeviceClient {
                     call: Call<ListHubAccessoryConfigurationToDelete>,
                     response: Response<ListHubAccessoryConfigurationToDelete>
             ) {
-                Log.d("Test Delete Device", "OK")
+                ApiUtils.handleError(context, response.code())
             }
 
             override fun onFailure(call: Call<ListHubAccessoryConfigurationToDelete>, t: Throwable) {
-                Log.d("Test Send Device", "NOK")
+                ApiUtils.handleError(context, 500)
             }
         })
     }
@@ -166,14 +164,13 @@ object DeviceClient {
                 if (response.isSuccessful) {
                     val listRoom = response.body()
                     roomList.value = listRoom?.rooms
-                    Log.d("Test Room Get", "OK")
                 } else {
-                    Log.d("Test Room Get", "NOK")
+                    ApiUtils.handleError(context, response.code())
                 }
             }
 
             override fun onFailure(call: Call<ListRoom>, t: Throwable) {
-                Log.d("Test Room Get", "FAILED")
+                ApiUtils.handleError(context, 500)
             }
         })
     }
@@ -188,15 +185,13 @@ object DeviceClient {
             ) {
                 if (response.isSuccessful) {
                     val res = response.body()
-                    val erreur = res?.get("error") as? List<Room>
-                    Log.d("Test Room Get", "OK")
                 } else {
-                    Log.d("Test Room Get", "NOK")
+                    ApiUtils.handleError(context, response.code())
                 }
             }
 
             override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
-                Log.d("Test Room Get", "FAILED")
+                ApiUtils.handleError(context, 500)
             }
         })
     }

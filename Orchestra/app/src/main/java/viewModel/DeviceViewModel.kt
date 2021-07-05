@@ -15,15 +15,11 @@ class DeviceViewModel : ViewModel() {
     var deviceList : MutableLiveData<List<HubAccessoryConfiguration>> = MutableLiveData()
     var supportedAccessorieList : MutableLiveData<List<SupportedAccessories>> = MutableLiveData()
     var roomList : MutableLiveData<List<Room>> = MutableLiveData()
-    var apiError : MutableLiveData<ApiError> = MutableLiveData()
     val deviceService = DeviceClient
 
     fun getDevices() {
         deviceService.deviceList.observe(context, Observer {
             deviceList.value = it
-        })
-        deviceService.apiError.observe(context, Observer {
-            apiError.value = it
         })
         deviceService.getAllDevices(context)
     }
