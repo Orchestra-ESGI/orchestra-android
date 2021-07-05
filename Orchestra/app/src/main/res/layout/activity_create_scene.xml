@@ -11,16 +11,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/create_scene_new_scene_tv"
-            android:text="@string/create_scene_new_scene"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="20dp"
-            />
 
         <TextView
             android:layout_width="wrap_content"

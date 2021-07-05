@@ -31,7 +31,6 @@ import kotlin.random.Random
 
 class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked, OnActionLongClicked, AdapterView.OnItemSelectedListener {
 
-    private lateinit var titleTextView: TextView
     private lateinit var nameTitleTextView: TextView
     private lateinit var nameEditText: EditText
     private lateinit var chooseColorTitleTextView: TextView
@@ -132,7 +131,6 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     }
 
     private fun bind() {
-        titleTextView = findViewById(R.id.create_scene_new_scene_tv)
         nameTitleTextView = findViewById(R.id.create_scene_name_tv)
         nameEditText = findViewById(R.id.create_scene_name_et)
         chooseColorTitleTextView = findViewById(R.id.create_scene_choose_color_tv)
@@ -156,98 +154,104 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
 
     private fun setupAutomationView() {
         if (isAutomatisation == true) {
+            title = getString(R.string.create_scene_new_automation)
             triggerLinearLayout.visibility = View.VISIBLE
             initModificationAutomation = true
             setUpRoomSpinner()
+        } else {
+            title = getString(R.string.create_scene_new_scene)
         }
     }
 
     private fun setUpRoomSpinner() {
         val triggerDeviceList = deviceList.filter { device -> triggerableDeviceTypeList.contains(device.type) }
 
-        arrayAdapterAction = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item)
-        arrayAdapterTypeAction = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item)
-        arrayAdapterDevice = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item)
-        arrayAdapterOperator = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item)
+        if (triggerDeviceList.isNotEmpty()) {
+            arrayAdapterAction = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item)
+            arrayAdapterTypeAction = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item)
+            arrayAdapterDevice = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item)
+            arrayAdapterOperator = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item)
 
-        arrayAdapterDevice.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
-        arrayAdapterAction.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
-        arrayAdapterOperator.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
-        arrayAdapterTypeAction.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
-
-
-        triggerDeviceList.forEach {
-            arrayAdapterDevice.add(it.name)
-        }
-        triggerDeviceSpinner.adapter = arrayAdapterDevice
-
-        operatorListForTemperatureAndHumidity.forEach {
-            arrayAdapterOperator.add(it.toString())
-        }
-        triggerOperatorSpinner.adapter = arrayAdapterOperator
+            arrayAdapterDevice.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+            arrayAdapterAction.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+            arrayAdapterOperator.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+            arrayAdapterTypeAction.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
 
 
-        val deviceSelected : HubAccessoryConfiguration? = if (automationDetail != null) {
-            triggerDeviceList.firstOrNull { device -> device.friendly_name == automationDetail!!.trigger.friendly_name }
-        } else {
-            val deviceSelectedIndex = triggerDeviceSpinner.selectedItemPosition
-            triggerDeviceList[deviceSelectedIndex]
-        }
-
-        if (deviceSelected?.type == HubAccessoryType.temperatureandhumidity) {
-            triggerActionSpinner.visibility = View.GONE
-            triggerOperatorSpinner.visibility = View.VISIBLE
-            triggerValueEditText.visibility = View.VISIBLE
-        } else {
-            triggerActionSpinner.visibility = View.VISIBLE
-            triggerOperatorSpinner.visibility = View.GONE
-            triggerValueEditText.visibility = View.GONE
-        }
-
-        val triggerActionList = when (deviceSelected?.type) {
-            HubAccessoryType.programmableswitch -> actionListForSwitch
-            else -> actionListForSensor
-        }
-
-        val triggerActionTypeList = when (deviceSelected?.type) {
-            HubAccessoryType.temperatureandhumidity -> actionTypeTemperatureAndHumidityList
-            else -> listOf("state")
-        }
-
-        triggerActionTypeList.forEach {
-            arrayAdapterTypeAction.add(it)
-        }
-        triggerActionTypeSpinner.adapter = arrayAdapterTypeAction
-
-        triggerActionList.forEach {
-            arrayAdapterAction.add(it)
-        }
-        triggerActionSpinner.adapter = arrayAdapterAction
-
-        if (automationDetail != null) {
-            val actionTypeSelected = triggerActionTypeList.firstOrNull() { action -> action == automationDetail!!.trigger.type.name}
-            val actionSelected = triggerActionList.firstOrNull { action -> action == automationDetail!!.trigger.actions.state}
-            val indexDevice = triggerDeviceList.indexOf(deviceSelected)
-            triggerDeviceSpinner.setSelection(indexDevice)
-            if (actionTypeSelected != null) {
-                if(actionTypeSelected == "temperature" || actionTypeSelected == "humidity") {
-                    val indexOperator = operatorListForTemperatureAndHumidity.indexOf(automationDetail!!.trigger.actions.operator)
-                    triggerOperatorSpinner.setSelection(indexOperator)
-                    triggerValueEditText.setText(automationDetail!!.trigger.actions.state)
-                }
-            } else {
-                val indexAction = triggerActionList.indexOf(actionSelected)
-                triggerActionSpinner.setSelection(indexAction)
+            triggerDeviceList.forEach {
+                arrayAdapterDevice.add(it.name)
             }
+            triggerDeviceSpinner.adapter = arrayAdapterDevice
+
+            operatorListForTemperatureAndHumidity.forEach {
+                arrayAdapterOperator.add(it.toString())
+            }
+            triggerOperatorSpinner.adapter = arrayAdapterOperator
+
+
+            val deviceSelected : HubAccessoryConfiguration? = if (automationDetail != null) {
+                triggerDeviceList.firstOrNull { device -> device.friendly_name == automationDetail!!.trigger.friendly_name }
+            } else {
+                val deviceSelectedIndex = triggerDeviceSpinner.selectedItemPosition
+                triggerDeviceList[deviceSelectedIndex]
+            }
+
+            if (deviceSelected?.type == HubAccessoryType.temperatureandhumidity) {
+                triggerActionSpinner.visibility = View.GONE
+                triggerOperatorSpinner.visibility = View.VISIBLE
+                triggerValueEditText.visibility = View.VISIBLE
+            } else {
+                triggerActionSpinner.visibility = View.VISIBLE
+                triggerOperatorSpinner.visibility = View.GONE
+                triggerValueEditText.visibility = View.GONE
+            }
+
+            val triggerActionList = when (deviceSelected?.type) {
+                HubAccessoryType.programmableswitch -> actionListForSwitch
+                else -> actionListForSensor
+            }
+
+            val triggerActionTypeList = when (deviceSelected?.type) {
+                HubAccessoryType.temperatureandhumidity -> actionTypeTemperatureAndHumidityList
+                else -> listOf("state")
+            }
+
+            triggerActionTypeList.forEach {
+                arrayAdapterTypeAction.add(it)
+            }
+            triggerActionTypeSpinner.adapter = arrayAdapterTypeAction
+
+            triggerActionList.forEach {
+                arrayAdapterAction.add(it)
+            }
+            triggerActionSpinner.adapter = arrayAdapterAction
+
+            if (automationDetail != null) {
+                val actionTypeSelected = triggerActionTypeList.firstOrNull() { action -> action == automationDetail!!.trigger.type.name}
+                val actionSelected = triggerActionList.firstOrNull { action -> action == automationDetail!!.trigger.actions.state}
+                val indexDevice = triggerDeviceList.indexOf(deviceSelected)
+                triggerDeviceSpinner.setSelection(indexDevice)
+                if (actionTypeSelected != null) {
+                    if(actionTypeSelected == "temperature" || actionTypeSelected == "humidity") {
+                        val indexOperator = operatorListForTemperatureAndHumidity.indexOf(automationDetail!!.trigger.actions.operator)
+                        triggerOperatorSpinner.setSelection(indexOperator)
+                        triggerValueEditText.setText(automationDetail!!.trigger.actions.state)
+                    }
+                } else {
+                    val indexAction = triggerActionList.indexOf(actionSelected)
+                    triggerActionSpinner.setSelection(indexAction)
+                }
+            }
+            triggerDeviceSpinner.onItemSelectedListener = this
+        } else {
+            triggerLinearLayout.visibility = View.GONE
+            Toast.makeText(this, getString(R.string.cannot_create_automation), Toast.LENGTH_LONG).show()
         }
-
-
-        triggerDeviceSpinner.onItemSelectedListener = this
-        // triggerActionSpinner.onItemSelectedListener = this
     }
 
     private fun loadDataIfModeModify() {
         if(sceneDetail != null) {
+            title = getString(R.string.create_scene_modify_scene)
             nameEditText.setText(sceneDetail!!.name)
             descriptionEditText.setText(sceneDetail!!.description)
             actionList = formatActionsToHubAccessoryConfiguration(sceneDetail!!.devices)
@@ -256,6 +260,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         if(automationDetail != null) {
             isAutomatisation = true
             setupAutomationView()
+            title = getString(R.string.create_scene_modify_automation)
             nameEditText.setText(automationDetail!!.name)
             descriptionEditText.setText(automationDetail!!.description)
             actionList = formatActionsToHubAccessoryConfiguration(automationDetail!!.targets)
@@ -452,32 +457,40 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.create_scene_add_btn -> {
             val intent = Intent()
-            if(isAutomatisation == true) {
-                val automation = retrieveDataAutomation()
-                if (automationNotEmpty(automation)) {
-                    if(automation._id == null) {
-                        sceneViewModel.saveAutomation(automation)
+            if (deviceList.isNotEmpty()) {
+                if (isAutomatisation == true) {
+                    val automation = retrieveDataAutomation()
+                    if (automationNotEmpty(automation)) {
+                        if(automation._id == null) {
+                            sceneViewModel.saveAutomation(automation)
+                        } else {
+                            sceneViewModel.updateAutomation(automation)
+                        }
+                        setResult(RESULT_OK, intent)
+                        finish()
                     } else {
-                        sceneViewModel.updateAutomation(automation)
+                        Toast.makeText(this, getString(R.string.create_scene_missing_information_toast), Toast.LENGTH_SHORT).show()
                     }
-                    setResult(RESULT_OK, intent)
-                    finish()
                 } else {
-                    Toast.makeText(this, getString(R.string.create_scene_missing_information_toast), Toast.LENGTH_SHORT).show()
+                    val scene = retrieveDataScene()
+                    if (sceneNotEmpty(scene)) {
+                        intent.putExtra("CreatedScene", scene)
+                        if (scene._id == null) {
+                            sceneViewModel.saveScene(scene)
+                        } else {
+                            sceneViewModel.updateScene(scene)
+                        }
+                        setResult(RESULT_OK, intent)
+                        finish()
+                    } else {
+                        Toast.makeText(this, getString(R.string.create_scene_missing_information_toast), Toast.LENGTH_SHORT).show()
+                    }
                 }
             } else {
-                val scene = retrieveDataScene()
-                if (sceneNotEmpty(scene)) {
-                    intent.putExtra("CreatedScene", scene)
-                    if (scene._id == null) {
-                        sceneViewModel.saveScene(scene)
-                    } else {
-                        sceneViewModel.updateScene(scene)
-                    }
-                    setResult(RESULT_OK, intent)
-                    finish()
+                if(isAutomatisation == true) {
+                    Toast.makeText(this, getString(R.string.cannot_create_automation), Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(this, getString(R.string.create_scene_missing_information_toast), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.cannot_create_scene), Toast.LENGTH_LONG).show()
                 }
             }
             true

@@ -190,6 +190,11 @@
     <string name="create_scene_is">Is</string>
     <string name="error_404">Une erreur est survenue\nVérifier si votre connexion internet est activé\nSi le problème persiste\nContactez l\'organisation</string>
     <string name="error_user">\"L\'identifiant ou le mot de passe est erronée\nVeuillez réessayer\"</string>
+    <string name="cannot_create_automation">Vous ne pouvez pas créer d\'automatisation car vous ne possedez pas de device</string>
+    <string name="cannot_create_scene">Vous ne pouvez pas créer de scène car vous de possedez pas de device</string>
+    <string name="create_scene_new_automation">Nouvelle automatisation</string>
+    <string name="create_scene_modify_automation">Modifier l\'automatisation</string>
+    <string name="create_scene_modify_scene">Modifier la scène</string>
 
 
 </resources>
