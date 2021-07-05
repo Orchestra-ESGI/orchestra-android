@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.DrawableCompat
@@ -146,44 +147,48 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
                 arrayAdapter.add(it.key)
             }
 
-            itemView.setOnClickListener {
-                if(action.actions == null && action.friendly_name == null) {
-                    val alertDialog: AlertDialog = itemView.context.let {
-                        val builder = AlertDialog.Builder(it)
-                        builder.apply {
-                            this.setTitle(R.string.create_scene_add_action_text)
-                            setAdapter(arrayAdapter) {_, which ->
-                                if (actionsName[which].key == itemView.context.getString(R.string.create_scene_actions_adapter_choose_color)) {
-                                    val view = LayoutInflater.from(itemView.context).inflate(R.layout.custom_view_color_picker, null)
-                                    val colorPicker = view.findViewById<ColorPicker>(R.id.custom_view_color_picker)
-                                    var colorSelected = String.format("#%06X", 0xFFFFFF and colorPicker.color)
-                                    colorPicker.setOnColorChangedListener(object :
-                                            ColorPicker.OnColorChangedListener {
-                                        override fun onColorChanged(color: Int) {
-                                            colorSelected = String.format("#%06X", 0xFFFFFF and color)
-                                        }
-                                    })
-                                    val builder = AlertDialog.Builder(itemView.context)
-                                            .setTitle(itemView.context.getString(R.string.create_scene_actions_adapter_choose_color))
-                                            .setPositiveButton(itemView.context.getString(R.string.create_scene_actions_adapter_ok)) { _, which ->
-                                                listener.actionClicked(SceneActionsName(type = "color", key = itemView.context.getString(R.string.create_scene_actions_adapter_choosen_color), value = colorSelected), position = position)
+            if (actionsName.isNotEmpty()) {
+                itemView.setOnClickListener {
+                    if(action.actions == null && action.friendly_name == null) {
+                        val alertDialog: AlertDialog = itemView.context.let {
+                            val builder = AlertDialog.Builder(it)
+                            builder.apply {
+                                this.setTitle(R.string.create_scene_add_action_text)
+                                setAdapter(arrayAdapter) {_, which ->
+                                    if (actionsName[which].key == itemView.context.getString(R.string.create_scene_actions_adapter_choose_color)) {
+                                        val view = LayoutInflater.from(itemView.context).inflate(R.layout.custom_view_color_picker, null)
+                                        val colorPicker = view.findViewById<ColorPicker>(R.id.custom_view_color_picker)
+                                        var colorSelected = String.format("#%06X", 0xFFFFFF and colorPicker.color)
+                                        colorPicker.setOnColorChangedListener(object :
+                                                ColorPicker.OnColorChangedListener {
+                                            override fun onColorChanged(color: Int) {
+                                                colorSelected = String.format("#%06X", 0xFFFFFF and color)
                                             }
-                                            .setNegativeButton(itemView.context.getString(R.string.create_scene_actions_adapter_cancel)) { dialog, _ ->
-                                                dialog.cancel()
-                                            }
-                                            .create()
-                                    builder.setView(view)
-                                    builder.setCanceledOnTouchOutside(false)
-                                    builder.show()
-                                } else {
-                                    listener.actionClicked(actionsName[which], position = position)
+                                        })
+                                        val builder = AlertDialog.Builder(itemView.context)
+                                                .setTitle(itemView.context.getString(R.string.create_scene_actions_adapter_choose_color))
+                                                .setPositiveButton(itemView.context.getString(R.string.create_scene_actions_adapter_ok)) { _, which ->
+                                                    listener.actionClicked(SceneActionsName(type = "color", key = itemView.context.getString(R.string.create_scene_actions_adapter_choosen_color), value = colorSelected), position = position)
+                                                }
+                                                .setNegativeButton(itemView.context.getString(R.string.create_scene_actions_adapter_cancel)) { dialog, _ ->
+                                                    dialog.cancel()
+                                                }
+                                                .create()
+                                        builder.setView(view)
+                                        builder.setCanceledOnTouchOutside(false)
+                                        builder.show()
+                                    } else {
+                                        listener.actionClicked(actionsName[which], position = position)
+                                    }
                                 }
                             }
+                            builder.create()
                         }
-                        builder.create()
+                        alertDialog.show()
                     }
-                    alertDialog.show()
                 }
+            } else {
+                Toast.makeText(itemView.context, itemView.context.getString(R.string.create_scene_no_action_available), Toast.LENGTH_LONG).show()
             }
 
             itemView.setOnLongClickListener {

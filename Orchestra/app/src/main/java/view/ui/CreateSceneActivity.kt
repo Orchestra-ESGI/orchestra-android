@@ -304,24 +304,28 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     }
 
     private fun setUpAddActions() {
-        addActionTextView.setOnClickListener {
-            val arrayAdapter = ArrayAdapter<String>(this@CreateSceneActivity, android.R.layout.select_dialog_item)
-            availableDeviceList.forEach {
-                arrayAdapter.add(it.name)
-            }
-            val alertDialog: AlertDialog = this@CreateSceneActivity.let {
-                val builder = AlertDialog.Builder(it)
-                builder.apply {
-                    this.setTitle(R.string.create_scene_list_action_description)
-                            .setAdapter(arrayAdapter) { _, which ->
-                                if(which < availableDeviceList.size) {
-                                    addSection(availableDeviceList[which])
-                                }
-                            }
+        if (availableDeviceList.isNotEmpty()) {
+            addActionTextView.setOnClickListener {
+                val arrayAdapter = ArrayAdapter<String>(this@CreateSceneActivity, android.R.layout.select_dialog_item)
+                availableDeviceList.forEach {
+                    arrayAdapter.add(it.name)
                 }
-                builder.create()
+                val alertDialog: AlertDialog = this@CreateSceneActivity.let {
+                    val builder = AlertDialog.Builder(it)
+                    builder.apply {
+                        this.setTitle(R.string.create_scene_list_action_description)
+                                .setAdapter(arrayAdapter) { _, which ->
+                                    if(which < availableDeviceList.size) {
+                                        addSection(availableDeviceList[which])
+                                    }
+                                }
+                    }
+                    builder.create()
+                }
+                alertDialog.show()
             }
-            alertDialog.show()
+        } else {
+            Toast.makeText(this, getString(R.string.create_scene_no_device_available), Toast.LENGTH_LONG).show()
         }
     }
 

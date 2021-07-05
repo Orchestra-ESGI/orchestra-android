@@ -193,5 +193,7 @@
     <string name="create_scene_new_automation">Nouvelle automatisation</string>
     <string name="create_scene_modify_automation">Modifier l\'automatisation</string>
     <string name="create_scene_modify_scene">Modifier la scène</string>
+    <string name="create_scene_no_device_available">Plus aucun device n\'est disponible</string>
+    <string name="create_scene_no_action_available">Plus aucune action est disponible pour ce device</string>
 
 </resources>
