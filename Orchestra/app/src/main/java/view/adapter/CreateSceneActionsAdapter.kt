@@ -147,14 +147,14 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
                 arrayAdapter.add(it.key)
             }
 
-            if (actionsName.isNotEmpty()) {
-                itemView.setOnClickListener {
-                    if(action.actions == null && action.friendly_name == null) {
+            itemView.setOnClickListener {
+                if (actionsName.isNotEmpty()) {
+                    if (action.actions == null && action.friendly_name == null) {
                         val alertDialog: AlertDialog = itemView.context.let {
                             val builder = AlertDialog.Builder(it)
                             builder.apply {
                                 this.setTitle(R.string.create_scene_add_action_text)
-                                setAdapter(arrayAdapter) {_, which ->
+                                setAdapter(arrayAdapter) { _, which ->
                                     if (actionsName[which].key == itemView.context.getString(R.string.create_scene_actions_adapter_choose_color)) {
                                         val view = LayoutInflater.from(itemView.context).inflate(R.layout.custom_view_color_picker, null)
                                         val colorPicker = view.findViewById<ColorPicker>(R.id.custom_view_color_picker)
@@ -186,10 +186,11 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
                         }
                         alertDialog.show()
                     }
+                } else {
+                        Toast.makeText(itemView.context, itemView.context.getString(R.string.create_scene_no_action_available), Toast.LENGTH_LONG).show()
                 }
-            } else {
-                Toast.makeText(itemView.context, itemView.context.getString(R.string.create_scene_no_action_available), Toast.LENGTH_LONG).show()
             }
+
 
             itemView.setOnLongClickListener {
                 if(actionTv.text != itemView.context.getString(R.string.create_scene_add_action)) {

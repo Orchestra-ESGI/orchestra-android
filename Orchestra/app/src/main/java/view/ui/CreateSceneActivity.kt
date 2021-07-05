@@ -304,8 +304,8 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     }
 
     private fun setUpAddActions() {
-        if (availableDeviceList.isNotEmpty()) {
-            addActionTextView.setOnClickListener {
+        addActionTextView.setOnClickListener {
+            if (availableDeviceList.isNotEmpty()) {
                 val arrayAdapter = ArrayAdapter<String>(this@CreateSceneActivity, android.R.layout.select_dialog_item)
                 availableDeviceList.forEach {
                     arrayAdapter.add(it.name)
@@ -323,9 +323,9 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
                     builder.create()
                 }
                 alertDialog.show()
+            } else {
+                Toast.makeText(this, getString(R.string.create_scene_no_device_available), Toast.LENGTH_LONG).show()
             }
-        } else {
-            Toast.makeText(this, getString(R.string.create_scene_no_device_available), Toast.LENGTH_LONG).show()
         }
     }
 
