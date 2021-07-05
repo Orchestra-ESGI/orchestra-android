@@ -463,17 +463,22 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
             val intent = Intent()
             if (deviceList.isNotEmpty()) {
                 if (isAutomatisation == true) {
-                    val automation = retrieveDataAutomation()
-                    if (automationNotEmpty(automation)) {
-                        if(automation._id == null) {
-                            sceneViewModel.saveAutomation(automation)
+                    val triggerDeviceList = deviceList.filter { device -> triggerableDeviceTypeList.contains(device.type) }
+                    if (triggerDeviceList.isNotEmpty()) {
+                        val automation = retrieveDataAutomation()
+                        if (automationNotEmpty(automation)) {
+                            if(automation._id == null) {
+                                sceneViewModel.saveAutomation(automation)
+                            } else {
+                                sceneViewModel.updateAutomation(automation)
+                            }
+                            setResult(RESULT_OK, intent)
+                            finish()
                         } else {
-                            sceneViewModel.updateAutomation(automation)
+                            Toast.makeText(this, getString(R.string.create_scene_missing_information_toast), Toast.LENGTH_SHORT).show()
                         }
-                        setResult(RESULT_OK, intent)
-                        finish()
                     } else {
-                        Toast.makeText(this, getString(R.string.create_scene_missing_information_toast), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.cannot_create_automation), Toast.LENGTH_LONG).show()
                     }
                 } else {
                     val scene = retrieveDataScene()
