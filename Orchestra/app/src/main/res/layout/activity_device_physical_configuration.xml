@@ -13,7 +13,7 @@
         android:id="@+id/device_physical_configuration_title"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:text="@string/device_physical_configuration_title"
         android:layout_marginTop="20dp"/>
 
@@ -23,10 +23,19 @@
         android:id="@+id/device_physical_configuration_step_one"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:text="@string/device_physical_configuration_step_one"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginStart="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/device_physical_configuration_step_one_url"
+        android:textColor="@color/blue_pwd"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,10 +43,10 @@
         android:id="@+id/device_physical_configuration_step_two"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:text="@string/device_physical_configuration_step_two"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         />
 
     <ImageView
@@ -55,9 +64,9 @@
         android:id="@+id/device_physical_configuration_step_three"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:text="@string/device_physical_configuration_step_three"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginStart="10dp"/>
 
 </LinearLayout>

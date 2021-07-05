@@ -35,10 +35,6 @@ class SearchDeviceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_device)
 
-        deviceVM = ViewModelProviders.of(this).get(DeviceViewModel::class.java)
-        deviceVM.context = this
-        deviceData = intent.getSerializableExtra("CreatedScene") as? HubAccessoryConfiguration
-
         bind()
         setUpViews()
         setOnClickListenerReturnHome()
@@ -53,33 +49,19 @@ class SearchDeviceActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpViews() {
-        if(isSuccessfulyAdded){
-            searchDeviceImageView.setImageResource(R.drawable.ic_check)
-            searchDeviceTitleTextView.text = getString(R.string.search_device_success_title)
-            searchDeviceTitleTextView.setTextColor(colorSuccess)
-            searchDeviceDescriptionTextView.text = getString(R.string.search_device_success_description)
-            returnHomeButton.text = getString(R.string.search_device_success_btn)
-            returnHomeButton.setBackgroundColor(colorSuccess)
-        }else{
-            searchDeviceImageView.setImageResource(R.drawable.ic_cancel)
-            searchDeviceTitleTextView.text = getString(R.string.search_device_error_title)
-            searchDeviceTitleTextView.setTextColor(colorError)
-            searchDeviceDescriptionTextView.text = getString(R.string.search_device_error_description)
-            returnHomeButton.text = getString(R.string.search_device_error_btn)
-            returnHomeButton.setBackgroundColor(colorError)
-        }
+        searchDeviceImageView.setImageResource(R.drawable.ic_check)
+        searchDeviceTitleTextView.text = getString(R.string.search_device_success_title)
+        searchDeviceTitleTextView.setTextColor(colorSuccess)
+        searchDeviceDescriptionTextView.text = getString(R.string.search_device_success_description)
+        returnHomeButton.text = getString(R.string.search_device_success_btn)
+        returnHomeButton.setBackgroundColor(colorSuccess)
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setOnClickListenerReturnHome() {
         returnHomeButton.setOnClickListener {
-            if(isSuccessfulyAdded){
-                deviceVM!!.saveDevice(deviceData!!)
-                startActivity(Intent(applicationContext, HomeActivity::class.java))
-            }else{
-                isSuccessfulyAdded = true
-                setUpViews()
-            }
+            startActivity(Intent(applicationContext, HomeActivity::class.java))
         }
     }
 

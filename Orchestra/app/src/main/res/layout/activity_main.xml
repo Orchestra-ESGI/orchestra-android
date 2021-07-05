@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
-        android:src="@mipmap/ic_orchestra"/>
+        android:src="@drawable/ic_orchestra"/>
 
     <TextView
         android:id="@+id/splashscreen_tv"

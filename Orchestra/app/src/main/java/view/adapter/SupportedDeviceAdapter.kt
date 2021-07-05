@@ -19,7 +19,9 @@ import core.rest.model.ActionScene
 import core.rest.model.SupportedDeviceInformations
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import view.ui.CreateDeviceActivity
+import view.ui.DevicePhysicalConfigurationActivity
 import view.ui.HomeActivity
+import view.ui.SearchDeviceActivity
 import viewModel.DeviceViewModel
 import viewModel.HomeViewModel
 
@@ -72,24 +74,18 @@ class SupportedDeviceAdapter : RecyclerView.Adapter<SupportedDeviceAdapter.Suppo
             Glide.with(itemView).load(supportedDevice.image).apply(options).into(supportedDeviceImage)
 
             itemView.setOnClickListener {
-                val intent = Intent(itemView.context, CreateDeviceActivity::class.java)
-                intent.putExtra("SupportedDevice", supportedDevice)
-                intent.putExtra("device", device)
-                intent.putExtra("brand", brand)
-                if(device == null) {
-                    if(supportedDevice.documentation == null) {
-                        val builder = AlertDialog.Builder(itemView.context)
-                        builder.setTitle(itemView.context.getString(R.string.supported_device_reset_device_title))
-                        builder.setMessage(itemView.context.getString(R.string.supported_device_reset_device_message))
-                        builder.setPositiveButton(itemView.context.getString(R.string.supported_device_reset_device_button)) { dialog, which ->
-                            deviceVM!!.resetDevice()
-                            itemView.context.startActivity(Intent(itemView.context, HomeActivity::class.java))
-                        }
-                        builder.show()
-                    } else {
-                        itemView.context.startActivity(intent)
+                if(supportedDevice.documentation == null) {
+                    val builder = AlertDialog.Builder(itemView.context)
+                    builder.setTitle(itemView.context.getString(R.string.supported_device_reset_device_title))
+                    builder.setMessage(itemView.context.getString(R.string.supported_device_reset_device_message))
+                    builder.setPositiveButton(itemView.context.getString(R.string.supported_device_reset_device_button)) { dialog, which ->
+                        deviceVM!!.resetDevice()
+                        itemView.context.startActivity(Intent(itemView.context, HomeActivity::class.java))
                     }
+                    builder.show()
                 } else {
+                    val intent = Intent(itemView.context, DevicePhysicalConfigurationActivity::class.java)
+                    intent.putExtra("SupportedDevice", supportedDevice)
                     itemView.context.startActivity(intent)
                 }
             }

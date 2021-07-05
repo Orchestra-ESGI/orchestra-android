@@ -11,6 +11,13 @@ class WebViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_web_view)
 
         val myWebView: WebView = findViewById(R.id.webview)
-        myWebView.loadUrl("https://www.google.fr")
+
+        val url = intent.getStringExtra("URL")
+
+        if(url != null) {
+            myWebView.loadUrl(url)
+        } else {
+            myWebView.loadUrl("https://www.google.fr")
+        }
     }
 }

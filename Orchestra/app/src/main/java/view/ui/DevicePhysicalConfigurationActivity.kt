@@ -5,18 +5,34 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import com.example.orchestra.R
+import core.rest.model.SupportedDeviceInformations
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import view.adapter.SupportedDeviceAdapter
 
 class DevicePhysicalConfigurationActivity : AppCompatActivity() {
 
-    var hubAccessoryConfiguration : HubAccessoryConfiguration? = null
+    private lateinit var devicePhysicalConfigurationUrl : TextView
+
+    var supportedDevice : SupportedDeviceInformations? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_device_physical_configuration)
+        devicePhysicalConfigurationUrl = findViewById(R.id.device_physical_configuration_step_one_url)
 
-        hubAccessoryConfiguration = intent.getSerializableExtra("CreatedScene") as? HubAccessoryConfiguration
+        supportedDevice = intent.getSerializableExtra("SupportedDevice") as? SupportedDeviceInformations
+
+        if (supportedDevice != null) {
+            devicePhysicalConfigurationUrl.text = supportedDevice!!.documentation
+
+            devicePhysicalConfigurationUrl.setOnClickListener {
+                val webViewIntent = Intent(this, WebViewActivity::class.java)
+                webViewIntent.putExtra("URL", supportedDevice!!.documentation)
+                startActivity(webViewIntent)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -28,7 +44,6 @@ class DevicePhysicalConfigurationActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.create_account_continue_btn -> {
             val intent = Intent(applicationContext, SearchDeviceActivity::class.java)
-            intent.putExtra("CreatedScene", hubAccessoryConfiguration)
             startActivity(intent)
             true
         }
