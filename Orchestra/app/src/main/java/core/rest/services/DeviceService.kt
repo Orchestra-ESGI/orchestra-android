@@ -19,13 +19,13 @@ interface DeviceService {
     fun sendDeviceAction(@Body actionsToSet: ActionsToSet) : Call<ListHubAccessoryConfiguration>
 
     @POST("device/reset")
-    fun resetDevice() : Call<HubAccessoryConfiguration>
+    fun resetDevice() : Call<Device>
 
     @PATCH("device")
-    fun saveDevice(@Body device: HubAccessoryConfiguration): Call<HubAccessoryConfiguration>
+    fun saveDevice(@Body device: Device): Call<Device>
 
     @HTTP(method = "DELETE", path = "/device", hasBody = true)
-    fun deleteDevices(@Body friendly_name: ListHubAccessoryConfigurationToDelete): Call<ListHubAccessoryConfigurationToDelete>
+    fun deleteDevices(@Body friendly_name: HashMap<String, List<String>>): Call<HashMap<String, Any>>
 
     @GET("room/all")
     fun getAllRooms() : Call<ListRoom>

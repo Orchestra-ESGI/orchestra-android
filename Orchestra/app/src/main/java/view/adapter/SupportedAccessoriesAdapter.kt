@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.SupportedAccessories
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.Device
 import view.ui.SupportedDeviceListActivity
 
 class SupportedAccessoriesAdapter :
@@ -21,7 +21,7 @@ class SupportedAccessoriesAdapter :
             notifyDataSetChanged()
         }
 
-    var device: HubAccessoryConfiguration? = null
+    var device: Device? = null
         set(value) {
         field = value
             notifyDataSetChanged()
@@ -38,7 +38,7 @@ class SupportedAccessoriesAdapter :
     class SupportedDeviceTypeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val supportedDeviceTitle = itemView.findViewById<TextView>(R.id.cell_supported_device_type_tv)
 
-        fun bind(supportedAccessories : SupportedAccessories, device : HubAccessoryConfiguration?) {
+        fun bind(supportedAccessories : SupportedAccessories, device : Device?) {
             supportedDeviceTitle.text = supportedAccessories.brand
 
             itemView.setOnClickListener {

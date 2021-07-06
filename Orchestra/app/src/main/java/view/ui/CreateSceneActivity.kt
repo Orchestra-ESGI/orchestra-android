@@ -18,13 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.*
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.Device
 import core.rest.model.hubConfiguration.HubAccessoryType
 import utils.OnActionClicked
 import utils.OnActionLongClicked
 import utils.OnItemClicked
 import view.adapter.CreateSceneActionsAdapter
-import view.adapter.ShuffleColorAdapter
 import viewModel.SceneViewModel
 import kotlin.random.Random
 
@@ -49,12 +48,12 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
 
     private lateinit var sceneColorsHashMap : MutableMap<Int, Boolean>
     private lateinit var sceneColors : ArrayList<Int>
-    private var actionList : ArrayList<HubAccessoryConfiguration>  = ArrayList()
+    private var actionList : ArrayList<Device>  = ArrayList()
 
     private lateinit var sceneViewModel : SceneViewModel
 
-    private var deviceList : ArrayList<HubAccessoryConfiguration> = ArrayList()
-    private var availableDeviceList : ArrayList<HubAccessoryConfiguration> = ArrayList()
+    private var deviceList : ArrayList<Device> = ArrayList()
+    private var availableDeviceList : ArrayList<Device> = ArrayList()
 
     private val triggerableDeviceTypeList = listOf(
             HubAccessoryType.occupancy,
@@ -117,10 +116,10 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         automationDetail = intent.getSerializableExtra("automation") as? Automation
         isAutomatisation = intent.getSerializableExtra("isAutomatisation") as? Boolean
         deviceList = if(sceneDetail != null || automationDetail != null) {
-            intent.getSerializableExtra("deviceList") as ArrayList<HubAccessoryConfiguration>
+            intent.getSerializableExtra("deviceList") as ArrayList<Device>
         } else {
             val args = intent.getBundleExtra("BUNDLE")
-            args!!.getSerializable("ARRAYLIST") as ArrayList<HubAccessoryConfiguration>
+            args!!.getSerializable("ARRAYLIST") as ArrayList<Device>
         }
 
         deviceList.filter { device -> !triggerableDeviceTypeList.contains(device.type) }.forEach {
@@ -184,7 +183,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
             triggerOperatorSpinner.adapter = arrayAdapterOperator
 
 
-            val deviceSelected : HubAccessoryConfiguration? = if (automationDetail != null) {
+            val deviceSelected : Device? = if (automationDetail != null) {
                 triggerDeviceList.firstOrNull { device -> device.friendly_name == automationDetail!!.trigger.friendly_name }
             } else {
                 val deviceSelectedIndex = triggerDeviceSpinner.selectedItemPosition
@@ -310,15 +309,15 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         }
     }
 
-    private fun addSection(device: HubAccessoryConfiguration) {
+    private fun addSection(device: Device) {
             actionList.add(device)
             availableDeviceList.remove(device)
-            actionList.add(HubAccessoryConfiguration())
+            actionList.add(Device())
             listActionAdapter.notifyDataSetChanged()
             listActionRecyclerView.adapter!!.notifyDataSetChanged()
     }
 
-    private fun addAction(device: HubAccessoryConfiguration, position: Int) {
+    private fun addAction(device: Device, position: Int) {
         actionList.add(position, device)
         listActionAdapter.notifyDataSetChanged()
         listActionRecyclerView.adapter!!.notifyDataSetChanged()
@@ -482,7 +481,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
 
     override fun actionClicked(action: SceneActionsName, position: Int) {
         val actions = Actions(null, null, null, null)
-        val device = HubAccessoryConfiguration(actions = actions)
+        val device = Device(actions = actions)
         when(action.type) {
             "state" -> {
                 when (action.value) {
@@ -513,8 +512,8 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         addAction(device, position)
     }
 
-    private fun formatActionsToHubAccessoryConfiguration(listOfSceneDevices : List<ActionsToSet>?) : ArrayList<HubAccessoryConfiguration>{
-        val listOfDeviceFormatted : ArrayList<HubAccessoryConfiguration> = ArrayList()
+    private fun formatActionsToHubAccessoryConfiguration(listOfSceneDevices : List<ActionsToSet>?) : ArrayList<Device>{
+        val listOfDeviceFormatted : ArrayList<Device> = ArrayList()
 
         listOfSceneDevices?.forEach {
             val section = deviceList.first { device -> device.friendly_name == it.friendly_name }
@@ -527,23 +526,23 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
                     "off" -> state = DeviceState.off
                     "toggle" -> state = DeviceState.toggle
                 }
-                listOfDeviceFormatted.add(HubAccessoryConfiguration(actions = Actions(state = state)))
+                listOfDeviceFormatted.add(Device(actions = Actions(state = state)))
             }
             if (it.actions?.brightness != null) {
-                listOfDeviceFormatted.add(HubAccessoryConfiguration(actions = Actions(brightness = SliderAction(current_state = it.actions!!.brightness!!))))
+                listOfDeviceFormatted.add(Device(actions = Actions(brightness = SliderAction(current_state = it.actions!!.brightness!!))))
             }
             if (it.actions?.color != null) {
-                listOfDeviceFormatted.add(HubAccessoryConfiguration(actions = Actions(color = it.actions!!.color)))
+                listOfDeviceFormatted.add(Device(actions = Actions(color = it.actions!!.color)))
             }
             if (it.actions?.color_temp != null) {
-                listOfDeviceFormatted.add(HubAccessoryConfiguration(actions = Actions(color_temp = SliderAction(current_state = it.actions!!.color_temp!!))))
+                listOfDeviceFormatted.add(Device(actions = Actions(color_temp = SliderAction(current_state = it.actions!!.color_temp!!))))
             }
-            listOfDeviceFormatted.add(HubAccessoryConfiguration())
+            listOfDeviceFormatted.add(Device())
         }
         return listOfDeviceFormatted
     }
 
-    override fun actionLongClicked(device: HubAccessoryConfiguration, position: Int, isAction: Boolean) {
+    override fun actionLongClicked(device: Device, position: Int, isAction: Boolean) {
         if(isAction) {
             actionList.removeAt(position)
             listActionAdapter.notifyDataSetChanged()

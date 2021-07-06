@@ -3,31 +3,24 @@ package view.adapter
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
-import android.provider.Settings.Global.getString
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
-import core.rest.model.Device
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.Device
 import core.rest.model.hubConfiguration.HubAccessoryType
-import core.rest.model.hubConfiguration.ListHubAccessoryConfigurationToDelete
 import view.ui.DetailDeviceActivity
-import view.ui.HomeActivity
-import viewModel.DeviceViewModel
 import viewModel.HomeViewModel
 
 
 class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
 
-    var deviceList: List<HubAccessoryConfiguration>? = null
+    var deviceList: List<Device>? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -48,7 +41,7 @@ class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
         private val objectRoom = itemView.findViewById<TextView>(R.id.cell_object_room_tv)
         private val objectStatus = itemView.findViewById<TextView>(R.id.cell_object_stat_tv)
 
-        fun bind(device: HubAccessoryConfiguration, homeVM : HomeViewModel?) {
+        fun bind(device: Device, homeVM : HomeViewModel?) {
             when(device.type) {
                 HubAccessoryType.lightbulb -> objectIcon.setImageResource(R.drawable.ic_lightbulb)
                 HubAccessoryType.switch -> objectIcon.setImageResource(R.drawable.ic_switch)
@@ -87,7 +80,9 @@ class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
                 builder.setMessage(R.string.home_device_delete_message)
                 builder.setPositiveButton(R.string.home_device_delete_button) { dialog, which ->
                     if(homeVM != null) {
-                        homeVM!!.deleteDevices(ListHubAccessoryConfigurationToDelete(listOf(device.friendly_name!!)))
+                        val friendlyNameToDelete : HashMap<String, List<String>> = HashMap()
+                        friendlyNameToDelete["friendly_names"] = listOf(device.friendly_name!!)
+                        homeVM.deleteDevices(friendlyNameToDelete)
                     }
                 }
                 builder.show()

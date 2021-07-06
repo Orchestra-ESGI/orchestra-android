@@ -9,10 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.ViewModelProviders
 import com.example.orchestra.R
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
-import viewModel.DeviceViewModel
 
 class SearchDeviceActivity : AppCompatActivity() {
 

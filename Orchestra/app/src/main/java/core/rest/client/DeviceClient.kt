@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object DeviceClient {
     private var deviceServices: DeviceService? = getApi()
     var supportedDevices: MutableLiveData<List<SupportedAccessories>> = MutableLiveData()
-    var deviceList: MutableLiveData<List<HubAccessoryConfiguration>> = MutableLiveData()
+    var deviceList: MutableLiveData<List<Device>> = MutableLiveData()
     var roomList: MutableLiveData<List<Room>> = MutableLiveData()
 
     private fun getApi(context: Context? = null): DeviceService? {
@@ -108,49 +108,51 @@ object DeviceClient {
     }
 
     fun resetDevice(context: Context) {
-        getApi(context)?.resetDevice()?.enqueue(object : Callback<HubAccessoryConfiguration> {
+        getApi(context)?.resetDevice()?.enqueue(object : Callback<Device> {
             override fun onResponse(
-                call: Call<HubAccessoryConfiguration>,
-                response: Response<HubAccessoryConfiguration>
+                    call: Call<Device>,
+                    response: Response<Device>
             ) {
                 if (!response.isSuccessful) {
                     RootApiService.handleError(context, response.code())
                 }
             }
 
-            override fun onFailure(call: Call<HubAccessoryConfiguration>, t: Throwable) {
+            override fun onFailure(call: Call<Device>, t: Throwable) {
                 RootApiService.handleError(context, 500)
             }
         })
     }
 
-    fun saveDevice(device : HubAccessoryConfiguration, context: Context) {
-        getApi(context)?.saveDevice(device)?.enqueue(object : Callback<HubAccessoryConfiguration> {
+    fun saveDevice(device : Device, context: Context) {
+        getApi(context)?.saveDevice(device)?.enqueue(object : Callback<Device> {
             override fun onResponse(
-                    call: Call<HubAccessoryConfiguration>,
-                    response: Response<HubAccessoryConfiguration>
+                    call: Call<Device>,
+                    response: Response<Device>
             ) {
                 if(!response.isSuccessful) {
                     RootApiService.handleError(context, response.code())
                 }
             }
 
-            override fun onFailure(call: Call<HubAccessoryConfiguration>, t: Throwable) {
+            override fun onFailure(call: Call<Device>, t: Throwable) {
                 RootApiService.handleError(context, 500)
             }
         })
     }
 
-    fun deleteDevices(device : ListHubAccessoryConfigurationToDelete, context: Context) {
-        getApi(context)?.deleteDevices(device)?.enqueue(object : Callback<ListHubAccessoryConfigurationToDelete> {
+    fun deleteDevices(device : HashMap<String, List<String>>, context: Context) {
+        getApi(context)?.deleteDevices(device)?.enqueue(object : Callback<HashMap<String, Any>> {
             override fun onResponse(
-                    call: Call<ListHubAccessoryConfigurationToDelete>,
-                    response: Response<ListHubAccessoryConfigurationToDelete>
+                    call: Call<HashMap<String, Any>>,
+                    response: Response<HashMap<String, Any>>
             ) {
-                RootApiService.handleError(context, response.code())
+                if (!response.isSuccessful) {
+                    RootApiService.handleError(context, response.code())
+                }
             }
 
-            override fun onFailure(call: Call<ListHubAccessoryConfigurationToDelete>, t: Throwable) {
+            override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
                 RootApiService.handleError(context, 500)
             }
         })

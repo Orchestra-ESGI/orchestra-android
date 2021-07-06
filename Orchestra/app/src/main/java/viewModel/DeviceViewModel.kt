@@ -1,18 +1,16 @@
 package viewModel
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import core.rest.client.DeviceClient
 import core.rest.model.*
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
-import core.rest.model.hubConfiguration.ListHubAccessoryConfigurationToDelete
+import core.rest.model.hubConfiguration.Device
 
 class DeviceViewModel : ViewModel() {
     lateinit var context : AppCompatActivity
-    var deviceList : MutableLiveData<List<HubAccessoryConfiguration>> = MutableLiveData()
+    var deviceList : MutableLiveData<List<Device>> = MutableLiveData()
     var supportedAccessorieList : MutableLiveData<List<SupportedAccessories>> = MutableLiveData()
     var roomList : MutableLiveData<List<Room>> = MutableLiveData()
     val deviceService = DeviceClient
@@ -31,7 +29,7 @@ class DeviceViewModel : ViewModel() {
         deviceService.getSupportedAccessories(context)
     }
 
-    fun saveDevice(device : HubAccessoryConfiguration) {
+    fun saveDevice(device : Device) {
         deviceService.saveDevice(device, context)
     }
 
@@ -43,7 +41,7 @@ class DeviceViewModel : ViewModel() {
         deviceService.sendDeviceAction(actions, context)
     }
 
-    fun deleteDevices(friendlyName : ListHubAccessoryConfigurationToDelete) {
+    fun deleteDevices(friendlyName : HashMap<String, List<String>>) {
         deviceService.deleteDevices(friendlyName, context)
     }
 

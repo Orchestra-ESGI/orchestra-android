@@ -2,10 +2,6 @@ package core.rest.model
 
 import java.io.Serializable
 
-class ActionScene (
-        var title: String = ""
-        ) : Serializable
-
 class SliderAction (
         var min_val: Int = 0,
         var max_val: Int = 0,
@@ -35,8 +31,6 @@ data class Actions (
         var color: ColorAction? = null,
         var color_temp: SliderAction? = null
         ) : Serializable
-
-
 
 enum class DeviceState {
         toggle,

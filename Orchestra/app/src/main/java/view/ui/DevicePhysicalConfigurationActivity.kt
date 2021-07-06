@@ -8,8 +8,6 @@ import android.view.MenuItem
 import android.widget.TextView
 import com.example.orchestra.R
 import core.rest.model.SupportedDeviceInformations
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
-import view.adapter.SupportedDeviceAdapter
 
 class DevicePhysicalConfigurationActivity : AppCompatActivity() {
 

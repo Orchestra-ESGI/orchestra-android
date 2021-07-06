@@ -15,7 +15,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.SceneActionsName
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.Device
 import core.utils.ColorPicker
 import utils.OnActionClicked
 import utils.OnActionLongClicked
@@ -32,7 +32,7 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
     private val itemClickListener: OnActionClicked = onActionClicked
     private val itemLongClickListener: OnActionLongClicked = onActionLongClicked
 
-    var detailSceneActions: ArrayList<HubAccessoryConfiguration>? = null
+    var detailSceneActions: ArrayList<Device>? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -90,7 +90,7 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
         private val actionTv = itemView.findViewById<TextView>(R.id.cell_detail_scene_action_name)
         private val actionIv = itemView.findViewById<ImageView>(R.id.cell_detail_scene_action_iv)
 
-        fun bind(action : HubAccessoryConfiguration, position : Int, usedActionTypes : List<HubAccessoryConfiguration>, actionsName : ArrayList<SceneActionsName>?, listener : OnActionClicked, longClicked: OnActionLongClicked) {
+        fun bind(action : Device, position : Int, usedActionTypes : List<Device>, actionsName : ArrayList<SceneActionsName>?, listener : OnActionClicked, longClicked: OnActionLongClicked) {
             actionIv.visibility = View.GONE
             if(action.actions == null && action.friendly_name == null) {
                 actionTv.text = itemView.context.getString(R.string.create_scene_add_action)
@@ -214,7 +214,7 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
     class DetailSceneDevicesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val actionTv = itemView.findViewById<TextView>(R.id.cell_detail_scene_device_name)
 
-        fun bind(action : HubAccessoryConfiguration, position: Int, itemLongClickListener: OnActionLongClicked) {
+        fun bind(action : Device, position: Int, itemLongClickListener: OnActionLongClicked) {
             actionTv.text = action.name
 
             itemView.setOnLongClickListener {
@@ -234,7 +234,7 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
         }
     }
 
-    private fun parseDeviceActionToGetName(device: HubAccessoryConfiguration, deviceAction: HubAccessoryConfiguration, context: Context) : ArrayList<SceneActionsName> {
+    private fun parseDeviceActionToGetName(device: Device, deviceAction: Device, context: Context) : ArrayList<SceneActionsName> {
         var actions: ArrayList<String>
         var values: ArrayList<String>
         var actionsName = ArrayList<SceneActionsName>()
@@ -285,7 +285,7 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
         return actionsName
     }
 
-    private fun getSectionTypeViaElementPosition(position: Int) : HubAccessoryConfiguration? {
+    private fun getSectionTypeViaElementPosition(position: Int) : Device? {
         for (i in (detailSceneActions!!.size - 1) downTo 0 step 1) {
             if(detailSceneActions!![i].friendly_name != null) {
                 if(i <= position) {
@@ -296,8 +296,8 @@ class CreateSceneActionsAdapter(onActionClicked: OnActionClicked, onActionLongCl
         return null
     }
 
-    private fun getAlreadySelectedActionTypesForDevice(position: Int) : List<HubAccessoryConfiguration> {
-        var listActions : ArrayList<HubAccessoryConfiguration> = ArrayList()
+    private fun getAlreadySelectedActionTypesForDevice(position: Int) : List<Device> {
+        var listActions : ArrayList<Device> = ArrayList()
         for (i in position downTo 0 step 1) {
             if(detailSceneActions!![i].friendly_name == null) {
                 listActions.add(detailSceneActions!![i])

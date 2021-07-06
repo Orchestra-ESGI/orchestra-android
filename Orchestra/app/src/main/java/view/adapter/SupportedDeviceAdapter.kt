@@ -1,29 +1,21 @@
 package view.adapter
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.orchestra.R
-import core.rest.model.ActionScene
 import core.rest.model.SupportedDeviceInformations
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
-import view.ui.CreateDeviceActivity
+import core.rest.model.hubConfiguration.Device
 import view.ui.DevicePhysicalConfigurationActivity
 import view.ui.HomeActivity
-import view.ui.SearchDeviceActivity
 import viewModel.DeviceViewModel
-import viewModel.HomeViewModel
 
 
 class SupportedDeviceAdapter : RecyclerView.Adapter<SupportedDeviceAdapter.SupportedDeviceViewHolder>(){
@@ -33,7 +25,7 @@ class SupportedDeviceAdapter : RecyclerView.Adapter<SupportedDeviceAdapter.Suppo
             notifyDataSetChanged()
         }
 
-    var device: HubAccessoryConfiguration? = null
+    var device: Device? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -63,7 +55,7 @@ class SupportedDeviceAdapter : RecyclerView.Adapter<SupportedDeviceAdapter.Suppo
         private val supportedDeviceTitle = itemView.findViewById<TextView>(R.id.cell_supported_device_tv)
         private val supportedDeviceImage = itemView.findViewById<ImageView>(R.id.cell_supported_device_iv)
 
-        fun bind(supportedDevice: SupportedDeviceInformations, device : HubAccessoryConfiguration?, brand : String?, deviceVM: DeviceViewModel?) {
+        fun bind(supportedDevice: SupportedDeviceInformations, device : Device?, brand : String?, deviceVM: DeviceViewModel?) {
             supportedDeviceTitle.text = supportedDevice.name
 
             val options: RequestOptions = RequestOptions()

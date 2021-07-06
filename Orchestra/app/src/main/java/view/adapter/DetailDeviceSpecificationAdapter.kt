@@ -10,7 +10,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
-import core.rest.model.Device
 import java.util.*
 import kotlin.collections.HashMap
 

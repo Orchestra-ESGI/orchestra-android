@@ -1,30 +1,21 @@
 package view.ui
 
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.Actions
 import core.rest.model.Room
 import core.rest.model.SupportedDeviceInformations
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.Device
 import core.rest.model.hubConfiguration.HubAccessoryType
-import utils.OnItemClicked
-import view.adapter.ShuffleColorAdapter
 import viewModel.DeviceViewModel
-import kotlin.random.Random
 
 
 class CreateDeviceActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -34,7 +25,7 @@ class CreateDeviceActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
     private lateinit var whichRoomTitleTextView: TextView
     private lateinit var roomSpinner: Spinner
 
-    private var device : HubAccessoryConfiguration? = null
+    private var device : Device? = null
     private var supportedDevice : SupportedDeviceInformations? = null
     private var brand : String? = null
     private var roomList : List<Room> = ArrayList()
@@ -54,7 +45,7 @@ class CreateDeviceActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
     }
 
     private fun getIntentInfos() {
-        device = intent.getSerializableExtra("device") as? HubAccessoryConfiguration
+        device = intent.getSerializableExtra("device") as? Device
         supportedDevice = intent.getSerializableExtra("SupportedDevice") as? SupportedDeviceInformations
         brand = intent.getStringExtra("brand")
 
@@ -106,7 +97,7 @@ class CreateDeviceActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         return true
     }
 
-    private fun retrieveData() : HubAccessoryConfiguration {
+    private fun retrieveData() : Device {
         val name = nameEditText.text.toString()
         val type : HubAccessoryType?
 
@@ -128,7 +119,7 @@ class CreateDeviceActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
         val id = if(device == null) null else device!!._id
         val friendlyName = if(device == null) null else device!!.friendly_name
 
-        return HubAccessoryConfiguration(id, name, room, null, brand, supportedDevice?.model, null, null, type, Actions(null, null, null, null), friendlyName)
+        return Device(id, name, room, null, brand, supportedDevice?.model, null, null, type, Actions(null, null, null, null), friendlyName)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {

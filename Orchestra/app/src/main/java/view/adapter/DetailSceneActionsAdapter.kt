@@ -2,7 +2,6 @@ package view.adapter
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.SceneActionsName
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.Device
 import java.util.ArrayList
 
 class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
@@ -25,13 +24,13 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
     private lateinit var layoutInflater: LayoutInflater
 
-    var availableDeviceList : ArrayList<HubAccessoryConfiguration>? = null
+    var availableDeviceList : ArrayList<Device>? = null
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    var detailSceneActions: ArrayList<HubAccessoryConfiguration>? = null
+    var detailSceneActions: ArrayList<Device>? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -90,7 +89,7 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     class DetailDeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val deviceName = itemView.findViewById<TextView>(R.id.cell_detail_scene_device_name)
 
-        fun bind(device : HubAccessoryConfiguration) {
+        fun bind(device : Device) {
             if(device.friendly_name != null) {
                 deviceName.text = device.name
             } else {
@@ -103,7 +102,7 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         private val actionName = itemView.findViewById<TextView>(R.id.cell_detail_scene_action_name)
         private val actionIv = itemView.findViewById<ImageView>(R.id.cell_detail_scene_action_iv)
 
-        fun bind(device: HubAccessoryConfiguration, actionsName: ArrayList<SceneActionsName>, position: Int) {
+        fun bind(device: Device, actionsName: ArrayList<SceneActionsName>, position: Int) {
             var name : String?
             actionIv.visibility = View.GONE
 
@@ -135,7 +134,7 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         }
     }
 
-    private fun getListSceneDeviceName(deviceAction: HubAccessoryConfiguration, deviceParent: HubAccessoryConfiguration?, context: Context) : ArrayList<SceneActionsName> {
+    private fun getListSceneDeviceName(deviceAction: Device, deviceParent: Device?, context: Context) : ArrayList<SceneActionsName> {
         var actions: ArrayList<String>
         var values: ArrayList<String>
         var actionsName = ArrayList<SceneActionsName>()
@@ -187,7 +186,7 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     }
 
 
-    private fun getSectionTypeViaElementPosition(position: Int) : HubAccessoryConfiguration? {
+    private fun getSectionTypeViaElementPosition(position: Int) : Device? {
         for (i in (detailSceneActions!!.size - 1) downTo 0 step 1) {
             if(detailSceneActions!![i].friendly_name != null) {
                 if(i <= position) {
@@ -198,7 +197,7 @@ class DetailSceneActionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         return null
     }
 
-    private fun getDeviceParent(friendlyName : String) : HubAccessoryConfiguration? {
+    private fun getDeviceParent(friendlyName : String) : Device? {
         return availableDeviceList?.firstOrNull { device -> device.friendly_name == friendlyName }
     }
 }

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.*
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.Device
 import view.adapter.DetailSceneActionsAdapter
 
 class DetailSceneActivity : AppCompatActivity() {
@@ -26,7 +26,7 @@ class DetailSceneActivity : AppCompatActivity() {
 
     private var sceneDetail : Scene? = null
     private var automationDetail : Automation? = null
-    private var listDevice : ArrayList<HubAccessoryConfiguration>? = null
+    private var listDevice : ArrayList<Device>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +52,7 @@ class DetailSceneActivity : AppCompatActivity() {
         sceneDetail = intent.getSerializableExtra("DetailScene") as? Scene
         automationDetail = intent.getSerializableExtra("DetailAutomation") as? Automation
         val args = intent.getBundleExtra("BUNDLE")
-        listDevice = args!!.getSerializable("ARRAYLIST") as ArrayList<HubAccessoryConfiguration>
+        listDevice = args!!.getSerializable("ARRAYLIST") as ArrayList<Device>
     }
 
     private fun setupSceneView() {
@@ -93,12 +93,12 @@ class DetailSceneActivity : AppCompatActivity() {
         deviceSceneRecyclerView.adapter = detailSceneAdapter
     }
 
-    private fun formatSceneToDetailSceneActions(listOfSceneDevices : List<ActionsToSet>, listDevice : ArrayList<HubAccessoryConfiguration>) : ArrayList<HubAccessoryConfiguration> {
-        var listOfDeviceFormatted : ArrayList<HubAccessoryConfiguration> = ArrayList()
+    private fun formatSceneToDetailSceneActions(listOfSceneDevices : List<ActionsToSet>, listDevice : ArrayList<Device>) : ArrayList<Device> {
+        var listOfDeviceFormatted : ArrayList<Device> = ArrayList()
 
         listOfSceneDevices.forEach {
             val deviceName = listDevice.first { device -> device.friendly_name == it.friendly_name }
-            val section = (HubAccessoryConfiguration(friendly_name = deviceName.friendly_name, name = deviceName.name))
+            val section = (Device(friendly_name = deviceName.friendly_name, name = deviceName.name))
             listOfDeviceFormatted.add(section)
             if (it.actions?.state != null) {
                 var state : DeviceState? = null
@@ -107,16 +107,16 @@ class DetailSceneActivity : AppCompatActivity() {
                     "off" -> state = DeviceState.off
                     "toggle" -> state = DeviceState.toggle
                 }
-                listOfDeviceFormatted.add(HubAccessoryConfiguration(actions = Actions(state = state)))
+                listOfDeviceFormatted.add(Device(actions = Actions(state = state)))
             }
             if (it.actions?.brightness != null) {
-                listOfDeviceFormatted.add(HubAccessoryConfiguration(actions = Actions(brightness = SliderAction(current_state = it.actions!!.brightness!!))))
+                listOfDeviceFormatted.add(Device(actions = Actions(brightness = SliderAction(current_state = it.actions!!.brightness!!))))
             }
             if (it.actions?.color != null) {
-                listOfDeviceFormatted.add(HubAccessoryConfiguration(actions = Actions(color = it.actions!!.color)))
+                listOfDeviceFormatted.add(Device(actions = Actions(color = it.actions!!.color)))
             }
             if (it.actions?.color_temp != null) {
-                listOfDeviceFormatted.add(HubAccessoryConfiguration(actions = Actions(color_temp = SliderAction(current_state = it.actions!!.color_temp!!))))
+                listOfDeviceFormatted.add(Device(actions = Actions(color_temp = SliderAction(current_state = it.actions!!.color_temp!!))))
             }
         }
         return listOfDeviceFormatted

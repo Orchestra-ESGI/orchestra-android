@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.SupportedDeviceInformations
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.Device
 import view.adapter.SupportedDeviceAdapter
 import viewModel.DeviceViewModel
 
@@ -26,7 +26,7 @@ class SupportedDeviceListActivity : AppCompatActivity() {
         deviceVM.context = this
 
         val brand = intent.getStringExtra("brand")
-        val device = intent.getSerializableExtra("device") as? HubAccessoryConfiguration
+        val device = intent.getSerializableExtra("device") as? Device
 
         supportedDeviceListRecyclerView = findViewById(R.id.supported_device_rv)
         supportedDeviceListRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

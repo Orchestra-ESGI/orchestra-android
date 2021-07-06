@@ -27,7 +27,7 @@ import com.google.android.material.chip.ChipGroup
 import com.kaopiz.kprogresshud.KProgressHUD
 import core.rest.model.Automation
 import core.rest.model.Scene
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.Device
 import utils.OnActionListener
 import view.adapter.DeviceAdapter
 import view.adapter.AutomationAdapter
@@ -54,7 +54,7 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
     private lateinit var swipeRefreshLayout : SwipeRefreshLayout
     private lateinit var loader: KProgressHUD
 
-    private lateinit var deviceList : List<HubAccessoryConfiguration>
+    private lateinit var deviceList : List<Device>
     private lateinit var sceneList : List<Scene>
     private lateinit var automationList : List<Automation>
 

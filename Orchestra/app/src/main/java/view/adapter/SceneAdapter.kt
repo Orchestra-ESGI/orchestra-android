@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.ListSceneToDelete
 import core.rest.model.Scene
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.Device
 import view.ui.DetailSceneActivity
 import viewModel.HomeViewModel
 import java.io.Serializable
@@ -29,7 +28,7 @@ class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
             notifyDataSetChanged()
         }
 
-    var deviceList: List<HubAccessoryConfiguration>? = null
+    var deviceList: List<Device>? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -52,7 +51,7 @@ class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
     class SceneViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val sceneTitle = itemView.findViewById<TextView>(R.id.cell_scene_title_tv)
         private val sceneInfo = itemView.findViewById<ImageView>(R.id.cell_scene_info_iv)
-        fun bind(scene : Scene, homeVM : HomeViewModel?, deviceList : List<HubAccessoryConfiguration>?) {
+        fun bind(scene : Scene, homeVM : HomeViewModel?, deviceList : List<Device>?) {
             sceneTitle.text = scene.name
 
             val unwrappedDrawable = AppCompatResources.getDrawable(itemView.context, R.drawable.scene_list_item_shape)

@@ -14,7 +14,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.Automation
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.Device
 import utils.OnActionListener
 import view.ui.DetailSceneActivity
 import java.io.Serializable
@@ -27,7 +27,7 @@ class AutomationAdapter(clickListener: OnActionListener) : RecyclerView.Adapter<
             notifyDataSetChanged()
         }
 
-    var deviceList: List<HubAccessoryConfiguration>? = null
+    var deviceList: List<Device>? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -57,7 +57,7 @@ class AutomationAdapter(clickListener: OnActionListener) : RecyclerView.Adapter<
         private val automationIcon = itemView.findViewById<ImageView>(R.id.cell_scene_logo_iv)
         private val automationTitle = itemView.findViewById<TextView>(R.id.cell_scene_title_tv)
         private val automationInfo = itemView.findViewById<ImageView>(R.id.cell_scene_info_iv)
-        fun bind(automation: Automation, deviceList: List<HubAccessoryConfiguration>, listener: OnActionListener) {
+        fun bind(automation: Automation, deviceList: List<Device>, listener: OnActionListener) {
             automationTitle.text = automation.name
 
             val unwrappedDrawable = AppCompatResources.getDrawable(itemView.context, R.drawable.scene_list_item_shape)

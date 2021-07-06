@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.*
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
+import core.rest.model.hubConfiguration.Device
 import core.rest.model.hubConfiguration.HubAccessoryType
 import core.utils.ColorPicker
 import view.adapter.DetailDeviceSpecificationAdapter
@@ -51,7 +51,7 @@ class DetailDeviceActivity : AppCompatActivity() {
 
     private lateinit var deviceVM : DeviceViewModel
 
-    private var deviceDetail : HubAccessoryConfiguration? = null
+    private var deviceDetail : Device? = null
     private var actionToSend : ActionsToSet? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -60,7 +60,7 @@ class DetailDeviceActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail_device)
 
         bind()
-        deviceDetail = intent.getSerializableExtra("AccessoryDetail") as? HubAccessoryConfiguration
+        deviceDetail = intent.getSerializableExtra("AccessoryDetail") as? Device
         init()
 
         setupDeviceInfos()

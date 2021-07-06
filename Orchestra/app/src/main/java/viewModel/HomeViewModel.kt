@@ -5,14 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import core.rest.model.*
-import core.rest.model.hubConfiguration.HubAccessoryConfiguration
-import core.rest.model.hubConfiguration.ListHubAccessoryConfigurationToDelete
+import core.rest.model.hubConfiguration.Device
 
 class HomeViewModel: ViewModel() {
     lateinit var context : AppCompatActivity
     var deviceViewModel : DeviceViewModel? = null
     var sceneViewModel : SceneViewModel? = null
-    var deviceList : MutableLiveData<List<HubAccessoryConfiguration>> = MutableLiveData()
+    var deviceList : MutableLiveData<List<Device>> = MutableLiveData()
     var sceneList : MutableLiveData<List<Scene>> = MutableLiveData()
     var automationList : MutableLiveData<List<Automation>> = MutableLiveData()
     var roomList : MutableLiveData<List<Room>> = MutableLiveData()
@@ -54,7 +53,7 @@ class HomeViewModel: ViewModel() {
         sceneViewModel!!.launchAutomation(automationId)
     }
 
-    fun deleteDevices(friendlyName : ListHubAccessoryConfigurationToDelete) {
+    fun deleteDevices(friendlyName : HashMap<String, List<String>>) {
         deviceViewModel!!.context = context
         deviceViewModel!!.deleteDevices(friendlyName)
     }
