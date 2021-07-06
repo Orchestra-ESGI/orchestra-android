@@ -209,6 +209,7 @@
     <string name="home_no_scene">Aucune scène</string>
     <string name="home_no_automation">Aucune automation</string>
     <string name="detail_device_title">Détail</string>
+    <string name="create_device_modify_device">Modifier l\'appareil</string>
 
 
 </resources>

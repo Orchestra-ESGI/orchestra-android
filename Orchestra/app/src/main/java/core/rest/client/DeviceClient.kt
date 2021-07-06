@@ -131,7 +131,9 @@ object DeviceClient {
                     call: Call<HubAccessoryConfiguration>,
                     response: Response<HubAccessoryConfiguration>
             ) {
-                ApiUtils.handleError(context, response.code())
+                if(!response.isSuccessful) {
+                    ApiUtils.handleError(context, response.code())
+                }
             }
 
             override fun onFailure(call: Call<HubAccessoryConfiguration>, t: Throwable) {
