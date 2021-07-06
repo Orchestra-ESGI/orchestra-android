@@ -14,6 +14,15 @@
         android:theme="@style/Theme.Orchestra"
         android:usesCleartextTraffic="true"
         android:allowClearUserData="true">
+
+        <service
+            android:name="core.push.MyFirebaseService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity android:name="view.ui.PagerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarPage">

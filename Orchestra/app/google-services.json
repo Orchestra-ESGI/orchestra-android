@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "742750324330",
+    "project_id": "orchestra-5c305",
+    "storage_bucket": "orchestra-5c305.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:742750324330:android:15dd0a1fd61bb59b62ac13",
+        "android_client_info": {
+          "package_name": "com.example.orchestra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "742750324330-r74u1rdm50c5m4i65ancqec9lqmurrrm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoICzhzTORWRbV-zWaQy0RkVs9y9h3z8M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "742750324330-r74u1rdm50c5m4i65ancqec9lqmurrrm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "742750324330-e84lk9f3t417l5kphph2ja7g3s5ri7lg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nrv.orchestra",
+                "app_store_id": "1573823645"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

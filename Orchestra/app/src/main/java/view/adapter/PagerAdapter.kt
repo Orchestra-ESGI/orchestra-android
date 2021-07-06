@@ -1,11 +1,8 @@
 package view.adapter
 
-import android.content.ClipDescription
 import android.content.Context
 import android.content.Intent
 import android.graphics.Point
-import android.media.Image
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +10,9 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import view.ui.LoginActivity
-import view.ui.SupportedAccessoriesListActivity
 
 class PagerAdapter(var context: Context) : RecyclerView.Adapter<PagerAdapter.PagerViewHolder>() {
 

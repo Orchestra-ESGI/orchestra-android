@@ -1,12 +1,6 @@
 package core.utils
 
-import android.app.AlertDialog
-import android.content.Context
-import android.content.Intent
-import android.widget.Toast
 import com.example.orchestra.BuildConfig
-import com.example.orchestra.R
-import view.ui.LoginActivity
 
 object ApiUtils {
     // var API_URL = "http://orchestra.local:3000/"

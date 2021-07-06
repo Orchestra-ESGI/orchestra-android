@@ -41,7 +41,11 @@ class LoginActivity : AppCompatActivity() {
         setFilterEditText()
 
         val sharedPref = getSharedPreferences("com.example.orchestra.API_TOKEN", Context.MODE_PRIVATE)
-        sharedPref.edit().clear().apply()
+        sharedPref
+            .edit()
+            .remove("Email")
+            .remove("Token")
+            .apply()
 
         createAccountTv.setOnClickListener {
             val createAccountIntent =  Intent(this, SignInActivity::class.java)
@@ -59,6 +63,10 @@ class LoginActivity : AppCompatActivity() {
                                     .putString("Email", emailEditText.text.toString())
                                     .apply()
                             val sceneListIntent = Intent(this, HomeActivity::class.java)
+                            val fcmToken = sharedPref.getString("fcmToken", "")
+                            if (fcmToken != null) {
+                                userVM.sendFcmToken(fcmToken)
+                            }
                             startActivity(sceneListIntent)
                         } else {
                             Toast.makeText(this, getString(R.string.error_user), Toast.LENGTH_LONG).show()
