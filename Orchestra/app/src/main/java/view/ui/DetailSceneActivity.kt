@@ -57,6 +57,7 @@ class DetailSceneActivity : AppCompatActivity() {
 
     private fun setupSceneView() {
         if (sceneDetail != null) {
+            title = getString(R.string.detail_scene_title_scene)
             detailSceneTriggerTextView.visibility = View.GONE
             detailSceneName.text = sceneDetail!!.name
             detailSceneName.setTextColor(Color.parseColor(sceneDetail!!.color))
@@ -67,6 +68,7 @@ class DetailSceneActivity : AppCompatActivity() {
 
     private fun setupAutomationView() {
         if (automationDetail != null) {
+            title = getString(R.string.detail_scene_title_automation)
             detailSceneTriggerTextView.visibility = View.VISIBLE
             detailSceneName.text = automationDetail!!.name
             detailSceneName.setTextColor(Color.parseColor(automationDetail!!.color))

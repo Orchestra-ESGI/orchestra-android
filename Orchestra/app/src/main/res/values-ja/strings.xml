@@ -210,5 +210,8 @@
     <string name="create_device_modify_device">Modifier l\'appareil</string>
     <string name="supported_accessories_title">"Marque "</string>
     <string name="device_physical_configuration_tutoriel">Tutoriel</string>
+    <string name="detail_scene_title">Détail de l\'appareil</string>
+    <string name="detail_scene_title_scene">Détail de la scène</string>
+    <string name="detail_scene_title_automation">Détail de l\'automatisation</string>
 
 </resources>
