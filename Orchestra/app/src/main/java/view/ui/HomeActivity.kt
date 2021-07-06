@@ -60,6 +60,7 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
 
     private var deviceLoaded : Boolean = false
     private var sceneLoaded : Boolean = false
+    private var automationLoaded : Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -150,6 +151,8 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
         homeViewModel.automationList.observe(this, Observer {
             automationList = it
             automationAdapter.automationList = automationList
+            automationLoaded = true
+            checkLoaded()
         })
 
         swipeRefreshLayout.setOnRefreshListener {
@@ -174,18 +177,18 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
                 noDeviceTextView.visibility = View.VISIBLE
             }
             if (sceneAdapter.sceneList?.isNotEmpty() == true) {
-                scenesRecyclerView.visibility = View.GONE
-                noSceneTextView.visibility = View.VISIBLE
-            } else {
                 scenesRecyclerView.visibility = View.VISIBLE
                 noSceneTextView.visibility = View.GONE
+            } else {
+                scenesRecyclerView.visibility = View.GONE
+                noSceneTextView.visibility = View.VISIBLE
             }
             if (automationAdapter.automationList?.isNotEmpty() == true) {
-                automationRecyclerView.visibility = View.GONE
-                noAutomationTextView.visibility = View.VISIBLE
-            } else {
                 automationRecyclerView.visibility = View.VISIBLE
                 noAutomationTextView.visibility = View.GONE
+            } else {
+                automationRecyclerView.visibility = View.GONE
+                noAutomationTextView.visibility = View.VISIBLE
             }
         }
     }

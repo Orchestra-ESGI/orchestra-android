@@ -33,9 +33,6 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
 
     private lateinit var nameTitleTextView: TextView
     private lateinit var nameEditText: EditText
-    private lateinit var chooseColorTitleTextView: TextView
-    private lateinit var shuffleColorButton: ImageView
-    private lateinit var sceneColorsRecyclerView: RecyclerView
     private lateinit var descriptionTitleTextView: TextView
     private lateinit var descriptionEditText: EditText
     private lateinit var triggerLinearLayout: LinearLayout
@@ -48,7 +45,6 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     private lateinit var addActionTextView: TextView
     private lateinit var listActionRecyclerView: RecyclerView
 
-    private lateinit var sceneColorsAdapter : ShuffleColorAdapter
     private lateinit var listActionAdapter : CreateSceneActionsAdapter
 
     private lateinit var sceneColorsHashMap : MutableMap<Int, Boolean>
@@ -111,7 +107,6 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         loadDataIfModeModify()
         generateBackGroundColor()
         setUpRv()
-        setUpShuffleColor()
         setUpAddActions()
         setObserversOnEditText()
     }
@@ -127,15 +122,15 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
             val args = intent.getBundleExtra("BUNDLE")
             args!!.getSerializable("ARRAYLIST") as ArrayList<HubAccessoryConfiguration>
         }
-        availableDeviceList = deviceList
+
+        deviceList.filter { device -> !triggerableDeviceTypeList.contains(device.type) }.forEach {
+            availableDeviceList.add(it)
+        }
     }
 
     private fun bind() {
         nameTitleTextView = findViewById(R.id.create_scene_name_tv)
         nameEditText = findViewById(R.id.create_scene_name_et)
-        chooseColorTitleTextView = findViewById(R.id.create_scene_choose_color_tv)
-        shuffleColorButton = findViewById(R.id.create_scene_shuffle_color_iv)
-        sceneColorsRecyclerView = findViewById(R.id.create_scene_colors_rv)
         descriptionTitleTextView = findViewById(R.id.create_scene_description_tv)
         descriptionEditText = findViewById(R.id.create_scene_description_et)
         triggerLinearLayout = findViewById(R.id.create_scene_trigger_linear_layout)
@@ -184,7 +179,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
             triggerDeviceSpinner.adapter = arrayAdapterDevice
 
             operatorListForTemperatureAndHumidity.forEach {
-                arrayAdapterOperator.add(it.toString())
+                arrayAdapterOperator.add(it)
             }
             triggerOperatorSpinner.adapter = arrayAdapterOperator
 
@@ -282,25 +277,11 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
     }
 
     private fun setUpRv() {
-        sceneColorsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        sceneColorsAdapter = ShuffleColorAdapter(this)
-        sceneColorsAdapter.colorListMap = sceneColorsHashMap
-        sceneColorsAdapter.colorList = sceneColors
-        sceneColorsRecyclerView.adapter = sceneColorsAdapter
 
         listActionRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         listActionAdapter = CreateSceneActionsAdapter(this, this)
         listActionAdapter.detailSceneActions = actionList
         listActionRecyclerView.adapter = listActionAdapter
-    }
-
-    private fun setUpShuffleColor() {
-        shuffleColorButton.setOnClickListener {
-            this.sceneColorsHashMap.clear()
-            this.sceneColors.toMutableList().clear()
-            generateBackGroundColor()
-            redrawShuffleColors()
-        }
     }
 
     private fun setUpAddActions() {
@@ -351,17 +332,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         if (oldSelectedColor.size == 1) {
             sceneColorsHashMap.replace(oldSelectedColor.keys.first(), false)
             sceneColorsHashMap.replace(color, true)
-            redrawShuffleColors()
         }
-    }
-
-    private fun redrawShuffleColors() {
-        sceneColorsRecyclerView.adapter = null
-        sceneColorsRecyclerView.layoutManager = null
-        sceneColorsAdapter.colorListMap = sceneColorsHashMap
-        sceneColorsAdapter.colorList = sceneColors
-        sceneColorsRecyclerView.adapter = sceneColorsAdapter
-        sceneColorsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun setObserversOnEditText() {
