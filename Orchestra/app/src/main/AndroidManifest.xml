@@ -67,7 +67,8 @@
             android:name="view.ui.SignInActivity"
             android:label="@string/create_account_title_page"
             android:screenOrientation="portrait"
-            android:theme="@style/CreateAccountPage" >
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

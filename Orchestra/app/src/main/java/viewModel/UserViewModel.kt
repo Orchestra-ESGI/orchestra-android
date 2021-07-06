@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import core.rest.client.UserClient
 import core.rest.model.User
 import core.rest.model.UserValid
+import core.rest.services.UserServices
 
 class UserViewModel: ViewModel() {
     lateinit var context : AppCompatActivity
@@ -14,6 +15,9 @@ class UserViewModel: ViewModel() {
     var userValid: MutableLiveData<UserValid> = MutableLiveData()
 
     fun signup(user : User) {
+        userService.userValid.observe(context, Observer {
+            userValid.value = it
+        })
         userService.signup(context, user)
     }
 

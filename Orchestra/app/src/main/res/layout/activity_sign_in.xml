@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
     tools:context="view.ui.SignInActivity">
 
     <LinearLayout
@@ -17,11 +15,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/create_account_title_tv"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:text="@string/create_account_title"
             android:textSize="36sp"
             android:textColor="@color/white"
-            android:textStyle="bold"
+            android:fontFamily="@font/gilroy_light"
             android:layout_gravity="center">
         </TextView>
 
@@ -30,46 +28,49 @@
             android:layout_height="wrap_content"
             android:id="@+id/create_account_email_tv"
             android:layout_marginTop="30dp"
-            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
             android:layout_marginBottom="10dp"
             android:text="@string/login_email"
             android:textColor="@color/white"
-            android:textStyle="bold"
+            android:fontFamily="@font/gilroy_extra_bold"
             android:textSize="24sp"/>
 
         <EditText
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:id="@+id/create_account_email_et"
-            android:drawableStart="@drawable/ic_user"
-            android:background="@drawable/login_edit_background"
+            android:drawableEnd="@drawable/ic_mail_24"
+            android:backgroundTint="@color/light_gray"
             android:hint="@string/create_account_email_hint"
             android:textColorHint="@color/light_gray"
             android:layout_gravity="center"
+            android:fontFamily="@font/gilroy_light"
             android:textColor="@color/white"
-            android:inputType="text"
-            android:maxLines="1"/>
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:autofillHints="" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/create_account_pwd_tv"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
             android:layout_marginBottom="10dp"
             android:text="@string/create_account_pwd"
             android:textColor="@color/white"
-            android:textStyle="bold"
+            android:fontFamily="@font/gilroy_extra_bold"
             android:textSize="24sp"/>
 
         <EditText
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:id="@+id/create_account_pwd_et"
-            android:drawableStart="@drawable/ic_password"
-            android:background="@drawable/login_edit_background"
+            android:drawableEnd="@drawable/ic_lock_24"
+            android:backgroundTint="@color/light_gray"
             android:hint="@string/create_account_pwd_hint"
             android:textColorHint="@color/light_gray"
+            android:fontFamily="@font/gilroy_light"
             android:layout_gravity="center"
             android:inputType="textPassword"
             android:textColor="@color/white"
@@ -80,51 +81,40 @@
             android:layout_height="wrap_content"
             android:id="@+id/create_account_confirm_pwd_tv"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
             android:layout_marginBottom="10dp"
             android:text="@string/create_account_confirm_pwd"
             android:textColor="@color/white"
-            android:textStyle="bold"
+            android:fontFamily="@font/gilroy_extra_bold"
             android:textSize="24sp"/>
 
         <EditText
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:id="@+id/create_account_confirm_pwd_et"
-            android:drawableStart="@drawable/ic_password"
-            android:background="@drawable/login_edit_background"
+            android:drawableEnd="@drawable/ic_lock_24"
+            android:backgroundTint="@color/light_gray"
             android:hint="@string/create_account_pwd_hint"
             android:textColorHint="@color/light_gray"
             android:layout_gravity="center"
             android:inputType="textPassword"
             android:textColor="@color/white"
+            android:fontFamily="@font/gilroy_light"
             android:maxLines="1"/>
 
-        <TextView
+        <android.widget.Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/create_account_user_tv"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/create_account_user_name"
+            android:id="@+id/create_account_continue_btn"
+            android:text="@string/create_account_continue"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/button_shape"
+            android:backgroundTint="@color/app_primary_red"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="24sp"/>
-
-        <EditText
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:id="@+id/create_account_user_et"
-            android:drawableStart="@drawable/ic_user"
-            android:background="@drawable/login_edit_background"
-            android:hint="@string/create_account_user_name_hint"
-            android:textColorHint="@color/light_gray"
-            android:layout_gravity="center"
-            android:textColor="@color/white"
-            android:inputType="text"
-            android:maxLines="1" />
-
+            android:fontFamily="@font/gilroy_extra_bold"
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 

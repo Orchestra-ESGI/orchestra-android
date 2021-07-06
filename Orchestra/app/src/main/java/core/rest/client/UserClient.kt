@@ -7,6 +7,7 @@ import core.rest.model.UserValid
 import core.rest.services.RootApiService
 import core.rest.services.UserServices
 import core.utils.ApiUtils
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -57,7 +58,10 @@ object UserClient {
                             response: Response<UserValid>
                     ) {
                         if (!response.isSuccessful) {
-                            ApiUtils.handleError(context, response.code())
+                            val jObjError = JSONObject(response.errorBody()!!.string())
+                            userValid.value = UserValid(token = "", error = jObjError["error"].toString())
+                        } else {
+                            userValid.value = UserValid(token = "", error = "")
                         }
                     }
 

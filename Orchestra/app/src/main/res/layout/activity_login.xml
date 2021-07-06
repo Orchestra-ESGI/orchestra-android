@@ -39,10 +39,11 @@
         <EditText
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:id="@+id/login_id_et"
-            android:drawableEnd="@drawable/ic_mail_24"
-            android:inputType="text"
+            android:id="@+id/login_email_et"
+            android:hint="@string/create_account_email_hint"
             android:backgroundTint="@color/light_gray"
+            android:drawableEnd="@drawable/ic_mail_24"
+            android:inputType="textEmailAddress"
             android:fontFamily="@font/gilroy_light"
             android:maxLines="1"
             android:layout_gravity="center"/>
@@ -63,6 +64,7 @@
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:id="@+id/login_pwd_et"
+            android:hint="@string/create_account_pwd_hint"
             android:drawableEnd="@drawable/ic_eyes_24"
             android:backgroundTint="@color/light_gray"
             android:fontFamily="@font/gilroy_light"

@@ -196,5 +196,11 @@
     <string name="create_scene_no_action_available">Plus aucune action est disponible pour ce device</string>
     <string name="error_401">Une erreur est survenue\nVeuillez vous reconnecter</string>
     <string name="app_error">Une erreur est survenue\nRelancer l\'application</string>
+    <string name="error_400">Veuillez vérifier vos champs</string>
+    <string name="sigup_mail_send">Mail envoyé</string>
+    <string name="sigup_mail_send_message">Un mail de confirmation vous a été envoyé.\nRevenez sur Orchestra après avoir validé le mail</string>
+    <string name="sigup_fields_empty">Veuillez remplir les champs</string>
+    <string name="sigup_email_field_wrong">Veuillez renseigner un email valide</string>
+    <string name="sigup_password_wrong">Les mots de passe ne sont pas identiques</string>
 
 </resources>

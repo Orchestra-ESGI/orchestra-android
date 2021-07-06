@@ -74,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
         titleTextView = findViewById(R.id.login_title_tv)
         createAccountTv = findViewById(R.id.login_create_account_tv)
         connexionBtn = findViewById(R.id.login_connect_btn)
-        emailEditText = findViewById(R.id.login_id_et)
+        emailEditText = findViewById(R.id.login_email_et)
         passwordEditText = findViewById(R.id.login_pwd_et)
         userVM = ViewModelProviders.of(this).get(UserViewModel::class.java)
         userVM.context = this
