@@ -203,5 +203,8 @@
     <string name="sigup_fields_empty">Veuillez remplir les champs</string>
     <string name="sigup_email_field_wrong">Veuillez renseigner un email valide</string>
     <string name="sigup_password_wrong">Les mots de passe ne sont pas identiques</string>
+    <string name="home_no_device">Aucun objet</string>
+    <string name="home_no_scene">Aucune scène</string>
+    <string name="home_no_automation">Aucune automation</string>
 
 </resources>

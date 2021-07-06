@@ -39,7 +39,9 @@ import java.io.Serializable
 class HomeActivity : AppCompatActivity(), OnActionListener {
 
     private lateinit var sceneTitle : TextView
-    private lateinit var noDataTitle : TextView
+    private lateinit var noDeviceTextView: TextView
+    private lateinit var noSceneTextView : TextView
+    private lateinit var noAutomationTextView : TextView
     private lateinit var scenesRecyclerView: RecyclerView
     private lateinit var devicesRecyclerView: RecyclerView
     private lateinit var roomChipGroup: ChipGroup
@@ -79,7 +81,9 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
 
     private fun bind() {
         sceneTitle = findViewById(R.id.scene_list_tv)
-        noDataTitle = findViewById(R.id.home_no_device_tv)
+        noDeviceTextView = findViewById(R.id.home_no_device_tv)
+        noSceneTextView = findViewById(R.id.home_no_scene_tv)
+        noAutomationTextView = findViewById(R.id.home_no_automation_tv)
         devicesRecyclerView = findViewById(R.id.list_device_rv)
         scenesRecyclerView = findViewById(R.id.list_scene_rv)
         roomChipGroup = findViewById(R.id.home_room_filter_chip_group)
@@ -162,20 +166,26 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
 
     private fun checkLoaded() {
         if(sceneLoaded && deviceLoaded) {
-            if(deviceAdapter.deviceList?.isEmpty() == true) {
-                sceneTitle.visibility = View.GONE
-                devicesRecyclerView.visibility = View.GONE
-                scenesRecyclerView.visibility = View.GONE
-                automationTitle.visibility = View.GONE
-                automationRecyclerView.visibility = View.GONE
-                noDataTitle.visibility = View.VISIBLE
-            } else {
-                noDataTitle.visibility = View.GONE
-                sceneTitle.visibility = View.VISIBLE
+            if(deviceAdapter.deviceList?.isNotEmpty() == true) {
                 devicesRecyclerView.visibility = View.VISIBLE
+                noDeviceTextView.visibility = View.GONE
+            } else {
+                devicesRecyclerView.visibility = View.GONE
+                noDeviceTextView.visibility = View.VISIBLE
+            }
+            if (sceneAdapter.sceneList?.isNotEmpty() == true) {
+                scenesRecyclerView.visibility = View.GONE
+                noSceneTextView.visibility = View.VISIBLE
+            } else {
                 scenesRecyclerView.visibility = View.VISIBLE
-                automationTitle.visibility = View.VISIBLE
+                noSceneTextView.visibility = View.GONE
+            }
+            if (automationAdapter.automationList?.isNotEmpty() == true) {
+                automationRecyclerView.visibility = View.GONE
+                noAutomationTextView.visibility = View.VISIBLE
+            } else {
                 automationRecyclerView.visibility = View.VISIBLE
+                noAutomationTextView.visibility = View.GONE
             }
         }
     }
@@ -208,8 +218,13 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
         val listOfAction: List<String> = listOf(getString(R.string.home_add_new_device), getString(R.string.home_add_new_scene), getString(R.string.home_add_new_room), getString(R.string.home_add_new_automatisation))
         val listOfActionToCharSequence = listOfAction.toTypedArray<CharSequence>()
 
+        if (deviceAdapter.deviceList == null) {
+            deviceAdapter.deviceList = emptyList()
+        }
+
         val createSceneIntent = Intent(this, CreateSceneActivity::class.java)
         val args = Bundle()
+
         args.putSerializable("ARRAYLIST", deviceAdapter.deviceList as Serializable)
         createSceneIntent.putExtra("BUNDLE", args)
 
