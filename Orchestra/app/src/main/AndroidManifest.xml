@@ -29,23 +29,23 @@
         <activity
             android:name="view.ui.SearchDeviceActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SearchDeviceActivityPage" />
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
         <activity
             android:name="view.ui.DevicePhysicalConfigurationActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/DevicePhysicalConfigurationActivityPage" />
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
         <activity
             android:name="view.ui.CreateDeviceActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/CreateDeviceActivityPage" />
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
         <activity
             android:name="view.ui.SupportedAccessoriesListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SupportedAccessoriesListActivityPage" />
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
         <activity
             android:name="view.ui.SupportedDeviceListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SupportedDeviceListActivityPage" />
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
         <activity
             android:name="view.ui.DetailSceneActivity"
             android:screenOrientation="portrait"
@@ -57,7 +57,7 @@
         <activity
             android:name="view.ui.CreateSceneActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/CreateScenePage" />
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
         <activity
             android:name="view.ui.HomeActivity"
             android:screenOrientation="portrait"

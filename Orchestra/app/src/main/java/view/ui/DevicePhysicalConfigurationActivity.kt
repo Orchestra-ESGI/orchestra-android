@@ -22,6 +22,8 @@ class DevicePhysicalConfigurationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_device_physical_configuration)
         devicePhysicalConfigurationUrl = findViewById(R.id.device_physical_configuration_step_one_url)
 
+        title = getString(R.string.device_physical_configuration_tutoriel)
+
         supportedDevice = intent.getSerializableExtra("SupportedDevice") as? SupportedDeviceInformations
 
         if (supportedDevice != null) {

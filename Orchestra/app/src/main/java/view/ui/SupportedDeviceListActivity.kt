@@ -25,13 +25,20 @@ class SupportedDeviceListActivity : AppCompatActivity() {
         var deviceVM = ViewModelProviders.of(this).get(DeviceViewModel::class.java)
         deviceVM.context = this
 
+        val brand = intent.getStringExtra("brand")
+        val device = intent.getSerializableExtra("device") as? HubAccessoryConfiguration
+
         supportedDeviceListRecyclerView = findViewById(R.id.supported_device_rv)
         supportedDeviceListRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         supportedDeviceAdapter = SupportedDeviceAdapter()
-        supportedDeviceAdapter.device = intent.getSerializableExtra("device") as? HubAccessoryConfiguration
-        supportedDeviceAdapter.brand = intent.getStringExtra("brand")
+        supportedDeviceAdapter.device = device
+        supportedDeviceAdapter.brand = brand
         supportedDeviceAdapter.supportedDeviceList = data!!
         supportedDeviceAdapter.deviceVM = deviceVM
         supportedDeviceListRecyclerView.adapter = supportedDeviceAdapter
+
+        if (brand != null) {
+            title = brand
+        }
     }
 }

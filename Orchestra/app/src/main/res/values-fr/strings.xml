@@ -207,5 +207,7 @@
     <string name="home_no_automation">Aucune automation</string>
     <string name="detail_device_title">Détail</string>
     <string name="create_device_modify_device">Modifier l\'appareil</string>
+    <string name="supported_accessories_title">"Marque "</string>
+    <string name="device_physical_configuration_tutoriel">Tutoriel</string>
 
 </resources>

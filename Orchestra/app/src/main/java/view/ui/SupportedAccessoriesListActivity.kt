@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
-import com.fasterxml.jackson.databind.ObjectMapper
-import core.rest.model.SupportedAccessories
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import view.adapter.SupportedAccessoriesAdapter
 import viewModel.DeviceViewModel
@@ -28,8 +26,9 @@ class SupportedAccessoriesListActivity : AppCompatActivity() {
         deviceViewModel.supportedAccessorieList.observe(this, androidx.lifecycle.Observer {
             supportedAccessoriesAdapter.supportedAccessoriesList = it
         })
-
         deviceViewModel.getSupportedAccessories()
+
+        title = getString(R.string.supported_accessories_title)
 
         supportedDeviceTypeListRecyclerView = findViewById(R.id.supported_device_type_rv)
         supportedDeviceTypeListRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

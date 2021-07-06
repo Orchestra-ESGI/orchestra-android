@@ -21,14 +21,8 @@ class SearchDeviceActivity : AppCompatActivity() {
     private lateinit var searchDeviceDescriptionTextView: TextView
     private lateinit var returnHomeButton : Button
 
-    private var deviceData: HubAccessoryConfiguration? = null
-    private lateinit var deviceVM: DeviceViewModel
-    private var isSuccessfulyAdded = false
-
     @RequiresApi(Build.VERSION_CODES.O)
     val colorSuccess = Color.argb((1).toFloat(), (0.177152276).toFloat(), (0.669238627).toFloat(), (0.3678025007).toFloat())
-    @RequiresApi(Build.VERSION_CODES.O)
-    val colorError = Color.argb((1).toFloat(), (1).toFloat(), (0.2390179634).toFloat(), (0.2027955651).toFloat())
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
