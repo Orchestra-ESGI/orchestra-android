@@ -1,31 +1,27 @@
 package view.ui
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
-import com.kaopiz.kprogresshud.KProgressHUD
 import core.rest.model.*
 import core.rest.model.hubConfiguration.HubAccessoryConfiguration
 import core.rest.model.hubConfiguration.HubAccessoryType
 import core.utils.ColorPicker
 import view.adapter.DetailDeviceSpecificationAdapter
 import viewModel.DeviceViewModel
-import java.io.Serializable
 
 
 class DetailDeviceActivity : AppCompatActivity() {
@@ -42,8 +38,7 @@ class DetailDeviceActivity : AppCompatActivity() {
     private lateinit var configurateButton : Button
 
     private lateinit var stateLayout : LinearLayout
-    @SuppressLint("UseSwitchCompatOrMaterialCode")
-    private lateinit var stateSwitch : Switch
+    private lateinit var stateSwitch : SwitchCompat
 
     private lateinit var brightnessLayout : LinearLayout
     private lateinit var brightnessSlider : SeekBar
@@ -95,6 +90,8 @@ class DetailDeviceActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
+        title = getString(R.string.detail_device_title)
+
         detailDeviceSpecificationInfoNames = ArrayList()
         detailDeviceKeyValue = HashMap()
         detailDeviceAdapter = DetailDeviceSpecificationAdapter()
