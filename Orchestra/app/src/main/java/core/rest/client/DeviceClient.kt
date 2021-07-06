@@ -6,7 +6,6 @@ import core.rest.model.*
 import core.rest.model.hubConfiguration.*
 import core.rest.services.DeviceService
 import core.rest.services.RootApiService
-import core.utils.ApiUtils
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -58,13 +57,13 @@ object DeviceClient {
                     if (response.isSuccessful) {
                         deviceList.value = response.body()?.devices
                     } else {
-                        ApiUtils.handleError(context, response.code())
+                        RootApiService.handleError(context, response.code())
                     }
 
                 }
 
                 override fun onFailure(call: Call<ListHubAccessoryConfiguration>, t: Throwable?) {
-                    ApiUtils.handleError(context, 500)
+                    RootApiService.handleError(context, 500)
                 }
 
             })
@@ -77,12 +76,12 @@ object DeviceClient {
                 response: Response<ListHubAccessoryConfiguration>
             ) {
                 if (!response.isSuccessful) {
-                    ApiUtils.handleError(context, response.code())
+                    RootApiService.handleError(context, response.code())
                 }
             }
 
             override fun onFailure(call: Call<ListHubAccessoryConfiguration>, t: Throwable) {
-                ApiUtils.handleError(context, 500)
+                RootApiService.handleError(context, 500)
             }
         })
     }
@@ -97,12 +96,12 @@ object DeviceClient {
                         if (response.isSuccessful) {
                             supportedDevices.value = response.body()
                         } else {
-                            ApiUtils.handleError(context, response.code())
+                            RootApiService.handleError(context, response.code())
                         }
                     }
 
                     override fun onFailure(call: Call<List<SupportedAccessories>>?, t: Throwable?) {
-                        ApiUtils.handleError(context, 500)
+                        RootApiService.handleError(context, 500)
                     }
 
                 })
@@ -115,12 +114,12 @@ object DeviceClient {
                 response: Response<HubAccessoryConfiguration>
             ) {
                 if (!response.isSuccessful) {
-                    ApiUtils.handleError(context, response.code())
+                    RootApiService.handleError(context, response.code())
                 }
             }
 
             override fun onFailure(call: Call<HubAccessoryConfiguration>, t: Throwable) {
-                ApiUtils.handleError(context, 500)
+                RootApiService.handleError(context, 500)
             }
         })
     }
@@ -132,12 +131,12 @@ object DeviceClient {
                     response: Response<HubAccessoryConfiguration>
             ) {
                 if(!response.isSuccessful) {
-                    ApiUtils.handleError(context, response.code())
+                    RootApiService.handleError(context, response.code())
                 }
             }
 
             override fun onFailure(call: Call<HubAccessoryConfiguration>, t: Throwable) {
-                ApiUtils.handleError(context, 500)
+                RootApiService.handleError(context, 500)
             }
         })
     }
@@ -148,11 +147,11 @@ object DeviceClient {
                     call: Call<ListHubAccessoryConfigurationToDelete>,
                     response: Response<ListHubAccessoryConfigurationToDelete>
             ) {
-                ApiUtils.handleError(context, response.code())
+                RootApiService.handleError(context, response.code())
             }
 
             override fun onFailure(call: Call<ListHubAccessoryConfigurationToDelete>, t: Throwable) {
-                ApiUtils.handleError(context, 500)
+                RootApiService.handleError(context, 500)
             }
         })
     }
@@ -167,12 +166,12 @@ object DeviceClient {
                     val listRoom = response.body()
                     roomList.value = listRoom?.rooms
                 } else {
-                    ApiUtils.handleError(context, response.code())
+                    RootApiService.handleError(context, response.code())
                 }
             }
 
             override fun onFailure(call: Call<ListRoom>, t: Throwable) {
-                ApiUtils.handleError(context, 500)
+                RootApiService.handleError(context, 500)
             }
         })
     }
@@ -188,12 +187,12 @@ object DeviceClient {
                 if (response.isSuccessful) {
                     val res = response.body()
                 } else {
-                    ApiUtils.handleError(context, response.code())
+                    RootApiService.handleError(context, response.code())
                 }
             }
 
             override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
-                ApiUtils.handleError(context, 500)
+                RootApiService.handleError(context, 500)
             }
         })
     }

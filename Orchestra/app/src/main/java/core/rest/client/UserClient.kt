@@ -6,7 +6,6 @@ import core.rest.model.User
 import core.rest.model.UserValid
 import core.rest.services.RootApiService
 import core.rest.services.UserServices
-import core.utils.ApiUtils
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,11 +39,11 @@ object UserClient {
                         if (response.isSuccessful) {
                             userValid.value = response.body()
                         } else {
-                            ApiUtils.handleError(context, response.code())
+                            RootApiService.handleError(context, response.code())
                         }
                     }
                     override fun onFailure(call: Call<UserValid>, t: Throwable?) {
-                        ApiUtils.handleError(context, 500)
+                        RootApiService.handleError(context, 500)
                     }
 
                 })
@@ -66,7 +65,7 @@ object UserClient {
                     }
 
                     override fun onFailure(call: Call<UserValid>?, t: Throwable?) {
-                        ApiUtils.handleError(context, 500)
+                        RootApiService.handleError(context, 500)
                     }
 
                 })

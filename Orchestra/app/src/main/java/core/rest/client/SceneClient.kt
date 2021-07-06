@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import core.rest.model.*
 import core.rest.services.RootApiService
 import core.rest.services.SceneServices
-import core.utils.ApiUtils
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -55,12 +54,12 @@ object SceneClient {
                     if(response.isSuccessful) {
                         sceneList.value = response.body()!!.scenes
                     } else {
-                        ApiUtils.handleError(context, response.code())
+                        RootApiService.handleError(context, response.code())
                     }
                 }
 
                 override fun onFailure(call: Call<ListScene>?, t: Throwable?) {
-                    ApiUtils.handleError(context, 500)
+                    RootApiService.handleError(context, 500)
                 }
 
             })
@@ -76,11 +75,11 @@ object SceneClient {
                         if (response.isSuccessful) {
                             automationList.value = response.body()?.automations
                         } else {
-                            ApiUtils.handleError(context, response.code())
+                            RootApiService.handleError(context, response.code())
                         }
                     }
                     override fun onFailure(call: Call<ListAutomation>?, t: Throwable?) {
-                        ApiUtils.handleError(context, 500)
+                        RootApiService.handleError(context, 500)
                     }
 
                 })
@@ -94,12 +93,12 @@ object SceneClient {
                             response: Response<Scene>
                     ) {
                         if (!response.isSuccessful) {
-                            ApiUtils.handleError(context, response.code())
+                            RootApiService.handleError(context, response.code())
                         }
                     }
 
                     override fun onFailure(call: Call<Scene>?, t: Throwable?) {
-                        ApiUtils.handleError(context, 500)
+                        RootApiService.handleError(context, 500)
                     }
 
                 })
@@ -113,12 +112,12 @@ object SceneClient {
                             response: Response<ListSceneToDelete>
                     ) {
                         if (!response.isSuccessful) {
-                            ApiUtils.handleError(context, response.code())
+                            RootApiService.handleError(context, response.code())
                         }
                     }
 
                     override fun onFailure(call: Call<ListSceneToDelete>?, t: Throwable?) {
-                        ApiUtils.handleError(context, 500)
+                        RootApiService.handleError(context, 500)
                     }
 
                 })
@@ -132,12 +131,12 @@ object SceneClient {
                             response: Response<Scene>
                     ) {
                         if (!response.isSuccessful) {
-                            ApiUtils.handleError(context, response.code())
+                            RootApiService.handleError(context, response.code())
                         }
                     }
 
                     override fun onFailure(call: Call<Scene>, t: Throwable?) {
-                        ApiUtils.handleError(context, 500)
+                        RootApiService.handleError(context, 500)
                     }
 
                 })
@@ -151,12 +150,12 @@ object SceneClient {
                             response: Response<HashMap<String, Any>>
                     ) {
                         if (!response.isSuccessful) {
-                            ApiUtils.handleError(context, response.code())
+                            RootApiService.handleError(context, response.code())
                         }
                     }
 
                     override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable?) {
-                        ApiUtils.handleError(context, 500)
+                        RootApiService.handleError(context, 500)
                     }
 
                 })
@@ -170,12 +169,12 @@ object SceneClient {
                     response: Response<Scene>
                 ) {
                     if (!response.isSuccessful) {
-                        ApiUtils.handleError(context, response.code())
+                        RootApiService.handleError(context, response.code())
                     }
                 }
 
                 override fun onFailure(call: Call<Scene>?, t: Throwable?) {
-                    ApiUtils.handleError(context, 500)
+                    RootApiService.handleError(context, 500)
                 }
 
             })
@@ -189,12 +188,12 @@ object SceneClient {
                             response: Response<HashMap<String,Any>>
                     ) {
                         if (!response.isSuccessful) {
-                            ApiUtils.handleError(context, response.code())
+                            RootApiService.handleError(context, response.code())
                         }
                     }
 
                     override fun onFailure(call: Call<HashMap<String,Any>>?, t: Throwable?) {
-                        ApiUtils.handleError(context, 500)
+                        RootApiService.handleError(context, 500)
                     }
 
                 })
@@ -208,12 +207,12 @@ object SceneClient {
                             response: Response<HashMap<String, Any>>
                     ) {
                         if (!response.isSuccessful) {
-                            ApiUtils.handleError(context, response.code())
+                            RootApiService.handleError(context, response.code())
                         }
                     }
 
                     override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable?) {
-                        ApiUtils.handleError(context, 500)
+                        RootApiService.handleError(context, 500)
                     }
 
                 })
@@ -227,12 +226,12 @@ object SceneClient {
                             response: Response<HashMap<String, Any>>
                     ) {
                         if (!response.isSuccessful) {
-                            ApiUtils.handleError(context, response.code())
+                            RootApiService.handleError(context, response.code())
                         }
                     }
 
                     override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable?) {
-                        ApiUtils.handleError(context, 500)
+                        RootApiService.handleError(context, 500)
                     }
 
                 })
