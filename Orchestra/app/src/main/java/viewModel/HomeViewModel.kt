@@ -6,15 +6,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import core.rest.model.*
 import core.rest.model.hubConfiguration.Device
+import core.utils.SingleLiveEvent
 
 class HomeViewModel: ViewModel() {
     lateinit var context : AppCompatActivity
     var deviceViewModel : DeviceViewModel? = null
     var sceneViewModel : SceneViewModel? = null
-    var deviceList : MutableLiveData<List<Device>> = MutableLiveData()
-    var sceneList : MutableLiveData<List<Scene>> = MutableLiveData()
-    var automationList : MutableLiveData<List<Automation>> = MutableLiveData()
-    var roomList : MutableLiveData<List<Room>> = MutableLiveData()
+    var deviceList : SingleLiveEvent<List<Device>> = SingleLiveEvent()
+    var sceneList : SingleLiveEvent<List<Scene>> = SingleLiveEvent()
+    var automationList : SingleLiveEvent<List<Automation>> = SingleLiveEvent()
+    var roomList : SingleLiveEvent<List<Room>> = SingleLiveEvent()
 
     init {
         deviceViewModel = DeviceViewModel()

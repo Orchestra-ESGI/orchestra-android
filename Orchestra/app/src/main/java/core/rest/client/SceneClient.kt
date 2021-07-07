@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import core.rest.model.*
 import core.rest.services.RootApiService
 import core.rest.services.SceneServices
+import core.utils.SingleLiveEvent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -15,8 +16,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object SceneClient {
     private var sceneServices: SceneServices? = getApi()
-    var sceneList: MutableLiveData<List<Scene>> = MutableLiveData()
-    var automationList: MutableLiveData<List<Automation>> = MutableLiveData()
+    var sceneList: SingleLiveEvent<List<Scene>> = SingleLiveEvent()
+    var automationList: SingleLiveEvent<List<Automation>> = SingleLiveEvent()
 
     private fun getApi(context: Context? = null): SceneServices? {
         if(context != null) {

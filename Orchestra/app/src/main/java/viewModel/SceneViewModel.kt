@@ -8,11 +8,12 @@ import core.rest.client.SceneClient
 import core.rest.model.Automation
 import core.rest.model.ListSceneToDelete
 import core.rest.model.Scene
+import core.utils.SingleLiveEvent
 
 class SceneViewModel : ViewModel() {
     lateinit var context : AppCompatActivity
-    var sceneList : MutableLiveData<List<Scene>> = MutableLiveData()
-    var automationList : MutableLiveData<List<Automation>> = MutableLiveData()
+    var sceneList : SingleLiveEvent<List<Scene>> = SingleLiveEvent()
+    var automationList : SingleLiveEvent<List<Automation>> = SingleLiveEvent()
     var sceneService : SceneClient = SceneClient
 
     fun getScenes() {

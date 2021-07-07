@@ -8,28 +8,28 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface DeviceService {
-    @GET("device/supported")
+    @GET("/device/supported")
     fun getSupportedAccessories() : Call<List<SupportedAccessories>>
 
     @GET("device/all")
     // fun getAllDevices() : Call<HashMap<String, Any>>
     fun getAllDevices() : Call<ListHubAccessoryConfiguration>
 
-    @POST("device/action")
+    @POST("/device/action")
     fun sendDeviceAction(@Body actionsToSet: ActionsToSet) : Call<ListHubAccessoryConfiguration>
 
-    @POST("device/reset")
+    @POST("/device/reset")
     fun resetDevice() : Call<Device>
 
-    @PATCH("device")
+    @PATCH("/device")
     fun saveDevice(@Body device: Device): Call<Device>
 
     @HTTP(method = "DELETE", path = "/device", hasBody = true)
     fun deleteDevices(@Body friendly_name: HashMap<String, List<String>>): Call<HashMap<String, Any>>
 
-    @GET("room/all")
+    @GET("/room/all")
     fun getAllRooms() : Call<ListRoom>
 
-    @POST("room")
+    @POST("/room")
     fun addRoom(@Body body: HashMap<String, String>): Call<HashMap<String, Any>>
 }

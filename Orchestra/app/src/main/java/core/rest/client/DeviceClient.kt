@@ -6,6 +6,7 @@ import core.rest.model.*
 import core.rest.model.hubConfiguration.*
 import core.rest.services.DeviceService
 import core.rest.services.RootApiService
+import core.utils.SingleLiveEvent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -16,9 +17,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object DeviceClient {
     private var deviceServices: DeviceService? = getApi()
-    var supportedDevices: MutableLiveData<List<SupportedAccessories>> = MutableLiveData()
-    var deviceList: MutableLiveData<List<Device>> = MutableLiveData()
-    var roomList: MutableLiveData<List<Room>> = MutableLiveData()
+    var supportedDevices: SingleLiveEvent<List<SupportedAccessories>> = SingleLiveEvent()
+    var deviceList: SingleLiveEvent<List<Device>> = SingleLiveEvent()
+    var roomList: SingleLiveEvent<List<Room>> = SingleLiveEvent()
 
     private fun getApi(context: Context? = null): DeviceService? {
         if(context != null) {

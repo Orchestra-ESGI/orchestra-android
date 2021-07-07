@@ -7,12 +7,13 @@ import androidx.lifecycle.ViewModel
 import core.rest.client.DeviceClient
 import core.rest.model.*
 import core.rest.model.hubConfiguration.Device
+import core.utils.SingleLiveEvent
 
 class DeviceViewModel : ViewModel() {
     lateinit var context : AppCompatActivity
-    var deviceList : MutableLiveData<List<Device>> = MutableLiveData()
-    var supportedAccessorieList : MutableLiveData<List<SupportedAccessories>> = MutableLiveData()
-    var roomList : MutableLiveData<List<Room>> = MutableLiveData()
+    var deviceList : SingleLiveEvent<List<Device>> = SingleLiveEvent()
+    var supportedAccessorieList : SingleLiveEvent<List<SupportedAccessories>> = SingleLiveEvent()
+    var roomList : SingleLiveEvent<List<Room>> = SingleLiveEvent()
     val deviceService = DeviceClient
 
     fun getDevices() {
