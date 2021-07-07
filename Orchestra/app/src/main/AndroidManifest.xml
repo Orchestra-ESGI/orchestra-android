@@ -95,7 +95,8 @@
             android:windowSoftInputMode="stateAlwaysHidden"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
         </activity>
-        <activity android:name="view.ui.MainActivity" >
+        <activity android:name="view.ui.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
