@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.example.orchestra.R
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import view.Home.HomeActivity
+import view.Pager.PagerActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

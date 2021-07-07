@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_primary_blue"
-    tools:context="view.ui.DetailDeviceActivity">
+    tools:context="view.Detail.Device.DetailDeviceActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

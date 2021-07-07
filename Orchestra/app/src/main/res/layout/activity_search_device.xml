@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/app_primary_blue"
     android:orientation="vertical"
-    tools:context="view.ui.SearchDeviceActivity">
+    tools:context="view.ui.SuccessActivity">
 
     <ImageView
         android:layout_width="196dp"

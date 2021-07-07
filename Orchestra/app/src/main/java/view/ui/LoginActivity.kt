@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.orchestra.R
 import core.rest.model.User
+import view.Home.HomeActivity
 import viewModel.UserViewModel
 
 
@@ -55,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
             .apply()
 
         createAccountTv.setOnClickListener {
-            val createAccountIntent =  Intent(this, SignInActivity::class.java)
+            val createAccountIntent =  Intent(this, SignUpActivity::class.java)
             startActivity(createAccountIntent)
         }
 

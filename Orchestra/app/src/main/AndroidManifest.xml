@@ -23,7 +23,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name="view.ui.PagerActivity"
+        <activity android:name="view.Pager.PagerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarPage">
         </activity>
@@ -32,11 +32,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MaterialComponents.DayNight" />
         <activity
-            android:name="view.ui.SettingsActivity"
+            android:name="view.Settings.SettingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MaterialComponents.DayNight" />
         <activity
-            android:name="view.ui.SearchDeviceActivity"
+            android:name="view.ui.SuccessActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
         <activity
@@ -44,38 +44,38 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
         <activity
-            android:name="view.ui.CreateDeviceActivity"
+            android:name="view.Create.Device.CreateDeviceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
             android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
-            android:name="view.ui.SupportedAccessoriesListActivity"
+            android:name="view.SupportedDevice.ui.SupportedAccessoriesListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
         <activity
-            android:name="view.ui.SupportedDeviceListActivity"
+            android:name="view.SupportedDevice.ui.SupportedDeviceListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
         <activity
-            android:name="view.ui.DetailSceneActivity"
+            android:name="view.Detail.Scene.DetailSceneActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
         <activity
-            android:name="view.ui.DetailDeviceActivity"
+            android:name="view.Detail.Device.DetailDeviceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
         <activity
-            android:name="view.ui.CreateSceneActivity"
+            android:name="view.Create.Scene.CreateSceneActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
             android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
-            android:name="view.ui.HomeActivity"
+            android:name="view.Home.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MaterialComponents.DayNight">
         </activity>
         <activity
-            android:name="view.ui.SignInActivity"
+            android:name="view.ui.SignUpActivity"
             android:label="@string/create_account_title_page"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"

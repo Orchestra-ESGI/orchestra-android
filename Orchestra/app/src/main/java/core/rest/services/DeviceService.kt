@@ -2,21 +2,21 @@ package core.rest.services
 
 import core.rest.model.ActionsToSet
 import core.rest.model.ListRoom
-import core.rest.model.SupportedAccessories
-import core.rest.model.hubConfiguration.*
+import core.rest.model.SupportedDevices
+import core.rest.model.device.*
 import retrofit2.Call
 import retrofit2.http.*
 
 interface DeviceService {
     @GET("/device/supported")
-    fun getSupportedAccessories() : Call<List<SupportedAccessories>>
+    fun getSupportedAccessories() : Call<List<SupportedDevices>>
 
     @GET("device/all")
     // fun getAllDevices() : Call<HashMap<String, Any>>
-    fun getAllDevices() : Call<ListHubAccessoryConfiguration>
+    fun getAllDevices() : Call<ListDevice>
 
     @POST("/device/action")
-    fun sendDeviceAction(@Body actionsToSet: ActionsToSet) : Call<ListHubAccessoryConfiguration>
+    fun sendDeviceAction(@Body actionsToSet: ActionsToSet) : Call<ListDevice>
 
     @POST("/device/reset")
     fun resetDevice() : Call<Device>

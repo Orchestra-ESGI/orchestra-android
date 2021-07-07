@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    tools:context="view.ui.SettingsActivity">
+    tools:context="view.Settings.SettingsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

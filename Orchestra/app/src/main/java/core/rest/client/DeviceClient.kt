@@ -1,9 +1,8 @@
 package core.rest.client
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
 import core.rest.model.*
-import core.rest.model.hubConfiguration.*
+import core.rest.model.device.*
 import core.rest.services.DeviceService
 import core.rest.services.RootApiService
 import core.utils.SingleLiveEvent
@@ -17,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object DeviceClient {
     private var deviceServices: DeviceService? = getApi()
-    var supportedDevices: SingleLiveEvent<List<SupportedAccessories>> = SingleLiveEvent()
+    var supportedDevices: SingleLiveEvent<List<SupportedDevices>> = SingleLiveEvent()
     var deviceList: SingleLiveEvent<List<Device>> = SingleLiveEvent()
     var roomList: SingleLiveEvent<List<Room>> = SingleLiveEvent()
 
@@ -50,10 +49,10 @@ object DeviceClient {
 
     fun getAllDevices(context: Context) {
         getApi(context)?.getAllDevices()
-            ?.enqueue(object : Callback<ListHubAccessoryConfiguration> {
+            ?.enqueue(object : Callback<ListDevice> {
                 override fun onResponse(
-                    call: Call<ListHubAccessoryConfiguration>,
-                    response: Response<ListHubAccessoryConfiguration>
+                        call: Call<ListDevice>,
+                        response: Response<ListDevice>
                 ) {
                     if (response.isSuccessful) {
                         deviceList.value = response.body()?.devices
@@ -63,7 +62,7 @@ object DeviceClient {
 
                 }
 
-                override fun onFailure(call: Call<ListHubAccessoryConfiguration>, t: Throwable?) {
+                override fun onFailure(call: Call<ListDevice>, t: Throwable?) {
                     RootApiService.handleError(context, 500)
                 }
 
@@ -71,17 +70,17 @@ object DeviceClient {
     }
 
     fun sendDeviceAction(device : ActionsToSet, context: Context) {
-        getApi(context)?.sendDeviceAction(device)?.enqueue(object : Callback<ListHubAccessoryConfiguration> {
+        getApi(context)?.sendDeviceAction(device)?.enqueue(object : Callback<ListDevice> {
             override fun onResponse(
-                call: Call<ListHubAccessoryConfiguration>,
-                response: Response<ListHubAccessoryConfiguration>
+                    call: Call<ListDevice>,
+                    response: Response<ListDevice>
             ) {
                 if (!response.isSuccessful) {
                     RootApiService.handleError(context, response.code())
                 }
             }
 
-            override fun onFailure(call: Call<ListHubAccessoryConfiguration>, t: Throwable) {
+            override fun onFailure(call: Call<ListDevice>, t: Throwable) {
                 RootApiService.handleError(context, 500)
             }
         })
@@ -89,10 +88,10 @@ object DeviceClient {
 
     fun getSupportedAccessories(context: Context) {
         getApi(context)?.getSupportedAccessories()
-                ?.enqueue(object : Callback<List<SupportedAccessories>> {
+                ?.enqueue(object : Callback<List<SupportedDevices>> {
                     override fun onResponse(
-                            call: Call<List<SupportedAccessories>>,
-                            response: Response<List<SupportedAccessories>>
+                            call: Call<List<SupportedDevices>>,
+                            response: Response<List<SupportedDevices>>
                     ) {
                         if (response.isSuccessful) {
                             supportedDevices.value = response.body()
@@ -101,7 +100,7 @@ object DeviceClient {
                         }
                     }
 
-                    override fun onFailure(call: Call<List<SupportedAccessories>>?, t: Throwable?) {
+                    override fun onFailure(call: Call<List<SupportedDevices>>?, t: Throwable?) {
                         RootApiService.handleError(context, 500)
                     }
 

@@ -45,7 +45,7 @@ class DevicePhysicalConfigurationActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.create_account_continue_btn -> {
-            val intent = Intent(applicationContext, SearchDeviceActivity::class.java)
+            val intent = Intent(applicationContext, SuccessActivity::class.java)
             startActivity(intent)
             true
         }

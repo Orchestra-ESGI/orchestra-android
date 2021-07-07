@@ -1,11 +1,10 @@
 package viewModel
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import core.rest.model.*
-import core.rest.model.hubConfiguration.Device
+import core.rest.model.device.Device
 import core.utils.SingleLiveEvent
 
 class HomeViewModel: ViewModel() {

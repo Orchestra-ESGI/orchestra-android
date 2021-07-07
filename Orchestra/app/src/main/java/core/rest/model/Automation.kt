@@ -1,6 +1,6 @@
 package core.rest.model
 
-import core.rest.model.hubConfiguration.HubAccessoryType
+import core.rest.model.device.DeviceType
 import java.io.Serializable
 
 data class Automation(
@@ -13,7 +13,7 @@ data class Automation(
 ) : Serializable
 
 data class Trigger(
-        var type : HubAccessoryType,
+        var type : DeviceType,
         var friendly_name : String,
         var actions : ActionsToSetIn
 ) : Serializable

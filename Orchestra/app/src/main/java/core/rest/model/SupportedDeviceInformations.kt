@@ -1,6 +1,5 @@
 package core.rest.model
 
-import core.rest.model.hubConfiguration.HubAccessoryType
 import java.io.Serializable
 
 class SupportedDeviceInformations (

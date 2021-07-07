@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/app_primary_blue"
     android:orientation="vertical"
-    tools:context="view.ui.SupportedAccessoriesListActivity">
+    tools:context="view.SupportedDevice.ui.SupportedAccessoriesListActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
