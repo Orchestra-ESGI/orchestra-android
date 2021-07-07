@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.orchestra.R
@@ -34,6 +35,7 @@ class CreateDeviceActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
     private lateinit var deviceViewModel : DeviceViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_device)
 
@@ -99,11 +101,10 @@ class CreateDeviceActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
 
     private fun retrieveData() : Device {
         val name = nameEditText.text.toString()
-        val type : HubAccessoryType?
 
         val room = if (selectedPosition == -1) device!!.room else roomList[selectedPosition]
 
-        type = when (supportedDevice?.type) {
+        val type : HubAccessoryType? = when (supportedDevice?.type) {
             "lightbulb" -> HubAccessoryType.lightbulb
             "switch" -> HubAccessoryType.switch
             "sensor" -> HubAccessoryType.sensor
@@ -129,7 +130,8 @@ class CreateDeviceActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
             intent.putExtra("CreatedScene", retrieveData())
             if (supportedDevice == null) {
                 deviceViewModel.saveDevice(device)
-                onBackPressed()
+                intent.setClass(applicationContext, SearchDeviceActivity::class.java)
+                startActivity(intent)
             } else {
                 if (supportedDevice?.documentation != null) {
                     intent.setClass(applicationContext, DevicePhysicalConfigurationActivity::class.java)
