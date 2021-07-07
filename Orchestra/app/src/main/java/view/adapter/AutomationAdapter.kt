@@ -15,11 +15,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.Automation
 import core.rest.model.hubConfiguration.Device
-import utils.OnActionListener
+import utils.OnSceneListener
 import view.ui.DetailSceneActivity
 import java.io.Serializable
 
-class AutomationAdapter(clickListener: OnActionListener) : RecyclerView.Adapter<AutomationAdapter.AutomationViewHolder>() {
+class AutomationAdapter(clickListener: OnSceneListener) : RecyclerView.Adapter<AutomationAdapter.AutomationViewHolder>() {
 
     var automationList: List<Automation>? = null
         set(value) {
@@ -33,7 +33,7 @@ class AutomationAdapter(clickListener: OnActionListener) : RecyclerView.Adapter<
             notifyDataSetChanged()
         }
 
-    private val itemListener: OnActionListener = clickListener
+    private val itemListener: OnSceneListener = clickListener
     private lateinit var layoutInflater: LayoutInflater
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AutomationViewHolder {
@@ -57,7 +57,7 @@ class AutomationAdapter(clickListener: OnActionListener) : RecyclerView.Adapter<
         private val automationIcon = itemView.findViewById<ImageView>(R.id.cell_scene_logo_iv)
         private val automationTitle = itemView.findViewById<TextView>(R.id.cell_scene_title_tv)
         private val automationInfo = itemView.findViewById<ImageView>(R.id.cell_scene_info_iv)
-        fun bind(automation: Automation, deviceList: List<Device>, listener: OnActionListener) {
+        fun bind(automation: Automation, deviceList: List<Device>, listener: OnSceneListener) {
             automationTitle.text = automation.name
 
             val unwrappedDrawable = AppCompatResources.getDrawable(itemView.context, R.drawable.scene_list_item_shape)
@@ -68,7 +68,7 @@ class AutomationAdapter(clickListener: OnActionListener) : RecyclerView.Adapter<
             itemView.background = unwrappedDrawable
 
             itemView.setOnClickListener {
-                listener.onClickToLaunch(automation._id!!)
+                listener.onClickToLaunch(automation._id!!, "automation")
             }
 
             automationInfo.setOnClickListener {
@@ -85,7 +85,7 @@ class AutomationAdapter(clickListener: OnActionListener) : RecyclerView.Adapter<
                 builder.setTitle(itemView.context.getString(R.string.home_scene_delete_title))
                 builder.setMessage(itemView.context.getString(R.string.home_scene_delete_message))
                 builder.setPositiveButton(itemView.context.getString(R.string.home_scene_delete_button)) { dialog, which ->
-                    listener.onLongPressToDelete(automation._id!!)
+                    listener.onLongPressToDelete(automation._id!!, "automation")
                 }
                 builder.show()
                 true

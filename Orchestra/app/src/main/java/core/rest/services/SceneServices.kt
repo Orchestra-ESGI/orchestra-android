@@ -22,7 +22,7 @@ interface SceneServices {
     fun launchAutomation(@Path("id") animationId : String) : Call<HashMap<String, Any>>
 
     @HTTP(method = "DELETE", path = "/scene", hasBody = true)
-    fun deleteScenes(@Body scene: ListSceneToDelete) : Call<ListSceneToDelete>
+    fun deleteScenes(@Body scene: HashMap<String, List<String>>) : Call<ListSceneToDelete>
 
     @PATCH("/scene")
     fun updateScene(@Body scene: Scene) : Call<Scene>
@@ -34,5 +34,5 @@ interface SceneServices {
     fun addAutomation(@Body automation: Automation) : Call<HashMap<String, Any>>
 
     @HTTP(method = "DELETE", path = "/automation", hasBody = true)
-    fun deleteScenes(@Body idList: HashMap<String, List<String>>) : Call<HashMap<String, Any>>
+    fun deleteAutomations(@Body idList: HashMap<String, List<String>>) : Call<HashMap<String, Any>>
 }

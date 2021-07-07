@@ -105,7 +105,7 @@ object SceneClient {
                 })
     }
 
-    fun deleteScenes(sceneIds : ListSceneToDelete, context: Context) {
+    fun deleteScenes(sceneIds : HashMap<String, List<String>>, context: Context) {
         getApi(context)?.deleteScenes(sceneIds)
                 ?.enqueue(object : Callback<ListSceneToDelete>{
                     override fun onResponse(
@@ -220,7 +220,7 @@ object SceneClient {
     }
 
     fun deleteAutomations(idList : HashMap<String, List<String>>, context: Context) {
-        getApi(context)?.deleteScenes(idList)
+        getApi(context)?.deleteAutomations(idList)
                 ?.enqueue(object : Callback<HashMap<String, Any>>{
                     override fun onResponse(
                             call: Call<HashMap<String, Any>>,

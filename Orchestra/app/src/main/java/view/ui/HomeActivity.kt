@@ -28,7 +28,7 @@ import com.kaopiz.kprogresshud.KProgressHUD
 import core.rest.model.Automation
 import core.rest.model.Scene
 import core.rest.model.hubConfiguration.Device
-import utils.OnActionListener
+import utils.OnSceneListener
 import view.adapter.DeviceAdapter
 import view.adapter.AutomationAdapter
 import view.adapter.SceneAdapter
@@ -36,7 +36,7 @@ import viewModel.HomeViewModel
 import java.io.Serializable
 
 
-class HomeActivity : AppCompatActivity(), OnActionListener {
+class HomeActivity : AppCompatActivity(), OnSceneListener {
 
     private lateinit var sceneTitle : TextView
     private lateinit var noDeviceTextView: TextView
@@ -118,8 +118,7 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
 
     private fun setupSceneRecyclerView() {
         scenesRecyclerView.layoutManager = GridLayoutManager(this, 2)
-        sceneAdapter = SceneAdapter()
-        sceneAdapter.homeVM = homeViewModel
+        sceneAdapter = SceneAdapter(this)
         scenesRecyclerView.adapter = sceneAdapter
     }
 
@@ -154,9 +153,7 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
         })
 
         swipeRefreshLayout.setOnRefreshListener {
-            homeViewModel.getAllDevice()
-            homeViewModel.getAllScene()
-            homeViewModel.getAllAutomation()
+            refreshCall()
         }
     }
 
@@ -369,6 +366,13 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
         }
     }
 
+    private fun refreshCall() {
+        loader.show()
+        homeViewModel.getAllDevice()
+        homeViewModel.getAllScene()
+        homeViewModel.getAllAutomation()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1) {
@@ -385,14 +389,24 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
         startActivity(intent)
     }
 
-    override fun onLongPressToDelete(id: String) {
+    override fun onLongPressToDelete(id: String, sender: String) {
         val idList : HashMap<String, List<String>> = HashMap()
         idList["ids"] = listOf(id)
-        homeViewModel.deleteAutomations(idList)
+        if(sender == "scene") {
+            homeViewModel.deleteScenes(idList)
+            refreshCall()
+        } else {
+            homeViewModel.deleteAutomations(idList)
+            refreshCall()
+        }
     }
 
-    override fun onClickToLaunch(id: String) {
-        homeViewModel.launchAutomation(id)
+    override fun onClickToLaunch(id: String, sender: String) {
+        if (sender == "scene") {
+            homeViewModel.launchScene(id)
+        } else {
+            homeViewModel.launchAutomation(id)
+        }
     }
 }
 

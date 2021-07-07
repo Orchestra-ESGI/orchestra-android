@@ -16,11 +16,12 @@ import com.example.orchestra.R
 import core.rest.model.ListSceneToDelete
 import core.rest.model.Scene
 import core.rest.model.hubConfiguration.Device
+import utils.OnSceneListener
 import view.ui.DetailSceneActivity
 import viewModel.HomeViewModel
 import java.io.Serializable
 
-class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
+class SceneAdapter(listener: OnSceneListener) : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
 
     var sceneList: List<Scene>? = null
         set(value) {
@@ -34,13 +35,9 @@ class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
             notifyDataSetChanged()
         }
 
-    var homeVM: HomeViewModel? = null
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
     private lateinit var layoutInflater: LayoutInflater
+
+    private var itemListener = listener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SceneViewHolder {
         layoutInflater = LayoutInflater.from(parent.context)
@@ -51,7 +48,7 @@ class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
     class SceneViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val sceneTitle = itemView.findViewById<TextView>(R.id.cell_scene_title_tv)
         private val sceneInfo = itemView.findViewById<ImageView>(R.id.cell_scene_info_iv)
-        fun bind(scene : Scene, homeVM : HomeViewModel?, deviceList : List<Device>?) {
+        fun bind(scene : Scene, listener: OnSceneListener, deviceList : List<Device>?) {
             sceneTitle.text = scene.name
 
             val unwrappedDrawable = AppCompatResources.getDrawable(itemView.context, R.drawable.scene_list_item_shape)
@@ -69,7 +66,7 @@ class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
             itemView.background = unwrappedDrawable
 
             itemView.setOnClickListener {
-                homeVM!!.launchDevice(sceneId = scene._id!!)
+                listener.onClickToLaunch(scene._id!!, "scene")
             }
 
             sceneInfo.setOnClickListener {
@@ -86,9 +83,7 @@ class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
                 builder.setTitle(itemView.context.getString(R.string.home_scene_delete_title))
                 builder.setMessage(itemView.context.getString(R.string.home_scene_delete_message))
                 builder.setPositiveButton(itemView.context.getString(R.string.home_scene_delete_button)) { dialog, which ->
-                    if(homeVM != null) {
-                        homeVM!!.deleteScenes(ListSceneToDelete(listOf(scene._id!!)))
-                    }
+                    listener.onLongPressToDelete(scene._id!!, "scene")
                 }
                 builder.show()
                 true
@@ -97,7 +92,7 @@ class SceneAdapter : RecyclerView.Adapter<SceneAdapter.SceneViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: SceneViewHolder, position: Int) {
-        holder.bind(scene = sceneList!![position], homeVM = homeVM, deviceList = deviceList)
+        holder.bind(scene = sceneList!![position], listener = itemListener, deviceList = deviceList)
     }
 
     override fun getItemCount(): Int {

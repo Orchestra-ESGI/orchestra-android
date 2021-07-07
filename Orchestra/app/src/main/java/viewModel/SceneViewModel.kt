@@ -42,7 +42,7 @@ class SceneViewModel : ViewModel() {
         sceneService.launchAutomation(automationId, context)
     }
 
-    fun deleteScenes(scenes : ListSceneToDelete) {
+    fun deleteScenes(scenes : HashMap<String, List<String>>) {
         sceneService.deleteScenes(scenes, context)
     }
 

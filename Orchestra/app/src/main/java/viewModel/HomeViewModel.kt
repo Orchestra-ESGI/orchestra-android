@@ -46,7 +46,7 @@ class HomeViewModel: ViewModel() {
         sceneViewModel!!.getAllAutomation()
     }
 
-    fun launchDevice(sceneId : String) {
+    fun launchScene(sceneId : String) {
         sceneViewModel!!.launchScene(sceneId)
     }
 
@@ -59,7 +59,7 @@ class HomeViewModel: ViewModel() {
         deviceViewModel!!.deleteDevices(friendlyName)
     }
 
-    fun deleteScenes(scenes : ListSceneToDelete) {
+    fun deleteScenes(scenes : HashMap<String, List<String>>) {
         sceneViewModel!!.context = context
         sceneViewModel!!.deleteScenes(scenes)
     }
