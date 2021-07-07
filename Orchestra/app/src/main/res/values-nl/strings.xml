@@ -77,8 +77,8 @@
     <!-- Detail Device -->
     <string name="detail_device_ok">OK</string>
     <string name="detail_device_room_title">Kamer</string>
-    <string name="detail_device_config_text">Configureer dit apparaat a.u.b.</string>
-    <string name="detail_device_config_button">Configureren</string>
+    <string name="detail_device_config_text">Het apparaat wordt niet ondersteund door Orchestra.\nStuur ons de apparaatinformatie zodat we deze kunnen integreren in toekomstige updates</string>
+    <string name="detail_device_config_button">Apparaat verzenden</string>
     <string name="detail_device_state_text">Staate</string>
     <string name="detail_device_brightness_text">Helderheid</string>
     <string name="detail_device_color_text">Kleur</string>
@@ -223,5 +223,6 @@
     <string name="settings_shutdown_message">Weet je zeker dat je de HUB stopt ?</string>
     <string name="settings_reboot_message">Weet je zeker dat je de hub opnieuw moet opstarten ?</string>
     <string name="settings_please_wait">Wacht alsjeblieft</string>
+    <string name="detail_device_unmutable">Appareil non modifiable</string>
 
 </resources>

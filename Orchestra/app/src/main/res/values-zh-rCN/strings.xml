@@ -77,8 +77,8 @@
     <!-- Detail Device -->
     <string name="detail_device_ok">OK</string>
     <string name="detail_device_room_title">房间</string>
-    <string name="detail_device_config_text">请配置此设备</string>
-    <string name="detail_device_config_button">配置</string>
+    <string name="detail_device_config_text">Orchestra 不支持该设备。\n将设备信息发送给我们，以便我们可以将其集成到未来的更新中</string>
+    <string name="detail_device_config_button">发送设备</string>
     <string name="detail_device_state_text">状态</string>
     <string name="detail_device_brightness_text">亮度</string>
     <string name="detail_device_color_text">颜色</string>
@@ -223,5 +223,6 @@
     <string name="settings_shutdown_message">你确定要停止 HUB 吗 ?</string>
     <string name="settings_reboot_message">您确定要重新启动集线器吗 ?</string>
     <string name="settings_please_wait">请稍等</string>
+    <string name="detail_device_unmutable">Appareil non modifiable</string>
 
 </resources>

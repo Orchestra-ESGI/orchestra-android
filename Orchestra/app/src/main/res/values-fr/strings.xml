@@ -76,8 +76,8 @@
 
     <!-- Detail Device -->
     <string name="detail_device_ok">OK</string>
-    <string name="detail_device_config_text">Veuillez configurer cet appareil</string>
-    <string name="detail_device_config_button">Configurer</string>
+    <string name="detail_device_config_text">L\'appareil n\'est pas pris en charge par Orchestra.\nEnvoyez-nous les informations de l\'appareil afin que nous puissions les intégrer dans les futures mises à jour</string>
+    <string name="detail_device_config_button">Envoyer l\'appareil</string>
     <string name="detail_device_state_text">État</string>
     <string name="detail_device_brightness_text">Luminosité</string>
     <string name="detail_device_color_text">Couleur</string>
@@ -221,5 +221,6 @@
     <string name="settings_shutdown_message">Êtes-vous sûr d\'arrêter le HUB ?</string>
     <string name="settings_reboot_message">Êtes-vous sûr de redémarrer le hub ?</string>
     <string name="settings_please_wait">Veuillez patientier</string>
+    <string name="detail_device_unmutable">Appareil non modifiable</string>
 
 </resources>

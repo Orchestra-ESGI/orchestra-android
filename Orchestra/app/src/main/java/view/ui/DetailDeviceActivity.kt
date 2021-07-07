@@ -2,6 +2,7 @@ package view.ui
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -105,9 +106,8 @@ class DetailDeviceActivity : AppCompatActivity() {
         }
 
         configurateButton.setOnClickListener {
-            val intent = Intent(this, SupportedAccessoriesListActivity::class.java)
-            intent.putExtra("device", deviceDetail!!)
-            startActivity(intent)
+            val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "orchestra.nrv.dev@gmail.com", null))
+            startActivity(Intent.createChooser(emailIntent, "Send Device"))
         }
 
         if(deviceDetail?.actions?.brightness != null) {
@@ -288,9 +288,14 @@ class DetailDeviceActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
 
         R.id.detail_modifier_btn -> {
-            val deviceModificationIntent = Intent(this, CreateDeviceActivity::class.java)
-            deviceModificationIntent.putExtra("device", deviceDetail!!)
-            startActivity(deviceModificationIntent)
+            if(deviceDetail?.room != null) {
+                val deviceModificationIntent = Intent(this, CreateDeviceActivity::class.java)
+                deviceModificationIntent.putExtra("device", deviceDetail!!)
+                startActivity(deviceModificationIntent)
+            } else {
+                Toast.makeText(this, getString(R.string.detail_device_unmutable), Toast.LENGTH_LONG).show()
+            }
+
             true
         }
         else -> {

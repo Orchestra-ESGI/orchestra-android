@@ -76,8 +76,8 @@
 
     <!-- Detail Device -->
     <string name="detail_device_ok">OK</string>
-    <string name="detail_device_config_text">Configura este dispositivo</string>
-    <string name="detail_device_config_button">Configurar</string>
+    <string name="detail_device_config_text">Orchestra no admite el dispositivo.\nEnvíanos la información del dispositivo para que podamos integrarlo en futuras actualizaciones</string>
+    <string name="detail_device_config_button">Enviar dispositivo</string>
     <string name="detail_device_state_text">Expresar</string>
     <string name="detail_device_brightness_text">Brillo</string>
     <string name="detail_device_color_text">Color</string>
@@ -222,6 +222,7 @@
     <string name="settings_shutdown_message">¿Estás seguro de detener el HUB?</string>
     <string name="settings_reboot_message">¿Estás seguro de reiniciar el concentrador ?</string>
     <string name="settings_please_wait">Espere por favor</string>
+    <string name="detail_device_unmutable">Appareil non modifiable</string>
 
 
 </resources>

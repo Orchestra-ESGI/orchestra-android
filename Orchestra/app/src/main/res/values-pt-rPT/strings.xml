@@ -77,8 +77,8 @@
     <!-- Detail Device -->
     <string name="detail_device_ok">OK</string>
     <string name="detail_device_room_title">Quarto</string>
-    <string name="detail_device_config_text">Por favor, configure este dispositivo</string>
-    <string name="detail_device_config_button">Configurar</string>
+    <string name="detail_device_config_text">O dispositivo não é compatível com Orchestra.\nEnvie-nos as informações do dispositivo para que possamos integrá-lo em futuras atualizações</string>
+    <string name="detail_device_config_button">Dispositivo de envio</string>
     <string name="detail_device_state_text">Estado</string>
     <string name="detail_device_brightness_text">Brilho</string>
     <string name="detail_device_color_text">Cor</string>
@@ -223,5 +223,6 @@
     <string name="settings_shutdown_message">Tem certeza de que deseja interromper o HUB ?</string>
     <string name="settings_reboot_message">Tem certeza de que deseja reiniciar o hub ?</string>
     <string name="settings_please_wait">Por favor, aguarde</string>
+    <string name="detail_device_unmutable">Appareil non modifiable</string>
 
 </resources>

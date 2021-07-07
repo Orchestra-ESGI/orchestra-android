@@ -77,8 +77,8 @@
     <!-- Detail Device -->
     <string name="detail_device_ok">OK</string>
     <string name="detail_device_room_title">Camera</string>
-    <string name="detail_device_config_text">Si prega di configurare questo dispositivo</string>
-    <string name="detail_device_config_button">Configura</string>
+    <string name="detail_device_config_text">Il dispositivo non è supportato da Orchestra.\nInviaci le informazioni sul dispositivo in modo che possiamo integrarlo in futuri aggiornamenti</string>
+    <string name="detail_device_config_button">Invia dispositivo</string>
     <string name="detail_device_state_text">stato</string>
     <string name="detail_device_brightness_text">Luminosità</string>
     <string name="detail_device_color_text">Colore</string>
@@ -222,5 +222,6 @@
     <string name="settings_shutdown_message">Sei sicuro di fermare l\'HUB ?</string>
     <string name="settings_reboot_message">Sei sicuro di riavviare l\'hub ?</string>
     <string name="settings_please_wait">attendere prego</string>
+    <string name="detail_device_unmutable">Appareil non modifiable</string>
 
 </resources>
