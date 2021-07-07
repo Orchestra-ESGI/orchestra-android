@@ -15,43 +15,52 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
+import utils.OnSettingListener
 import view.ui.LoginActivity
 import view.ui.WebViewActivity
 
-class SettingsAdapter(context: Context) : RecyclerView.Adapter<SettingsAdapter.SettingsViewHolder>() {
+
+class SettingsAdapter(context: Context, clickListener: OnSettingListener) : RecyclerView.Adapter<SettingsAdapter.SettingsViewHolder>() {
 
     private var titleList = listOf(
-            context.getString(R.string.settings_rate_us),
-            context.getString(R.string.settings_share_the_app),
-            "",
-            context.getString(R.string.settings_about_us),
-            context.getString(R.string.settings_contact),
-            "",
-            context.getString(R.string.settings_libraries_we_use),
-            "",
-            context.getString(R.string.settings_privacy_policy),
-            context.getString(R.string.settings_terms_of_use),
-            "",
-            context.getString(R.string.settings_sign_out),
-            context.getString(R.string.settings_delete_your_account)
+        context.getString(R.string.settings_rate_us),
+        context.getString(R.string.settings_share_the_app),
+        "",
+        context.getString(R.string.settings_about_us),
+        context.getString(R.string.settings_contact),
+        "",
+        context.getString(R.string.settings_libraries_we_use),
+        "",
+        context.getString(R.string.settings_privacy_policy),
+        context.getString(R.string.settings_terms_of_use),
+        "",
+        context.getString(R.string.settings_shutdown),
+        context.getString(R.string.settings_reboot),
+        "",
+        context.getString(R.string.settings_sign_out),
+        context.getString(R.string.settings_delete_your_account)
     )
     private var descriptionList = listOf(
-            R.drawable.ic_star,
-            R.drawable.ic_share,
-            0,
-            R.drawable.ic_group,
-            R.drawable.ic_mail,
-            0,
-            R.drawable.ic_library,
-            0,
-            R.drawable.ic_privacy_policy,
-            R.drawable.ic_terms,
-            0,
-            R.drawable.ic_logout,
-            R.drawable.ic_delete
+        R.drawable.ic_star,
+        R.drawable.ic_share,
+        0,
+        R.drawable.ic_group,
+        R.drawable.ic_mail,
+        0,
+        R.drawable.ic_library,
+        0,
+        R.drawable.ic_privacy_policy,
+        R.drawable.ic_terms,
+        0,
+        R.drawable.ic_close_24,
+        R.drawable.ic_restart_24,
+        0,
+        R.drawable.ic_logout,
+        R.drawable.ic_delete
     )
 
     private lateinit var layoutInflater: LayoutInflater
+    private var listener = clickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SettingsViewHolder {
         layoutInflater = LayoutInflater.from(parent.context)
@@ -60,7 +69,7 @@ class SettingsAdapter(context: Context) : RecyclerView.Adapter<SettingsAdapter.S
     }
 
     override fun onBindViewHolder(holder: SettingsViewHolder, position: Int) {
-        holder.bind(titleList[position], descriptionList[position])
+        holder.bind(titleList[position], descriptionList[position], listener)
     }
 
     override fun getItemCount(): Int {
@@ -73,7 +82,7 @@ class SettingsAdapter(context: Context) : RecyclerView.Adapter<SettingsAdapter.S
         private var settingsTextView = itemView.findViewById<TextView>(R.id.cell_settings_text_tv)
         private var settingsNextImageView = itemView.findViewById<ImageView>(R.id.cell_settings_next_iv)
 
-        fun bind(title: String, icon: Int) {
+        fun bind(title: String, icon: Int, listener: OnSettingListener) {
             settingsTextView.text = title
             settingsIconImageView.setImageResource(icon)
 
@@ -85,7 +94,6 @@ class SettingsAdapter(context: Context) : RecyclerView.Adapter<SettingsAdapter.S
             }
 
             if (title == itemView.context.getString(R.string.settings_delete_your_account)) {
-                // val appRedColor = ContextCompat.getColor(itemView.context, R.color.app_primary_red)
                 settingsTextView.setTextColor(Color.RED)
             }
 
@@ -93,8 +101,15 @@ class SettingsAdapter(context: Context) : RecyclerView.Adapter<SettingsAdapter.S
                 when (title) {
                     itemView.context.getString(R.string.settings_rate_us) -> rateApp()
                     itemView.context.getString(R.string.settings_share_the_app) -> shareApp()
+                    itemView.context.getString(R.string.settings_about_us) -> otherViews("https://orchestra-website.herokuapp.com/about")
+                    itemView.context.getString(R.string.settings_privacy_policy) -> otherViews("https://orchestra-website.herokuapp.com/privacy")
+                    itemView.context.getString(R.string.settings_terms_of_use) -> otherViews("https://orchestra-website.herokuapp.com/cgu")
+                    itemView.context.getString(R.string.settings_shutdown) -> shutdownHub(listener)
+                    itemView.context.getString(R.string.settings_reboot) -> rebootHub(listener)
                     itemView.context.getString(R.string.settings_sign_out) -> signOut()
-                    itemView.context.getString(R.string.settings_delete_your_account) -> deleteAccount()
+                    itemView.context.getString(R.string.settings_delete_your_account) -> deleteAccount(
+                        listener
+                    )
                     else -> otherViews()
                 }
             }
@@ -107,16 +122,54 @@ class SettingsAdapter(context: Context) : RecyclerView.Adapter<SettingsAdapter.S
             try {
                 itemView.context.startActivity(myAppLinkToMarket)
             } catch (e: ActivityNotFoundException) {
-                Toast.makeText(itemView.context, itemView.context.getString(R.string.settings_rate_app_impossible), Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    itemView.context,
+                    itemView.context.getString(R.string.settings_rate_app_impossible),
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
         private fun shareApp() {
             val intent = Intent()
             intent.action = Intent.ACTION_SEND
-            intent.putExtra(Intent.EXTRA_TEXT, itemView.context.getString(R.string.settings_share_app_text))
+            intent.putExtra(
+                Intent.EXTRA_TEXT,
+                itemView.context.getString(R.string.settings_share_app_text)
+            )
             intent.type = "text/plain"
-            itemView.context.startActivity(Intent.createChooser(intent, itemView.context.getString(R.string.settings_share_app_title)))
+            itemView.context.startActivity(
+                Intent.createChooser(
+                    intent,
+                    itemView.context.getString(R.string.settings_share_app_title)
+                )
+            )
+        }
+
+        private fun shutdownHub(listener: OnSettingListener) {
+            AlertDialog.Builder(itemView.context).setTitle(itemView.context.getString(R.string.settings_shutdown))
+                .setMessage(itemView.context.getString(R.string.settings_shutdown_message))
+                .setPositiveButton(itemView.context.getString(R.string.settings_shutdown)) { dialog, _ ->
+                    listener.onShutdownHub()
+                    dialog.dismiss()
+                }
+                .setNegativeButton(itemView.context.getString(R.string.settings_sign_out_alert_cancel)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
+
+        private fun rebootHub(listener: OnSettingListener) {
+            AlertDialog.Builder(itemView.context).setTitle(itemView.context.getString(R.string.settings_reboot))
+                .setMessage(itemView.context.getString(R.string.settings_reboot_message))
+                .setPositiveButton(itemView.context.getString(R.string.settings_reboot)) { dialog, _ ->
+                    listener.onRebootHub()
+                    dialog.dismiss()
+                }
+                .setNegativeButton(itemView.context.getString(R.string.settings_sign_out_alert_cancel)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
         }
 
         private fun signOut() {
@@ -124,8 +177,11 @@ class SettingsAdapter(context: Context) : RecyclerView.Adapter<SettingsAdapter.S
                 .setMessage(itemView.context.getString(R.string.settings_sign_out_alert_message))
                 .setPositiveButton(itemView.context.getString(R.string.settings_sign_out_alert_sign_out)) { dialog, _ ->
 
-                    val sharedPref = itemView.context.getSharedPreferences("com.example.orchestra.API_TOKEN", Context.MODE_PRIVATE)
-                    with (sharedPref.edit()) {
+                    val sharedPref = itemView.context.getSharedPreferences(
+                        "com.example.orchestra.API_TOKEN",
+                        Context.MODE_PRIVATE
+                    )
+                    with(sharedPref.edit()) {
                         putString("Token", null)
                         apply()
                     }
@@ -139,17 +195,26 @@ class SettingsAdapter(context: Context) : RecyclerView.Adapter<SettingsAdapter.S
                 .show()
         }
 
-        private fun otherViews() {
+        private fun otherViews(url: String? = null) {
             val intent = Intent(itemView.context, WebViewActivity::class.java)
+            if (url != null) {
+                intent.putExtra("URL", url)
+            }
             itemView.context.startActivity(intent)
         }
 
-        private fun deleteAccount() {
+        private fun deleteAccount(listener: OnSettingListener) {
             AlertDialog.Builder(itemView.context)
                 .setTitle(itemView.context.getString(R.string.settings_delete_your_account_alert_title))
                 .setMessage(itemView.context.getString(R.string.settings_delete_your_account_alert_message))
                 .setPositiveButton(itemView.context.getString(R.string.settings_delete_your_account_alert_delete)) { dialog, _ ->
-
+                    listener.onDeleteAccount()
+                    itemView.context.startActivity(
+                        Intent(
+                            itemView.context,
+                            LoginActivity::class.java
+                        )
+                    )
                     dialog.dismiss()
                 }
                 .setNegativeButton(itemView.context.getString(R.string.settings_delete_your_account_alert_cancel)) { dialog, _ ->

@@ -2,12 +2,11 @@ package core.rest.client
 
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import core.rest.model.FirebaseToken
 import core.rest.model.User
 import core.rest.model.UserValid
 import core.rest.services.RootApiService
 import core.rest.services.UserServices
+import core.utils.SingleLiveEvent
 import okhttp3.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -15,15 +14,14 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 
 object UserClient {
-    private var userServices: UserServices? = getApi(context = null)
-    var userValid: MutableLiveData<UserValid> = MutableLiveData()
+    private var userServices: UserServices? = getApi()
+    var userValid: SingleLiveEvent<UserValid> = SingleLiveEvent()
     private var fcmToken: String = ""
 
-    private fun getApi(context: Context?): UserServices? {
+    private fun getApi(context: Context? = null): UserServices? {
         val sharedPref = context?.getSharedPreferences("com.example.orchestra.API_TOKEN", Context.MODE_PRIVATE)
         val token = sharedPref?.getString("Token", "")
         if (token != null) {
@@ -84,20 +82,7 @@ object UserClient {
             }
         })
     }
-/*
-    fun sendFcmToken(context: Context, fcmToken: String) {
 
-        getApi(context)?.sendFcmToken(FirebaseToken(fcmToken))?.enqueue(object : Callback<HashMap<String, Any>> {
-            override fun onResponse(call: Call<HashMap<String, Any>>, response: Response<HashMap<String, Any>>) {
-
-            }
-
-            override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {
-
-            }
-        })
-    }
-*/
     fun signup(context: Context, user: User) {
         getApi(context)?.signup(user)
                 ?.enqueue(object : Callback<UserValid> {
@@ -118,6 +103,29 @@ object UserClient {
                     }
 
                 })
+    }
+
+    fun deleteAccount(context: Context, email: String) {
+        val hashMap = HashMap<String, String>()
+        hashMap["email"] = email
+        getApi(context)?.deleteAccount(hashMap)?.enqueue(object : Callback<HashMap<String, Any>> {
+            override fun onResponse(call: Call<HashMap<String, Any>>, response: Response<HashMap<String, Any>>) {}
+            override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {}
+        })
+    }
+
+    fun resetFactory() {
+        getApi()?.resetFactory()?.enqueue(object : Callback<HashMap<String, Any>> {
+            override fun onResponse(call: Call<HashMap<String, Any>>, response: Response<HashMap<String, Any>>) {}
+            override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {}
+        })
+    }
+
+    fun shutdown() {
+        getApi()?.shutdown()?.enqueue(object : Callback<HashMap<String, Any>> {
+            override fun onResponse(call: Call<HashMap<String, Any>>, response: Response<HashMap<String, Any>>) {}
+            override fun onFailure(call: Call<HashMap<String, Any>>, t: Throwable) {}
+        })
     }
 
 }
