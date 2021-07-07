@@ -102,8 +102,10 @@ class SettingsAdapter(context: Context, clickListener: OnSettingListener) : Recy
                     itemView.context.getString(R.string.settings_rate_us) -> rateApp()
                     itemView.context.getString(R.string.settings_share_the_app) -> shareApp()
                     itemView.context.getString(R.string.settings_about_us) -> otherViews("https://orchestra-website.herokuapp.com/about")
+                    itemView.context.getString(R.string.settings_contact) -> sendEmail()
                     itemView.context.getString(R.string.settings_privacy_policy) -> otherViews("https://orchestra-website.herokuapp.com/privacy")
                     itemView.context.getString(R.string.settings_terms_of_use) -> otherViews("https://orchestra-website.herokuapp.com/cgu")
+                    itemView.context.getString(R.string.settings_libraries_we_use) -> otherViews("https://kotlinlang.org/")
                     itemView.context.getString(R.string.settings_shutdown) -> shutdownHub(listener)
                     itemView.context.getString(R.string.settings_reboot) -> rebootHub(listener)
                     itemView.context.getString(R.string.settings_sign_out) -> signOut()
@@ -144,6 +146,13 @@ class SettingsAdapter(context: Context, clickListener: OnSettingListener) : Recy
                     itemView.context.getString(R.string.settings_share_app_title)
                 )
             )
+        }
+
+        private fun sendEmail() {
+            val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                    "mailto", "orchestra.nrv.dev@gmail.com", null))
+            itemView.context.startActivity(Intent.createChooser(emailIntent, "Contact"))
+
         }
 
         private fun shutdownHub(listener: OnSettingListener) {
