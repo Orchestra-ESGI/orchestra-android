@@ -21,12 +21,18 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         val sharedPref = getSharedPreferences("com.example.orchestra.API_TOKEN", Context.MODE_PRIVATE)
+        val isFirstLaunch = sharedPref.getBoolean("isFirstLaunch", true)
         val token = sharedPref.getString("Token", "")
 
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent()
             if (token == "" || token == null) {
-                intent.setClass(this, LoginActivity::class.java)
+                if (isFirstLaunch) {
+                    sharedPref.edit().putBoolean("isFirstLaunch", false).apply()
+                    intent.setClass(this, PagerActivity::class.java)
+                } else {
+                    intent.setClass(this, LoginActivity::class.java)
+                }
             } else {
                 intent.setClass(this, HomeActivity::class.java)
             }
