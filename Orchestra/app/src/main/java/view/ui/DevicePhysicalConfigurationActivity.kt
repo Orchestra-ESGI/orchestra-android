@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.orchestra.R
 import core.rest.model.SupportedDeviceInformations
 
@@ -16,6 +17,7 @@ class DevicePhysicalConfigurationActivity : AppCompatActivity() {
     var supportedDevice : SupportedDeviceInformations? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_device_physical_configuration)
         devicePhysicalConfigurationUrl = findViewById(R.id.device_physical_configuration_step_one_url)
