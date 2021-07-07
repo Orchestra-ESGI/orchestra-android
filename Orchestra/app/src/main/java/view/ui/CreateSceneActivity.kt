@@ -2,14 +2,12 @@ package view.ui
 
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -22,13 +20,12 @@ import core.rest.model.hubConfiguration.Device
 import core.rest.model.hubConfiguration.HubAccessoryType
 import utils.OnActionClicked
 import utils.OnActionLongClicked
-import utils.OnItemClicked
 import view.adapter.CreateSceneActionsAdapter
 import viewModel.SceneViewModel
 import kotlin.random.Random
 
 
-class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked, OnActionLongClicked, AdapterView.OnItemSelectedListener {
+class CreateSceneActivity : AppCompatActivity(), OnActionClicked, OnActionLongClicked, AdapterView.OnItemSelectedListener {
 
     private lateinit var nameTitleTextView: TextView
     private lateinit var nameEditText: EditText
@@ -221,7 +218,7 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
             triggerActionSpinner.adapter = arrayAdapterAction
 
             if (automationDetail != null) {
-                val actionTypeSelected = triggerActionTypeList.firstOrNull() { action -> action == automationDetail!!.trigger.type.name}
+                val actionTypeSelected = triggerActionTypeList.firstOrNull { action -> action == automationDetail!!.trigger.type.name}
                 val actionSelected = triggerActionList.firstOrNull { action -> action == automationDetail!!.trigger.actions.state}
                 val indexDevice = triggerDeviceList.indexOf(deviceSelected)
                 triggerDeviceSpinner.setSelection(indexDevice)
@@ -323,20 +320,9 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
         listActionRecyclerView.adapter!!.notifyDataSetChanged()
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    override fun colorClicked(color: Int, position: Int) {
-        val oldSelectedColor = sceneColorsHashMap.filterValues {
-            it
-        }
-        if (oldSelectedColor.size == 1) {
-            sceneColorsHashMap.replace(oldSelectedColor.keys.first(), false)
-            sceneColorsHashMap.replace(color, true)
-        }
-    }
-
     private fun setObserversOnEditText() {
 
-        val filter = InputFilter { source, start, end, dest, dstart, dend ->
+        val filter = InputFilter { source, start, end, _, _, _ ->
 
             for (i in start until end) {
                 if (Character.isWhitespace(source[i])) {
@@ -442,8 +428,9 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
                             } else {
                                 sceneViewModel.updateAutomation(automation)
                             }
-                            setResult(RESULT_OK, intent)
-                            finish()
+                            startActivity(Intent(this, SearchDeviceActivity::class.java))
+                            // setResult(RESULT_OK, intent)
+                            // finish()
                         } else {
                             Toast.makeText(this, getString(R.string.create_scene_missing_information_toast), Toast.LENGTH_SHORT).show()
                         }
@@ -459,8 +446,9 @@ class CreateSceneActivity : AppCompatActivity(), OnItemClicked, OnActionClicked,
                         } else {
                             sceneViewModel.updateScene(scene)
                         }
-                        setResult(RESULT_OK, intent)
-                        finish()
+                        startActivity(Intent(this, SearchDeviceActivity::class.java))
+                        // setResult(RESULT_OK, intent)
+                        // finish()
                     } else {
                         Toast.makeText(this, getString(R.string.create_scene_missing_information_toast), Toast.LENGTH_SHORT).show()
                     }
