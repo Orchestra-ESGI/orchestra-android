@@ -138,8 +138,6 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
             checkLoaded()
             sceneAdapter.deviceList = deviceList
             automationAdapter.deviceList = deviceList
-            swipeRefreshLayout.isRefreshing = false
-            loader.dismiss()
         })
         homeViewModel.sceneList.observe(this, Observer {
             sceneList = it
@@ -168,7 +166,9 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
     }
 
     private fun checkLoaded() {
-        if(sceneLoaded && deviceLoaded) {
+        if(sceneLoaded && deviceLoaded && automationLoaded) {
+            swipeRefreshLayout.isRefreshing = false
+            loader.dismiss()
             if(deviceAdapter.deviceList?.isNotEmpty() == true) {
                 devicesRecyclerView.visibility = View.VISIBLE
                 noDeviceTextView.visibility = View.GONE
@@ -190,6 +190,9 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
                 automationRecyclerView.visibility = View.GONE
                 noAutomationTextView.visibility = View.VISIBLE
             }
+            deviceLoaded = false
+            sceneLoaded = false
+            automationLoaded = false
         }
     }
 
@@ -290,7 +293,7 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
     private fun setUpRoomFilter() {
             roomChipGroup.removeAllViews()
 
-            val listRoom = deviceList.map { device -> device.room }.distinct()
+            val listRoom = deviceList.filter { device -> device.room != null }.map { device -> device.room }.distinct()
             val chipAll = Chip(roomChipGroup.context)
             var chipSelected: Chip = chipAll
             val defaultColor = chipAll.chipBackgroundColor
@@ -346,8 +349,8 @@ class HomeActivity : AppCompatActivity(), OnActionListener {
             automationAdapter.automationList = automationList
         } else {
             val filterDeviceList = deviceList.filter { device -> device.room?.name == room }
-            var filterSceneList = ArrayList<Scene>()
-            var filterAutomation = ArrayList<Automation>()
+            val filterSceneList = ArrayList<Scene>()
+            val filterAutomation = ArrayList<Automation>()
 
             deviceAdapter.deviceList = filterDeviceList
 
