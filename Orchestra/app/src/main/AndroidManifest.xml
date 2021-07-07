@@ -46,7 +46,8 @@
         <activity
             android:name="view.ui.CreateDeviceActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name="view.ui.SupportedAccessoriesListActivity"
             android:screenOrientation="portrait"
@@ -66,7 +67,8 @@
         <activity
             android:name="view.ui.CreateSceneActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name="view.ui.HomeActivity"
             android:screenOrientation="portrait"
