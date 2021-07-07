@@ -14,11 +14,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.orchestra.R
 import core.rest.model.hubConfiguration.Device
 import core.rest.model.hubConfiguration.HubAccessoryType
+import utils.OnDeviceListener
 import view.ui.DetailDeviceActivity
 import viewModel.HomeViewModel
 
 
-class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
+class DeviceAdapter(listener : OnDeviceListener) : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
 
     var deviceList: List<Device>? = null
         set(value) {
@@ -26,13 +27,8 @@ class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
             notifyDataSetChanged()
         }
 
-    var homeVM: HomeViewModel? = null
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
     private lateinit var layoutInflater: LayoutInflater
+    private var itemListener = listener
 
     class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -41,7 +37,7 @@ class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
         private val objectRoom = itemView.findViewById<TextView>(R.id.cell_object_room_tv)
         private val objectStatus = itemView.findViewById<TextView>(R.id.cell_object_stat_tv)
 
-        fun bind(device: Device, homeVM : HomeViewModel?) {
+        fun bind(device: Device, listener: OnDeviceListener) {
             when(device.type) {
                 HubAccessoryType.lightbulb -> objectIcon.setImageResource(R.drawable.ic_lightbulb)
                 HubAccessoryType.switch -> objectIcon.setImageResource(R.drawable.ic_switch)
@@ -79,11 +75,9 @@ class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
                 builder.setTitle(R.string.home_device_delete_title)
                 builder.setMessage(R.string.home_device_delete_message)
                 builder.setPositiveButton(R.string.home_device_delete_button) { dialog, which ->
-                    if(homeVM != null) {
-                        val friendlyNameToDelete : HashMap<String, List<String>> = HashMap()
-                        friendlyNameToDelete["friendly_names"] = listOf(device.friendly_name!!)
-                        homeVM.deleteDevices(friendlyNameToDelete)
-                    }
+                    val friendlyNameToDelete : HashMap<String, List<String>> = HashMap()
+                    friendlyNameToDelete["friendly_names"] = listOf(device.friendly_name!!)
+                    listener.onLongPressToDeleteDevice(friendlyNameToDelete)
                 }
                 builder.show()
                 true
@@ -99,7 +93,7 @@ class DeviceAdapter : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: DeviceViewHolder, position: Int) {
-        holder.bind(device = deviceList!![position], homeVM = homeVM)
+        holder.bind(device = deviceList!![position], listener = itemListener)
 
     }
 

@@ -28,6 +28,7 @@ import com.kaopiz.kprogresshud.KProgressHUD
 import core.rest.model.Automation
 import core.rest.model.Scene
 import core.rest.model.hubConfiguration.Device
+import utils.OnDeviceListener
 import utils.OnSceneListener
 import view.adapter.DeviceAdapter
 import view.adapter.AutomationAdapter
@@ -36,7 +37,7 @@ import viewModel.HomeViewModel
 import java.io.Serializable
 
 
-class HomeActivity : AppCompatActivity(), OnSceneListener {
+class HomeActivity : AppCompatActivity(), OnSceneListener, OnDeviceListener {
 
     private lateinit var sceneTitle : TextView
     private lateinit var noDeviceTextView: TextView
@@ -111,8 +112,7 @@ class HomeActivity : AppCompatActivity(), OnSceneListener {
 
     private fun setupDeviceRecyclerView() {
         devicesRecyclerView.layoutManager = GridLayoutManager(this, 3)
-        deviceAdapter = DeviceAdapter()
-        deviceAdapter.homeVM = homeViewModel
+        deviceAdapter = DeviceAdapter(this)
         devicesRecyclerView.adapter = deviceAdapter
     }
 
@@ -407,6 +407,10 @@ class HomeActivity : AppCompatActivity(), OnSceneListener {
         } else {
             homeViewModel.launchAutomation(id)
         }
+    }
+
+    override fun onLongPressToDeleteDevice(friendlyNameToDelete: HashMap<String, List<String>>) {
+        homeViewModel.deleteDevices(friendlyNameToDelete)
     }
 }
 
