@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.orchestra.R
 
 class SearchDeviceActivity : AppCompatActivity() {
@@ -23,6 +24,7 @@ class SearchDeviceActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_device)
 
@@ -54,6 +56,10 @@ class SearchDeviceActivity : AppCompatActivity() {
         returnHomeButton.setOnClickListener {
             startActivity(Intent(applicationContext, HomeActivity::class.java))
         }
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, HomeActivity::class.java))
     }
 
 }
