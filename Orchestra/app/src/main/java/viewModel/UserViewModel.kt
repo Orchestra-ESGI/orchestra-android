@@ -9,12 +9,13 @@ import core.rest.client.UserClient
 import core.rest.model.User
 import core.rest.model.UserValid
 import core.rest.services.UserServices
+import core.utils.SingleLiveEvent
 import okhttp3.RequestBody
 
 class UserViewModel: ViewModel() {
     lateinit var context : AppCompatActivity
     var userService : UserClient = UserClient
-    var userValid: MutableLiveData<UserValid> = MutableLiveData()
+    var userValid: SingleLiveEvent<UserValid> = SingleLiveEvent()
 
     fun signup(user : User) {
         userService.userValid.observe(context, Observer {
@@ -30,8 +31,24 @@ class UserViewModel: ViewModel() {
         userService.login(context, user)
     }
 
+
     fun sendFcmToken(fcmToken: String) {
         userService.sendFcmToken(context, fcmToken)
     }
 
+    fun deleteAccount(email: String) {
+        userService.deleteAccount(context, email)
+    }
+
+    fun resetFactory() {
+        userService.resetFactory()
+    }
+
+    fun shutdown() {
+        userService.shutdown()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+    }
 }

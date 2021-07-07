@@ -12,10 +12,10 @@ import retrofit2.http.*
 
 interface UserServices {
 
-    @POST("user/login")
+    @POST("/user/login")
     fun login(@Body user: User) : Call<UserValid>
 
-    @POST("user/signup")
+    @POST("/user/signup")
     fun signup(@Body user: User) : Call<UserValid>
 
     @POST("/notification")
@@ -23,4 +23,15 @@ interface UserServices {
 
     @POST("/notification")
     fun sendToken(@Body body: HashMap<String, String>): Call<HashMap<String, Any>>
+
+    @HTTP(method = "DELETE", path = "/user", hasBody = true)
+    fun deleteAccount(@Body email: HashMap<String, String>): Call<HashMap<String, Any>>
+
+    @POST("/factory-reset")
+    fun resetFactory(): Call<HashMap<String, Any>>
+
+    @POST("/shutdown")
+    fun shutdown(): Call<HashMap<String, Any>>
+
+
 }

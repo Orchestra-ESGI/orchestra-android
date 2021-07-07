@@ -179,14 +179,13 @@
     <string name="settings_sign_out_alert_sign_out">Déconnexion</string>
 
     <string name="create_scene_missing_information_toast">Veuillez renseigner les informations manquantes</string>
-    <string name="home_automation_title">my Automations</string>
-    <string name="home_no_data">Aucune Donnée</string>
-    <string name="detail_scene_automation_trigger">Triggered by %1$s when state is %2$s</string>
-    <string name="create_scene_trigger_by">Trigger by</string>
-    <string name="create_scene_when">When</string>
-    <string name="create_scene_is">Is</string>
+    <string name="home_automation_title">Mes automatisations</string>
+    <string name="detail_scene_automation_trigger">Déclenché par %1$s lorsque l\'état est à %2$s</string>
+    <string name="create_scene_trigger_by">Déclencher par</string>
+    <string name="create_scene_when">quand</string>
+    <string name="create_scene_is">est à</string>
     <string name="error_500_INTERNAL_ERROR">Une erreur est survenue\nVérifier si votre connexion internet est activé\nSi le problème persiste\nContactez l\'organisation</string>
-    <string name="error_user">\"L\'identifiant ou le mot de passe est erronée\nVeuillez réessayer\"</string>
+    <string name="error_user">L\'identifiant ou le mot de passe est erronée\nVeuillez réessayer</string>
     <string name="cannot_create_automation">Vous ne pouvez pas créer d\'automatisation car vous ne possedez pas de device</string>
     <string name="cannot_create_scene">Vous ne pouvez pas créer de scène car vous de possedez pas de device</string>
     <string name="create_scene_new_automation">Nouvelle automatisation</string>
@@ -200,7 +199,7 @@
     <string name="sigup_mail_send">Mail envoyé</string>
     <string name="sigup_mail_send_message">Un mail de confirmation vous a été envoyé.\nRevenez sur Orchestra après avoir validé le mail</string>
     <string name="sigup_fields_empty">Veuillez remplir les champs</string>
-    <string name="sigup_email_field_wrong">Veuillez renseigner un email valide</string>
+
     <string name="sigup_password_wrong">Les mots de passe ne sont pas identiques</string>
     <string name="home_no_device">Aucun objet</string>
     <string name="home_no_scene">Aucune scène</string>
@@ -209,8 +208,18 @@
     <string name="create_device_modify_device">Modifier l\'appareil</string>
     <string name="supported_accessories_title">"Marque "</string>
     <string name="device_physical_configuration_tutoriel">Tutoriel</string>
-    <string name="detail_scene_title">Détail de l\'appareil</string>
     <string name="detail_scene_title_scene">Détail de la scène</string>
     <string name="detail_scene_title_automation">Détail de l\'automatisation</string>
+    <string name="settings_shutdown">Éteindre le HUB</string>
+    <string name="settings_reboot">Redémarrer le hub</string>
+    <string name="login_faq_alert_title">Besoin d\'aide ?</string>
+    <string name="login_reset_factory">Redémarrer le hub</string>
+    <string name="login_shutdown">Éteindre le HUB</string>
+    <string name="login_faq">FAQ</string>
+    <string name="login_cancel">Cancel</string>
+
+    <string name="settings_shutdown_message">Êtes-vous sûr d\'arrêter le HUB ?</string>
+    <string name="settings_reboot_message">Êtes-vous sûr de redémarrer le hub ?</string>
+    <string name="settings_please_wait">Veuillez patientier</string>
 
 </resources>
