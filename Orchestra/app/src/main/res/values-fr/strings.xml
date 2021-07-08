@@ -122,7 +122,7 @@
     <string name="device_physical_configuration_step_three">3. Suivez les instructions pour appairer votre objet</string>
 
     <string name="search_device_success_title">C\'est fait</string>
-    <string name="search_device_success_description">Votre objet a été correctement crée !</string>
+    <string name="search_device_success_description">Synchronisation effectuée !</string>
     <string name="search_device_success_btn">Revenir à l\'accueil</string>
     <string name="search_device_error_title">Oops !</string>
     <string name="search_device_error_description">Un problème est survenu durant l\'ajout !</string>

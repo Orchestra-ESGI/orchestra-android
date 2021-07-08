@@ -125,7 +125,7 @@
     <string name="device_physical_configuration_step_three">3. Follow the instructions to pair your object</string>
 
     <string name="search_device_success_title">It\'s done</string>
-    <string name="search_device_success_description">Your object has been successfully created !</string>
+    <string name="search_device_success_description">Synchronization completed !</string>
     <string name="search_device_success_btn">Return to home</string>
     <string name="search_device_error_title">Oops !</string>
     <string name="search_device_error_description">There was a problem when adding device !</string>

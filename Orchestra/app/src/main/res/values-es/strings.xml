@@ -123,7 +123,7 @@
     <string name="device_physical_configuration_step_three">3. Siga las instrucciones para emparejar su objeto</string>
 
     <string name="search_device_success_title">Siga las instrucciones para emparejar su objeto</string>
-    <string name="search_device_success_description">Tu objeto ha sido creado con éxito !</string>
+    <string name="search_device_success_description">Sincronización completada !</string>
     <string name="search_device_success_btn">Vuelve a casa</string>
     <string name="search_device_error_title">¡Oops!</string>
     <string name="search_device_error_description">¡Se produjo un error al agregar!</string>

@@ -122,7 +122,7 @@
     <string name="device_physical_configuration_step_three">3. Befolgen Sie die Anweisungen, um Ihr Objekt zu koppeln</string>
 
     <string name="search_device_success_title">Es ist vollbracht</string>
-    <string name="search_device_success_description">Ihr Objekt wurde erfolgreich erstellt !</string>
+    <string name="search_device_success_description">Synchronisierung abgeschlossen !</string>
     <string name="search_device_success_btn">Nach Hause zurückkehren</string>
     <string name="search_device_error_title">Scheiße !</string>
     <string name="search_device_error_description">Beim Hinzufügen ist ein Problem aufgetreten !</string>

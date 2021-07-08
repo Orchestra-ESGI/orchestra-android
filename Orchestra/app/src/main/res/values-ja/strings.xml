@@ -123,7 +123,7 @@
     <string name="device_physical_configuration_step_three">3. 指示に従ってオブジェクトをペアリングします</string>
 
     <string name="search_device_success_title">されております</string>
-    <string name="search_device_success_description">オブジェクトが正常に作成されました !</string>
+    <string name="search_device_success_description">同期が完了しました !</string>
     <string name="search_device_success_btn">家に帰る</string>
     <string name="search_device_error_title">おっとっと !</string>
     <string name="search_device_error_description">追加に問題がありました !</string>

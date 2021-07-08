@@ -123,7 +123,7 @@
     <string name="device_physical_configuration_step_three">3. Segui le istruzioni per abbinare il tuo oggetto</string>
 
     <string name="search_device_success_title">È fatta</string>
-    <string name="search_device_success_description">Il tuo articolo è stato creato con successo!</string>
+    <string name="search_device_success_description">Sincronizzazione completata!</string>
     <string name="search_device_success_btn">Tornare a casa</string>
     <string name="search_device_error_title">Oops !</string>
     <string name="search_device_error_description">Si è verificato un problema durante l\'aggiunta !</string>
