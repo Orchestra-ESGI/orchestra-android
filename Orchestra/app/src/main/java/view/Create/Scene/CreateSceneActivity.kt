@@ -329,18 +329,11 @@ class CreateSceneActivity : AppCompatActivity(), OnActionClicked, OnActionLongCl
                     return@InputFilter ""
                 }
             }
-/*
-            val speChat = "\\s+"
-            val pattern: Pattern = Pattern.compile(speChat)
-            val matcher: Matcher = pattern.matcher(source.toString())
-            if (matcher.find()) return@InputFilter ""
-
- */
             null
         }
 
-        nameEditText.filters = arrayOf(filter)
-        descriptionEditText.filters = arrayOf(filter)
+        // nameEditText.filters = arrayOf(filter)
+        // descriptionEditText.filters = arrayOf(filter)
     }
 
     private fun retrieveDataAutomation() : Automation {
